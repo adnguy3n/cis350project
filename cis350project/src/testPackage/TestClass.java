@@ -9,9 +9,6 @@ public class TestClass {
 
 		System.out.print("Anthony was here.");
 		System.out.println("Luke was also here!");
-		
-
-		System.out.println("Anthony was here.");
 		System.out.println("Josh was too.");
 
 	}
