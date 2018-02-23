@@ -6,7 +6,7 @@ public class card {
 	/* The value of a card (e.g. King, Ace, Two, Nine, etc.) */
 	private String value;
 	/* The suite of a card: Hearts, Spades, Diamonds, or Clubs */
-	private String suite;
+	private String suit;
 	
 	/*
 	 * Constructor, initializes the card with its value and suite.
@@ -17,7 +17,7 @@ public class card {
 	public card(String value, String suite) 
 	{
 		this.value = value;
-		this.suite = suite;
+		this.suit = suite;
 	}
 	
 	/*
@@ -31,8 +31,8 @@ public class card {
 	/*
 	 * Get method for suite, returns suite when called.
 	 */
-	public String getsuite()
+	public String getsuit()
 	{
-		return suite;
+		return suit;
 	}
 }
