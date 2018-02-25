@@ -2,7 +2,7 @@ package casinoGames;
 
 import java.util.ArrayList;
 
-/* Commenting this out for a bit as I don't have it on my computer */
+// Commenting this out for a bit as I don't have it on my computer.
 //import javax.smartcardio.Card;
 
 public class deck 
