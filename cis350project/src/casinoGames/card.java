@@ -2,28 +2,29 @@ package casinoGames;
 /*
  * Card Object used to represent the various cards in a playing deck.
  */
-public class card {
+public class card 
+{
 	/* The value of a card (e.g. King, Ace, Two, Nine, etc.) */
-	private String value;
-	/* The suite of a card: Hearts, Spades, Diamonds, or Clubs */
-	private String suit;
+	private CardValue value;
+	/* The suit of a card: Hearts, Spades, Diamonds, or Clubs */
+	private Suit suit;
 	
 	/*
 	 * Constructor, initializes the card with its value and suite.
 	 * 
 	 * @param value
-	 * @param suite
+	 * @param suit
 	 */
-	public card(String value, String suite) 
+	public card(CardValue value, Suit suit) 
 	{
 		this.value = value;
-		this.suit = suite;
+		this.suit = suit;
 	}
 	
 	/*
 	 * Get method for value, returns value when called.
 	 */
-	public String getValue()
+	public CardValue getValue()
 	{
 		return value;
 	}
@@ -31,7 +32,7 @@ public class card {
 	/*
 	 * Get method for suite, returns suite when called.
 	 */
-	public String getsuit()
+	public Suit getsuit()
 	{
 		return suit;
 	}
