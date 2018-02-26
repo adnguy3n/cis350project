@@ -13,11 +13,13 @@ public class casinoGUI extends JFrame{
 	private JPanel output = new JPanel();
 	private JTextArea playerArea = new JTextArea();
 	private JTextArea dealerArea = new JTextArea();
+	private CasinoGamesBlackJackModel game;
 	
 	/*
 	 * Construction of the JFrame
 	 */
 	public casinoGUI(){
+		game = new CasinoGamesBlackJackModel();
 		stage  = new JFrame();
 		stage.setSize(new Dimension(700,400));
 		stage.setTitle("BlackJack");
