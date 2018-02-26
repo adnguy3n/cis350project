@@ -1,39 +1,73 @@
 package casinoGames;
-/*
- * Card Object used to represent the various cards in a playing deck.
- */
-public class card 
-{
-	/* The value of a card (e.g. King, Ace, Two, Nine, etc.) */
-	private CardValue value;
-	/* The suit of a card: Hearts, Spades, Diamonds, or Clubs */
-	private Suit suit;
-	
-	/*
-	 * Constructor, initializes the card with its value and suite.
-	 * 
-	 * @param value
-	 * @param suit
-	 */
-	public card(CardValue value, Suit suit) 
-	{
-		this.value = value;
-		this.suit = suit;
-	}
-	
-	/*
-	 * Get method for value, returns value when called.
-	 */
-	public CardValue getValue()
-	{
-		return value;
-	}
-	
-	/*
-	 * Get method for suite, returns suite when called.
-	 */
-	public Suit getsuit()
-	{
-		return suit;
-	}
+
+
+import java.util.Comparator;
+
+public class Card implements Comparable<Card> {
+    public Suit suit;
+    public Rank rank;
+
+    /**
+     * Deterministic constructor takes a rank and a suit
+     * @param rank  a Rank such as ACE
+     * @param suit  a Suit such as CLUBS
+     */
+    public Card(Rank rank, Suit suit) {
+        this.rank = rank;
+        this.suit = suit;
+
+    }
+    /**
+     * Default constructor randomly generates a rank and a suit
+     */
+    public Card() {
+        rank = Rank.ACE;
+        suit = Suit.CLUBS;
+    }
+
+    public static Card fromString(String rank, String suit) {
+        return new Card(Rank.fromString(rank), Suit.fromString(suit));
+    }
+
+    public String toString() {
+        return rank.toString() + suit.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Card) {
+            Card othercard = (Card)other;
+            return this.rank == othercard.rank && this.suit == othercard.suit;
+        }
+        return false;
+    }
+
+    @Override
+    /**
+     * By default, sort by rank
+     */
+    public int compareTo(Card card2) {
+        Rank rank2 = card2.rank;
+
+        return this.rank.compareTo(rank2);
+    }
+
+    public static Comparator<Card> CardRankComparator = new Comparator<Card>() {
+        public int compare(Card card1, Card card2) {
+            Rank rank1 = card1.rank;
+            Rank rank2 = card2.rank;
+
+            return rank1.compareTo(rank2);
+        }
+    };
+
+    public static Comparator<Card> CardSuitComparator = new Comparator<Card>() {
+        public int compare(Card card1, Card card2) {
+            Suit suit1 = card1.suit;
+            Suit suit2 = card2.suit;
+
+            return suit1.compareTo(suit2);
+        }
+    };
+
 }

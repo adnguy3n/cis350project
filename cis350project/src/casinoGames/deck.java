@@ -5,19 +5,19 @@ import java.util.ArrayList;
 // Commenting this out for a bit as I don't have it on my computer.
 //import javax.smartcardio.Card;
 
-public class deck 
+public class Deck
 {
 	/* Array list used to hold the cards in the deck */
-    private ArrayList<card> playDeck = new ArrayList<card>();
+    private ArrayList<Card> playDeck = new ArrayList<Card>();
     
-    /* Array to hold the possible enum values for a card */
+    /* Array to hold the possible enum values for a Card */
     private CardValue values[] = {CardValue.ACE, CardValue.TWO, 
     		CardValue.THREE, CardValue.FOUR, CardValue.FIVE, 
     		CardValue.SIX, CardValue.SEVEN, CardValue.EIGHT, 
     		CardValue.NINE, CardValue.TEN, CardValue.JACK, 
     		CardValue.QUEEN, CardValue.KING};
     
-    /* Array to hold the posible enum suits for a card */
+    /* Array to hold the posible enum suits for a Card */
     private Suit suits[] = {Suit.CLUBS, Suit.DIAMONDS, 
     		Suit.HEARTS, Suit.SPADES};
     
@@ -26,14 +26,14 @@ public class deck
      */
     public deck() 
     {
-    	card card; 
+    	Card Card; 
     	
     	for (int i = 0; i < 4; i++)
     	{
     		for (int j = 0; j < 13; j++)
     		{
-    			card = new card(values[j], suits[i]);
-    			playDeck.add(card);
+    			Card = new Card(values[j], suits[i]);
+    			playDeck.add(Card);
     		}
     	}
     }
@@ -43,7 +43,7 @@ public class deck
      * 
      * @param otherDeck
      */
-    public deck(deck otherDeck) 
+    public Deck(Deck otherDeck)
     {
     	for (int i = 0; i < otherDeck.getSize(); i++)
     	{
@@ -54,7 +54,7 @@ public class deck
     /*
      * Generate an empty deck.
      */
-    public deck(int i) 
+    public Deck(int i)
     {
     	if (i != 0)
     	{
@@ -64,35 +64,35 @@ public class deck
     }
     
     /*
-     * Get Method for a specific card.
+     * Get Method for a specific Card.
      */
-    public card getCard(int i)
+    public Card getCard(int i)
     {
     	return playDeck.get(i);
     }
     
     /*
-     * Draw a card from the deck.
+     * Draw a Card from the deck.
      */
-    public card draw()
+    public Card draw()
     {
-    	card card = playDeck.get(0);
+    	Card Card = playDeck.get(0);
     	playDeck.remove(0);
-    	return card;
+    	return Card;
     }
     
     /*
-     * Adds a card to the deck.
+     * Adds a Card to the deck.
      * 
-     * @param card
+     * @param Card
      */
-    public void addCard(card card)
+    public void addCard(Card Card)
     {
-    	playDeck.add(card);
+    	playDeck.add(Card);
     }
     
     /*
-     * Remove a card from the deck.
+     * Remove a Card from the deck.
      * 
      * @param i
      */
