@@ -1,4 +1,6 @@
 package casinoGames;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class casinoGUI extends JFrame{
@@ -58,18 +60,26 @@ public class casinoGUI extends JFrame{
 	}
 	
 	public void enableGameButtons(){
-		hitButton.setEnabled(true);
-		standButton.setEnabled(true);
-		playButton.setEnabled(false);
+		hit.setEnabled(true);
+		stand.setEnabled(true);
+		play.setEnabled(false);
 	}
 	
 	public void enableStartButton(){
-		playButton.setEnabled(true);
-		hitButton.setEnabled(false);
-		standButton.setEnabled(false);
+		play.setEnabled(true);
+		hit.setEnabled(false);
+		stand.setEnabled(false);
 	}
 	
 	public void displayDealerCard(card card){
 		dealerArea.setText("Dealer reveals: "+card);
 	}
+	/*
+	 * testing the GUI
+	 */
+	
+	public static void main(String args[]){
+		casinoGUI gui = new casinoGUI();
+	}
+	
 }
