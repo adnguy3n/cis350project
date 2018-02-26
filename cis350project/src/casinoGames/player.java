@@ -1,19 +1,21 @@
 package casinoGames;
 
 import java.util.ArrayList;
-
+/**
+ * Object representing a player in a game.
+ */
 public class player {
-	private ArrayList<Card> hand = new ArrayList<Card>();
+	private ArrayList<Card> hand;
 	
-	/*
+	/**
 	 * Default Constructor, creates a player with an empty hand.
 	 */
 	public player()
 	{
-		
+		hand = new ArrayList<Card>();
 	}
 	
-	/*
+	/**
 	 * Add Card to hand.
 	 */
 	public void addToHand(Card Card)
@@ -21,7 +23,7 @@ public class player {
 		hand.add(Card);
 	}
 	
-	/*
+	/**
 	 * DisCard hand.
 	 */
 	public void clearHand()
@@ -29,7 +31,7 @@ public class player {
 		hand.clear();
 	}
 	
-	/*
+	/**
 	 * Get number of Cards in hand.
 	 */
 	public int getHandSize()
@@ -37,7 +39,7 @@ public class player {
 		return hand.size();
 	}
 	
-	/*
+	/**
 	 * Get specific Card in hand.
 	 */
 	public Card getCard(int i)
@@ -45,8 +47,8 @@ public class player {
 		return hand.get(i);
 	}
 	
-	/*
-	 * 
+	/**
+	 * get method for the value of 
 	 */
 	public int getHandValue()
 	{

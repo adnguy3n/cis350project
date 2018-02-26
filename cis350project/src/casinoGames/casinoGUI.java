@@ -23,13 +23,13 @@ public class casinoGUI extends JFrame{
 		stage  = new JFrame();
 		stage.setSize(new Dimension(700,400));
 		stage.setTitle("BlackJack");
-		stage.setLayout(new BorderLayout());
+		stage.getContentPane().setLayout(new BorderLayout());
 		//outputPanel.setLayout(new BorderLayout());
-		stage.add(buttonPanel, BorderLayout.SOUTH);
+		stage.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		buttonPanel.add(play, null);
 		buttonPanel.add(hit, null);
 		buttonPanel.add(stand, null);
-		stage.add(output, BorderLayout.CENTER);
+		stage.getContentPane().add(output, BorderLayout.NORTH);
 		output.setLayout(new FlowLayout());
 		output.add(dealerArea, null);
 		output.add(playerArea, null);

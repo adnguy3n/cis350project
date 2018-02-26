@@ -18,7 +18,8 @@ public class CasinoGamesBlackJackModel {
 	/* Current Player Turn Flag: 1 for Player 1, 0 for Dealer */
 	private int turn;
 	
-	/*
+	
+	/**
 	 * 
 	 */
 	public CasinoGamesBlackJackModel()
@@ -27,7 +28,7 @@ public class CasinoGamesBlackJackModel {
 		generateDeck(1);
 	}
 	
-	/*
+	/**
 	 * Generates a shuffled deck to be played with.
 	 */
 	private void generateDeck(int decks)
@@ -45,16 +46,8 @@ public class CasinoGamesBlackJackModel {
 		}
 	}
 	
-	/*
-	 * 
-	 */
-	private void populatePlayerList()
-	{
-		playerList.add(dealer);
-		playerList.add(player1);
-	}
 	
-	/*
+	/**
 	 * Deal starting hand.
 	 */
 	private void deal()
@@ -65,22 +58,63 @@ public class CasinoGamesBlackJackModel {
 		dealer.addToHand(mainDeck.draw());
 	}
 	
-	/*
+	/**
 	 * 
 	 */
-	private void hit()
+	public void hit()
 	{
-		player1.addToHand(mainDeck.draw());
+		switch(turn)
+		{
+			case 0:
+				dealer.addToHand(mainDeck.draw());
+				break;
+			
+			case 1:
+				player1.addToHand(mainDeck.draw());
+				break;
+		}
 	}
 	
-	/*
+	/**
 	 * 
+	 */
+	public void stand()
+	{
+		changePlayer();
+	}
+	
+	/**
+	 * 
+	 */
+	private void changePlayer()
+	{
+		switch(turn)
+		{
+			case 0:
+				turn = 1;
+				break;
+			
+			case 1:
+				turn = 0;
+				break;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @return
 	 */
 	public int getHandValue(player player)
 	{
 		return player.getHandValue();
 	}
-	
+	/**
+	 * Checks if the player has a BlackJack.
+	 * 
+	 * @param player
+	 * @return true if the player has a black jack; false if the player does not have a black jack
+	 */
 	private boolean isBlackJack(player player)
 	{
 		boolean face = false;
@@ -128,7 +162,7 @@ public class CasinoGamesBlackJackModel {
 		return face;
 	}
 	
-	/*
+	/**
 	 * Returns a Player's Hand in text message form.
 	 */
 	private String printPlayerHand(player player)
@@ -145,7 +179,7 @@ public class CasinoGamesBlackJackModel {
 		return s;
 	}
 	
-	/*
+	/**
 	 * Plays out a single hand.
 	 */
 	public void test_game()
@@ -161,7 +195,7 @@ public class CasinoGamesBlackJackModel {
 			if (face == true)
 			{
 				System.out.println("BLACK JACK!");
-				test_PrintPlayer1Hand();
+				printPlayerHand(player1);
 				end = true;
 			}
 		}
@@ -171,7 +205,7 @@ public class CasinoGamesBlackJackModel {
 			int i = -1;
 			while(i < 0 || i > 1)
 			{
-				test_PrintPlayer1Hand();
+				printPlayerHand(player1);
 				System.out.println("Enter 1 to hit 0 to stand: ");
 				i = sc.nextInt();
 			}
@@ -194,39 +228,12 @@ public class CasinoGamesBlackJackModel {
 				end = true;
 			}
 			
-			test_PrintPlayer1Hand();
+			printPlayerHand(player1);
 		}
 		
 		player1.clearHand();
 		
 		sc.close();
-	}
-	
-	/*
-	 * Test Method, prints out player 1's hand.
-	 */
-	public void test_PrintPlayer1Hand()
-	{
-		System.out.println("Hand: ");
-		for (int i = 0; i < player1.getHandSize(); i++)
-		{
-			System.out.println(player1.getCard(i).getValue() + " of " + player1.getCard(i).getsuit());
-		}
-		
-		System.out.println("Value: " + player1.getHandValue());
-	}
-	
-	/*
-	 * Test Method, prints out all of the cards in the main deck.
-	 */
-	public void test_PrintOutDeck()
-	{
-		for (int i = 0; i < 52; i++)
-		{
-			System.out.println((i + 1) + " " 
-					+ mainDeck.getCard(i).getValue() 
-					+ " of " + mainDeck.getCard(i).getsuit());
-		}
 	}
 	
 }

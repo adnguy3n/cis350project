@@ -5,6 +5,9 @@ import java.util.ArrayList;
 // Commenting this out for a bit as I don't have it on my computer.
 //import javax.smartcardio.Card;
 
+/**
+ * Deck Object, representing a deck of play cards used for games.
+ */
 public class Deck
 {
 	/* Array list used to hold the cards in the deck */
@@ -21,7 +24,7 @@ public class Deck
     private Suit suits[] = {Suit.CLUBS, Suit.DIAMONDS, 
     		Suit.HEARTS, Suit.SPADES};
     
-    /*
+    /**
      * Default constructor to generate a standard deck.
      */
     public Deck() 
@@ -38,7 +41,7 @@ public class Deck
     	}
     }
     
-    /*
+    /**
      * Copy a deck.
      * 
      * @param otherDeck
@@ -51,7 +54,7 @@ public class Deck
     	}
     }
     
-    /*
+    /**
      * Generate an empty deck.
      */
     public Deck(int i)
@@ -63,15 +66,17 @@ public class Deck
     	}
     }
     
-    /*
+    /**
      * Get Method for a specific Card.
+     * 
+     * @param i
      */
     public Card getCard(int i)
     {
     	return playDeck.get(i);
     }
     
-    /*
+    /**
      * Draw a Card from the deck.
      */
     public Card draw()
@@ -81,7 +86,7 @@ public class Deck
     	return Card;
     }
     
-    /*
+    /**
      * Adds a Card to the deck.
      * 
      * @param Card
@@ -91,7 +96,7 @@ public class Deck
     	playDeck.add(Card);
     }
     
-    /*
+    /**
      * Remove a Card from the deck.
      * 
      * @param i
@@ -101,7 +106,7 @@ public class Deck
     	playDeck.remove(i);
     }
     
-    /*
+    /**
      * Return the number of cards in the deck.
      */
     public int getSize()

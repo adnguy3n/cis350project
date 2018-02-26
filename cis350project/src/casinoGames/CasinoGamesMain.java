@@ -15,6 +15,16 @@ public class CasinoGamesMain {
 				}
 			}
 		});
+		
+		// TODO Auto-generated method stub
+				CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel();
+				//game.test_PrintOutDeck();
+				//boolean test = true;
+				//while (test = true)
+				//{
+					game.test_game();
+				//}
 	}
+		
 
 }
