@@ -22,13 +22,54 @@ public class casinoGUI extends JFrame{
 		setTitle("BlackJack");
 		stage.setLayout(new BorderLayout());
 		outputPanel.setLayout(new BorderLayout());
-		stage.add(buttonPanel, BorderLayout.NORTH);
+		stage.add(buttonPanel, BorderLayout.SOUTH);
 		buttonPanel.add(play, null);
 		buttonPanel.add(hit, null);
 		buttonPanel.add(stand, null);
 		stage.add(output, BorderLayout.CENTER);
-		
+		output.setLayout(new FlowLayout());
+		output.add(dealerArea, null);
+		output.add(playerArea, null);
+		int width = getWidth();
+		int height = getHeight();
+		playerArea.setText(" ");
+		dealerArea.setText(" ");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
 	
+	public void playAction(ActionListener x){
+		play.addActionListener(x);
+	}
+	
+	public void hitAction(ActionListener x){
+		hit.addActionListener(x);
+	}
+	public void standAction(ActionListener x){
+		stand.addActionListener(x);
+	}
+	
+	public void displayPlayer(player one){
+		playerArea.setText("P1: "+one.getHandValue());
+	}
+	
+	public void displayDealer(player dealer){
+		dealerArea.setText("Dealer: "+dealer.getHandValue());
+	}
+	
+	public void enableGameButtons(){
+		hitButton.setEnabled(true);
+		standButton.setEnabled(true);
+		playButton.setEnabled(false);
+	}
+	
+	public void enableStartButton(){
+		playButton.setEnabled(true);
+		hitButton.setEnabled(false);
+		standButton.setEnabled(false);
+	}
+	
+	public void displayDealerCard(card card){
+		dealerArea.setText("Dealer reveals: "+card);
+	}
 }
