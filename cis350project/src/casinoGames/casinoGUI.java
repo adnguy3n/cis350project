@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class casinoGUI extends JFrame{
 
-	private Container stage;
+	private JFrame stage;
 	private JPanel buttonPanel = new JPanel();
 	private JButton play = new JButton("Play");
 	private JButton hit = new JButton("Hit	");
@@ -17,13 +17,12 @@ public class casinoGUI extends JFrame{
 	/*
 	 * Construction of the JFrame
 	 */
-	
 	public casinoGUI(){
-		stage = getContentPane();
-		setSize(new Dimension(700,400));
-		setTitle("BlackJack");
+		stage  = new JFrame();
+		stage.setSize(new Dimension(700,400));
+		stage.setTitle("BlackJack");
 		stage.setLayout(new BorderLayout());
-		outputPanel.setLayout(new BorderLayout());
+		//outputPanel.setLayout(new BorderLayout());
 		stage.add(buttonPanel, BorderLayout.SOUTH);
 		buttonPanel.add(play, null);
 		buttonPanel.add(hit, null);
@@ -36,50 +35,52 @@ public class casinoGUI extends JFrame{
 		int height = getHeight();
 		playerArea.setText(" ");
 		dealerArea.setText(" ");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		stage.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
 	
-	public void playAction(ActionListener x){
+	private void playAction(ActionListener x){
 		play.addActionListener(x);
 	}
 	
-	public void hitAction(ActionListener x){
+	private void hitAction(ActionListener x){
 		hit.addActionListener(x);
 	}
-	public void standAction(ActionListener x){
+	
+	private void standAction(ActionListener x){
 		stand.addActionListener(x);
 	}
 	
-	public void displayPlayer(player one){
+	private void displayPlayer(player one){
 		playerArea.setText("P1: "+one.getHandValue());
 	}
 	
-	public void displayDealer(player dealer){
+	private void displayDealer(player dealer){
 		dealerArea.setText("Dealer: "+dealer.getHandValue());
 	}
 	
-	public void enableGameButtons(){
+	private void enableGameButtons(){
 		hit.setEnabled(true);
 		stand.setEnabled(true);
 		play.setEnabled(false);
 	}
 	
-	public void enableStartButton(){
+	private void enableStartButton(){
 		play.setEnabled(true);
 		hit.setEnabled(false);
 		stand.setEnabled(false);
 	}
 	
-	public void displayDealerCard(card card){
+	private void displayDealerCard(Card card){
 		dealerArea.setText("Dealer reveals: "+card);
 	}
-	/*
-	 * testing the GUI
-	 */
 	
-	public static void main(String args[]){
-		casinoGUI gui = new casinoGUI();
+	/*
+	 * Method for returning the Jframe to the main class.
+	 */
+	public JFrame frame()
+	{
+		return stage;
 	}
 	
 }

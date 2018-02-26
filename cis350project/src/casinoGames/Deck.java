@@ -24,7 +24,7 @@ public class Deck
     /*
      * Default constructor to generate a standard deck.
      */
-    public deck() 
+    public Deck() 
     {
     	Card Card; 
     	

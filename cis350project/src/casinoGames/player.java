@@ -3,7 +3,7 @@ package casinoGames;
 import java.util.ArrayList;
 
 public class player {
-	private ArrayList<card> hand = new ArrayList<card>();
+	private ArrayList<Card> hand = new ArrayList<Card>();
 	
 	/*
 	 * Default Constructor, creates a player with an empty hand.
@@ -14,15 +14,15 @@ public class player {
 	}
 	
 	/*
-	 * Add card to hand.
+	 * Add Card to hand.
 	 */
-	public void addToHand(card card)
+	public void addToHand(Card Card)
 	{
-		hand.add(card);
+		hand.add(Card);
 	}
 	
 	/*
-	 * Discard hand.
+	 * DisCard hand.
 	 */
 	public void clearHand()
 	{
@@ -30,7 +30,7 @@ public class player {
 	}
 	
 	/*
-	 * Get number of cards in hand.
+	 * Get number of Cards in hand.
 	 */
 	public int getHandSize()
 	{
@@ -38,9 +38,9 @@ public class player {
 	}
 	
 	/*
-	 * Get specific card in hand.
+	 * Get specific Card in hand.
 	 */
-	public card getCard(int i)
+	public Card getCard(int i)
 	{
 		return hand.get(i);
 	}
@@ -50,72 +50,72 @@ public class player {
 	 */
 	public int getHandValue()
 	{
-		int cardValue = 0;
+		int CardValue = 0;
 		boolean hasAce = false;
 		for (int i = 0; i < hand.size(); i++)
 		{
 			switch(hand.get(i).getValue())
 			{
 				case ACE:
-					cardValue += 1;
+					CardValue += 1;
 					hasAce = true;
 					break;
 				
 				case TWO:
-					cardValue += 2;
+					CardValue += 2;
 					break;
 					
 				case THREE:
-					cardValue += 3;
+					CardValue += 3;
 					break;
 					
 				case FOUR:
-					cardValue += 4;
+					CardValue += 4;
 					break;
 					
 				case FIVE:
-					cardValue += 5;
+					CardValue += 5;
 					break;
 					
 				case SIX:
-					cardValue += 6;
+					CardValue += 6;
 					break;
 					
 				case SEVEN:
-					cardValue += 7;
+					CardValue += 7;
 					break;
 					
 				case EIGHT:
-					cardValue += 8;
+					CardValue += 8;
 					break;
 					
 				case NINE:
-					cardValue += 9;
+					CardValue += 9;
 					break;
 					
 				case TEN:
-					cardValue += 10;
+					CardValue += 10;
 					break;
 					
 				case JACK:
-					cardValue += 10;
+					CardValue += 10;
 					break;
 					
 				case QUEEN:
-					cardValue += 10;
+					CardValue += 10;
 					break;
 					
 				case KING:
-					cardValue += 10;
+					CardValue += 10;
 					break;
 			}
 		}
 		
-		if (hasAce == true && cardValue < 12)
+		if (hasAce == true && CardValue < 12)
 		{
-			cardValue += 10;
+			CardValue += 10;
 		}
 		
-		return cardValue;
+		return CardValue;
 	}
 }
