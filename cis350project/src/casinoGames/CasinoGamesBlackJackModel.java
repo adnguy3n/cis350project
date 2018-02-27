@@ -136,7 +136,7 @@ public class CasinoGamesBlackJackModel {
 	 * @param player
 	 * @return true if the player has a black jack; false if the player does not have a black jack
 	 */
-	public boolean isBlackJack(player player)
+	private boolean isBlackJack(player player)
 	{
 		boolean face = false;
 		for (int i = 0; i < player.getHandSize(); i++)
@@ -210,6 +210,15 @@ public class CasinoGamesBlackJackModel {
 		{
 			return true;
 		}
+		else if (dealer.getHandValue() == player.getHandValue())
+		{
+			if (isBlackJack(dealer))
+			{
+				return true;
+			}
+			
+			return false;
+		}
 		
 		return false;
 	}
@@ -224,7 +233,14 @@ public class CasinoGamesBlackJackModel {
 	{
 		if (dealer.getHandValue() == player.getHandValue())
 		{
-			return true;
+			if (isBlackJack(dealer) && isBlackJack(player))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 		
 		return false;
