@@ -9,7 +9,7 @@ public class Card
 	/* The suit of a card: Hearts, Spades, Diamonds, or Clubs */
 	private Suit suit;
 	
-	/*
+	/**
 	 * Constructor, initializes the card with its value and suite.
 	 * 
 	 * @param value
@@ -21,7 +21,7 @@ public class Card
 		this.suit = suit;
 	}
 	
-	/*
+	/**
 	 * Get method for value, returns value when called.
 	 */
 	public CardValue getValue()
@@ -29,11 +29,20 @@ public class Card
 		return value;
 	}
 	
-	/*
+	/**
 	 * Get method for suite, returns suite when called.
 	 */
 	public Suit getsuit()
 	{
 		return suit;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getCardString()
+	{
+		return (value + " OF " + suit);
 	}
 }

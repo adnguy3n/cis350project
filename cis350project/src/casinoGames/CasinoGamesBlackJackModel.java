@@ -24,8 +24,18 @@ public class CasinoGamesBlackJackModel {
 	 */
 	public CasinoGamesBlackJackModel()
 	{
-		turn = 1;
 		generateDeck(1);
+		playerList.add(dealer);
+		playerList.add(player1);
+	}
+	
+	/**
+	 * 
+	 */
+	public void startGame()
+	{
+		turn = 1;
+		deal();
 	}
 	
 	/**
@@ -81,6 +91,15 @@ public class CasinoGamesBlackJackModel {
 	public void stand()
 	{
 		changePlayer();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTurnPlayer()
+	{
+		return turn;
 	}
 	
 	/**
@@ -160,6 +179,18 @@ public class CasinoGamesBlackJackModel {
 		}
 		
 		return face;
+	}
+	
+	/**
+	 * Get Method for a particular player so the GUI can access
+	 * things such as the player's hand.
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public player getPlayer(int i)
+	{
+		return playerList.get(i);
 	}
 	
 	/**

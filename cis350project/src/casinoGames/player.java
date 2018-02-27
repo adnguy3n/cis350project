@@ -32,6 +32,15 @@ public class player {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Card> getHand()
+	{
+		return hand;
+	}
+	
+	/**
 	 * Get number of Cards in hand.
 	 */
 	public int getHandSize()
