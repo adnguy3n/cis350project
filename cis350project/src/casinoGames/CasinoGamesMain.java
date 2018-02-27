@@ -8,7 +8,7 @@ public class CasinoGamesMain {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					casinoGUI window = new casinoGUI();
+					CasinoGUI window = new CasinoGUI();
 					window.frame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

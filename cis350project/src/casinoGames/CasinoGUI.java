@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class casinoGUI extends JFrame{
+public class CasinoGUI extends JFrame{
 
 	private JFrame stage;
 	private JPanel buttonPanel = new JPanel();
@@ -16,11 +16,15 @@ public class casinoGUI extends JFrame{
 	private final JList<String> playerHandList;
 	private DefaultListModel<String> playerHandModel;
 	private DefaultListModel<String> dealerHandModel;
+	private int playerWinCount;
+	private int dealerWinCount;
+	private final JLabel playerWinCountLbl = new JLabel("0");
+	private final JLabel dealerWinCountLbl = new JLabel("0");
 	
 	/**
 	 * Construction of the JFrame
 	 */
-	public casinoGUI()
+	public CasinoGUI()
 	{
 		game = new CasinoGamesBlackJackModel();
 		stage  = new JFrame();
@@ -32,6 +36,12 @@ public class casinoGUI extends JFrame{
 		output.setBounds(0, 0, 684, 32);
 		stage.getContentPane().add(output);
 		output.setLayout(null);
+		playerWinCountLbl.setBounds(70, 11, 46, 14);
+		
+		output.add(playerWinCountLbl);
+		dealerWinCountLbl.setBounds(556, 11, 46, 14);
+		
+		output.add(dealerWinCountLbl);
 		
 		playerHandList = new JList<String>();
 		playerHandModel = new DefaultListModel<String>();
@@ -62,6 +72,7 @@ public class casinoGUI extends JFrame{
 				game.startGame();
 				enableGameButtons();
 				updateHandPlayer();
+				dealerHandModel.clear();
 				dealerHandModel.addElement(game.getPlayer(0).getHand().get(0).getCardString());
 			}
 		});
@@ -72,16 +83,24 @@ public class casinoGUI extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{
 				game.hit();
-				System.out.println(game.getTurnPlayer());
-				switch(game.getTurnPlayer())
+				if (game.isBust(game.getPlayer(game.getTurnPlayer())))
 				{
-					case 0:
-						updateHandDealer();
-						break;
-						
-					case 1:
-						updateHandPlayer();
-						break;
+					updateHandDealer();
+					updateHandPlayer();
+					endHand(true);
+				}
+				else
+				{
+					switch(game.getTurnPlayer())
+					{
+						case 0:
+							updateHandDealer();
+							break;
+							
+						case 1:
+							updateHandPlayer();
+							break;
+					}
 				}
 			}
 		});
@@ -91,15 +110,15 @@ public class casinoGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				game.stand();
 				switch(game.getTurnPlayer())
 				{
 					case 0:
-						System.out.println("Dealer Turn");
+						endHand(false);
 						break;
 						
 					case 1:
-						System.out.println("Player Turn");
+						game.stand();
+						updateHandDealer();
 						break;
 				}
 			}
@@ -109,6 +128,9 @@ public class casinoGUI extends JFrame{
 		
 	}
 	
+	/**
+	 * 
+	 */
 	private void updateHandPlayer()
 	{
 		playerHandModel.clear();
@@ -119,6 +141,9 @@ public class casinoGUI extends JFrame{
 		
 	}
 	
+	/**
+	 * 
+	 */
 	private void updateHandDealer()
 	{
 		dealerHandModel.clear();
@@ -128,19 +153,59 @@ public class casinoGUI extends JFrame{
 		}
 	}
 	
+	private void endHand(boolean bust)
+	{
+		if (bust == true)
+		{
+			switch(game.getTurnPlayer())
+			{
+				case 0:
+					playerWinCount++;
+					break;
+				
+				case 1:
+					dealerWinCount++;
+					break;
+			}
+		}
+		else if (game.isDraw(game.getPlayer(1), game.getPlayer(0)))
+		{
+			System.out.println("draw");
+		}
+		else if (game.dealerWon(game.getPlayer(1), game.getPlayer(0)))
+		{
+			dealerWinCount++;
+		}
+		else
+		{
+			playerWinCount++;
+		}
+		
+		enableStartButton();
+		game.gameReset();
+		playerWinCountLbl.setText(""+playerWinCount);
+		dealerWinCountLbl.setText(""+dealerWinCount);
+	}
+	
+	/**
+	 * 
+	 */
 	private void enableGameButtons(){
 		hit.setEnabled(true);
 		stand.setEnabled(true);
 		play.setEnabled(false);
 	}
 	
+	/**
+	 * 
+	 */
 	private void enableStartButton(){
 		play.setEnabled(true);
 		hit.setEnabled(false);
 		stand.setEnabled(false);
 	}
 	
-	/*
+	/**
 	 * Method for returning the Jframe to the main class.
 	 */
 	public JFrame frame()

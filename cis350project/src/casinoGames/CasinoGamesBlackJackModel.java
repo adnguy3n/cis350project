@@ -46,6 +46,7 @@ public class CasinoGamesBlackJackModel {
 		int numOfCards = 52 * decks;
 		Deck standardDeck = new Deck(this.standardDeck);
 		int randCard;
+		mainDeck.clearDeck();
 		
 		for (int i = 0; i < numOfCards; i++)
 		{
@@ -128,13 +129,14 @@ public class CasinoGamesBlackJackModel {
 	{
 		return player.getHandValue();
 	}
+	
 	/**
-	 * Checks if the player has a BlackJack.
+	 * Checks if the player has a BlackJack and returns a boolean.
 	 * 
 	 * @param player
 	 * @return true if the player has a black jack; false if the player does not have a black jack
 	 */
-	private boolean isBlackJack(player player)
+	public boolean isBlackJack(player player)
 	{
 		boolean face = false;
 		for (int i = 0; i < player.getHandSize(); i++)
@@ -182,6 +184,53 @@ public class CasinoGamesBlackJackModel {
 	}
 	
 	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public boolean isBust(player player)
+	{
+		if (player.getHandValue() > 21)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @param dealer
+	 * @return
+	 */
+	public boolean dealerWon(player player, player dealer)
+	{
+		if (dealer.getHandValue() > player.getHandValue())
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @param dealer
+	 * @return
+	 */
+	public boolean isDraw(player player, player dealer)
+	{
+		if (dealer.getHandValue() == player.getHandValue())
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Get Method for a particular player so the GUI can access
 	 * things such as the player's hand.
 	 * 
@@ -193,78 +242,10 @@ public class CasinoGamesBlackJackModel {
 		return playerList.get(i);
 	}
 	
-	/**
-	 * Returns a Player's Hand in text message form.
-	 */
-	private String printPlayerHand(player player)
+	public void gameReset()
 	{
-		String s = "";
-		System.out.println("Hand: ");
-		for (int i = 0; i < player.getHandSize(); i++)
-		{
-			s += player.getCard(i).getValue() + " of " + player.getCard(i).getsuit()+"\n";
-		}
-		
-		s += "Value: " + player1.getHandValue();
-		
-		return s;
-	}
-	
-	/**
-	 * Plays out a single hand.
-	 */
-	public void test_game()
-	{
-		boolean end = false;
-		Scanner sc = new Scanner(System.in);
-		deal();
-		
-		if (player1.getHandValue() == 21)
-		{
-			boolean face = isBlackJack(player1);
-			
-			if (face == true)
-			{
-				System.out.println("BLACK JACK!");
-				printPlayerHand(player1);
-				end = true;
-			}
-		}
-	
-		while(end != true)
-		{
-			int i = -1;
-			while(i < 0 || i > 1)
-			{
-				printPlayerHand(player1);
-				System.out.println("Enter 1 to hit 0 to stand: ");
-				i = sc.nextInt();
-			}
-			
-			if (i == 1)
-			{
-				System.out.println("Hit!");
-				hit();
-				
-				if (player1.getHandValue() > 21)
-				{
-					System.out.println("Bust!");
-					end = true;
-				}
-			}
-			
-			if (i == 0)
-			{
-				System.out.println("This must be the work of an enemy stand!");
-				end = true;
-			}
-			
-			printPlayerHand(player1);
-		}
-		
 		player1.clearHand();
-		
-		sc.close();
+		dealer.clearHand();
 	}
 	
 }

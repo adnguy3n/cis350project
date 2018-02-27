@@ -107,6 +107,14 @@ public class Deck
     }
     
     /**
+     * Empty the deck.
+     */
+    public void clearDeck()
+    {
+    	playDeck.clear();
+    }
+    
+    /**
      * Return the number of cards in the deck.
      */
     public int getSize()
