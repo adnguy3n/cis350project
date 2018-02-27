@@ -136,7 +136,7 @@ public class CasinoGamesBlackJackModel {
 	 * @param player
 	 * @return true if the player has a black jack; false if the player does not have a black jack
 	 */
-	private boolean isBlackJack(player player)
+	public boolean isBlackJack(player player)
 	{
 		boolean face = false;
 		for (int i = 0; i < player.getHandSize(); i++)
