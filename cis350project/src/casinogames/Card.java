@@ -1,4 +1,4 @@
-package casinoGames;
+package casinogames;
 /*
  * Card Object used to represent the various cards in a playing deck.
  */

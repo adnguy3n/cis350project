@@ -1,4 +1,4 @@
-package casinoGames;
+package casinogames;
 /**
  * enum containing the possible values (ace through king) for a card.
  */

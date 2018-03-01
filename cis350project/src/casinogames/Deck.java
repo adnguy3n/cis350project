@@ -1,4 +1,4 @@
-package casinoGames;
+package casinogames;
 
 import java.util.ArrayList;
 

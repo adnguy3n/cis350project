@@ -1,4 +1,4 @@
-package casinoGames;
+package casinogames;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

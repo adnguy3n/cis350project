@@ -1,4 +1,4 @@
-package casinoGames;
+package casinogames;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
