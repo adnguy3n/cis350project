@@ -5,28 +5,30 @@ import javax.swing.*;
 
 public class CasinoGUI extends JFrame{
 
-	private JFrame stage;
-	private JPanel buttonPanel = new JPanel();
-	private JButton play = new JButton("Play");
-	private JButton hit = new JButton("Hit	");
-	private JButton stand = new JButton("Stand");
-	private JPanel output = new JPanel();
+	private final JFrame stage;
+	private final JPanel buttonPanel = new JPanel();
+	private final JButton play = new JButton("Play");
+	private final JButton hit = new JButton("Hit	");
+	private final JButton stand = new JButton("Stand");
+	private final JPanel output = new JPanel();
 	private CasinoGamesBlackJackModel game;
-	private final JList<String> dealerHandList;
-	private final JList<String> playerHandList;
+	private JList<String> dealerHandList;
+	private JList<String> playerHandList;
 	private DefaultListModel<String> playerHandModel;
 	private DefaultListModel<String> dealerHandModel;
 	private int playerWinCount;
 	private int dealerWinCount;
-	private final JLabel playerWinCountLbl = new JLabel("0");
-	private final JLabel dealerWinCountLbl = new JLabel("0");
+	private final JLabel playerWinCountLbl = new JLabel("Player Wins: 0");
+	private final JLabel dealerWinCountLbl = new JLabel("Dealer Wins: 0");
+	private final JLabel playerValueLbl = new JLabel("0");;
+	private final JLabel dealerValueLbl = new JLabel("0");;
 	
 	/**
 	 * Construction of the JFrame
 	 */
 	public CasinoGUI()
 	{
-		game = new CasinoGamesBlackJackModel();
+		game = new CasinoGamesBlackJackModel(1);
 		stage  = new JFrame();
 		stage.setSize(new Dimension(700,400));
 		stage.setTitle("BlackJack");
@@ -36,10 +38,12 @@ public class CasinoGUI extends JFrame{
 		output.setBounds(0, 0, 684, 32);
 		stage.getContentPane().add(output);
 		output.setLayout(null);
-		playerWinCountLbl.setBounds(70, 11, 46, 14);
+		playerWinCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		playerWinCountLbl.setBounds(24, 11, 162, 14);
 		
 		output.add(playerWinCountLbl);
-		dealerWinCountLbl.setBounds(556, 11, 46, 14);
+		dealerWinCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		dealerWinCountLbl.setBounds(497, 11, 162, 14);
 		
 		output.add(dealerWinCountLbl);
 		
@@ -58,6 +62,14 @@ public class CasinoGUI extends JFrame{
 		buttonPanel.add(play);
 		buttonPanel.add(hit);
 		buttonPanel.add(stand);
+		
+		playerValueLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		playerValueLbl.setBounds(23, 301, 163, 14);
+		stage.getContentPane().add(playerValueLbl);
+		
+		dealerValueLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		dealerValueLbl.setBounds(498, 303, 156, 14);
+		stage.getContentPane().add(dealerValueLbl);
 		enableStartButton();
 		
 		play.addActionListener(new ActionListener()
@@ -74,6 +86,7 @@ public class CasinoGUI extends JFrame{
 				updateHandPlayer();
 				dealerHandModel.clear();
 				dealerHandModel.addElement(game.getPlayer(0).getHand().get(0).getCardString());
+				dealerValueLbl.setText("?");
 			}
 		});
 		
@@ -137,6 +150,11 @@ public class CasinoGUI extends JFrame{
 		for (int i= 0; i < game.getPlayer(1).getHand().size(); i++)
 		{
 			playerHandModel.addElement(game.getPlayer(1).getHand().get(i).getCardString());
+			playerValueLbl.setText(""+game.getHandValue(game.getPlayer(1)));
+			if (game.isBlackJack(game.getPlayer(1)))
+			{
+				playerValueLbl.setText("BLACKJACK");
+			}
 		}
 		
 	}
@@ -150,6 +168,11 @@ public class CasinoGUI extends JFrame{
 		for (int i= 0; i < game.getPlayer(0).getHand().size(); i++)
 		{
 			dealerHandModel.addElement(game.getPlayer(0).getHand().get(i).getCardString());
+			dealerValueLbl.setText(""+game.getHandValue(game.getPlayer(0)));
+			if (game.isBlackJack(game.getPlayer(0)))
+			{
+				dealerValueLbl.setText("BLACKJACK");
+			}
 		}
 	}
 	
@@ -183,8 +206,8 @@ public class CasinoGUI extends JFrame{
 		
 		enableStartButton();
 		game.gameReset();
-		playerWinCountLbl.setText(""+playerWinCount);
-		dealerWinCountLbl.setText(""+dealerWinCount);
+		playerWinCountLbl.setText("Player Wins: "+playerWinCount);
+		dealerWinCountLbl.setText("Dealer Wins: "+dealerWinCount);
 	}
 	
 	/**

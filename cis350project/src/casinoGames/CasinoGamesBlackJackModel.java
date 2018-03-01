@@ -13,18 +13,23 @@ public class CasinoGamesBlackJackModel {
 	private ArrayList<player> playerList = new ArrayList<player>();
 	/* Standard Non-Shuffled Play Deck. */
 	private Deck standardDeck = new Deck();
+	/* Number of Standard Decks that comprises the deck in use */
+	private int numOfDeck;
 	/* Deck being used. */
 	private Deck mainDeck = new Deck(0);
 	/* Current Player Turn Flag: 1 for Player 1, 0 for Dealer */
 	private int turn;
+	/* Hands Dealt */
+	private int hands = 0;
 	
 	
 	/**
 	 * 
 	 */
-	public CasinoGamesBlackJackModel()
+	public CasinoGamesBlackJackModel(int n)
 	{
-		generateDeck(1);
+		numOfDeck = n;
+		generateDeck(numOfDeck);
 		playerList.add(dealer);
 		playerList.add(player1);
 	}
@@ -54,6 +59,10 @@ public class CasinoGamesBlackJackModel {
 					nextInt(0, standardDeck.getSize());
 			mainDeck.addCard(standardDeck.getCard(randCard));
 			standardDeck.removeCard(randCard);
+			if (standardDeck.getSize() == 0)
+			{
+				standardDeck = new Deck(this.standardDeck);
+			}
 		}
 	}
 	
@@ -63,10 +72,17 @@ public class CasinoGamesBlackJackModel {
 	 */
 	private void deal()
 	{
+		if (hands == 5)
+		{
+			System.out.println("Shuffling Deck.");
+			generateDeck(numOfDeck);
+			hands = 0;
+		}
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		dealer.addToHand(mainDeck.draw());
 		dealer.addToHand(mainDeck.draw());
+		hands++;
 	}
 	
 	/**
@@ -139,44 +155,47 @@ public class CasinoGamesBlackJackModel {
 	public boolean isBlackJack(player player)
 	{
 		boolean face = false;
-		for (int i = 0; i < player.getHandSize(); i++)
+		if (player.getHandSize() == 2 && player.getHandValue() == 21)
 		{
-			switch(player.getCard(i).getValue())
+			for (int i = 0; i < player.getHandSize(); i++)
 			{
-				case JACK:
-					face = true;
-					break;
-					
-				case QUEEN:
-					face = true;
-					break;
-					
-				case KING:
-					face = true;
-					break;
-					
-				case ACE:
-					break;
-				case EIGHT:
-					break;
-				case FIVE:
-					break;
-				case FOUR:
-					break;
-				case NINE:
-					break;
-				case SEVEN:
-					break;
-				case SIX:
-					break;
-				case TEN:
-					break;
-				case THREE:
-					break;
-				case TWO:
-					break;
-				default:
-					break;
+				switch(player.getCard(i).getValue())
+				{
+					case JACK:
+						face = true;
+						break;
+						
+					case QUEEN:
+						face = true;
+						break;
+						
+					case KING:
+						face = true;
+						break;
+						
+					case ACE:
+						break;
+					case EIGHT:
+						break;
+					case FIVE:
+						break;
+					case FOUR:
+						break;
+					case NINE:
+						break;
+					case SEVEN:
+						break;
+					case SIX:
+						break;
+					case TEN:
+						break;
+					case THREE:
+						break;
+					case TWO:
+						break;
+					default:
+						break;
+				}
 			}
 		}
 		
