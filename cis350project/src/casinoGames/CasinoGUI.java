@@ -5,6 +5,10 @@ import javax.swing.*;
 
 public class CasinoGUI extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JFrame stage;
 	private final JPanel buttonPanel = new JPanel();
 	private final JButton play = new JButton("Play");

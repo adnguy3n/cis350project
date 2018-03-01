@@ -2,7 +2,6 @@ package casinoGames;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class CasinoGamesBlackJackModel {
 	/* Dealer Object*/
@@ -231,7 +230,7 @@ public class CasinoGamesBlackJackModel {
 		}
 		else if (dealer.getHandValue() == player.getHandValue())
 		{
-			if (isBlackJack(dealer))
+			if (isBlackJack(dealer) && !isDraw(player, dealer))
 			{
 				return true;
 			}
@@ -252,7 +251,8 @@ public class CasinoGamesBlackJackModel {
 	{
 		if (dealer.getHandValue() == player.getHandValue())
 		{
-			if (isBlackJack(dealer) && isBlackJack(player))
+			if ((isBlackJack(dealer) && !isBlackJack(player)) 
+					|| (!isBlackJack(dealer) && isBlackJack(player)))
 			{
 				return false;
 			}
