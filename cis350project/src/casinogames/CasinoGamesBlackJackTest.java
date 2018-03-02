@@ -162,6 +162,32 @@ public class CasinoGamesBlackJackTest {
 	}
 	
 	@Test
+	public void testCardValueAce03() {
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
+		Card card2 = new Card(CardValue.SIX, Suit.CLUBS);
+		Card card3 = new Card(CardValue.QUEEN, Suit.CLUBS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		player.addToHand(card3);
+		assertEquals(17, game.getHandValue(player));
+	}
+	
+	@Test
+	public void testCardValueAce04() {
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
+		Card card2 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card3 = new Card(CardValue.FOUR, Suit.CLUBS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		player.addToHand(card3);
+		assertEquals(13, game.getHandValue(player));
+	}
+	
+	@Test
 	public void testPlayerVsDealer01() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
@@ -224,6 +250,8 @@ public class CasinoGamesBlackJackTest {
 		dealer.addToHand(card4);
 		assertEquals(true, game.isDraw(player, dealer));
 	}
+	
+	@Test
 	public void testPlayerVsDealer05(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
@@ -244,6 +272,7 @@ public class CasinoGamesBlackJackTest {
 		assertEquals(true, game.dealerWon(player, dealer));
 	}
 	
+	@Test
 	public void TestPlayerVsDealer06(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
@@ -252,6 +281,82 @@ public class CasinoGamesBlackJackTest {
 		Card card2 = new Card(CardValue.KING, Suit.SPADES);
 		Card card3 = new Card(CardValue.ACE, Suit.CLUBS);
 		Card card4 = new Card(CardValue.ACE, Suit.DIAMONDS);
+		Card card5 = new Card(CardValue.JACK, Suit.HEARTS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		dealer.addToHand(card3);
+		dealer.addToHand(card4);
+		dealer.addToHand(card5);
+		
+		assertEquals(false, game.dealerWon(player, dealer));
+
+	}
+	
+	@Test
+	public void TestPlayerVsDealer07(){
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
+		Card card1 = new Card(CardValue.TEN, Suit.HEARTS);
+		Card card2 = new Card(CardValue.JACK, Suit.SPADES);
+		Card card3 = new Card(CardValue.QUEEN, Suit.DIAMONDS);
+		Card card4 = new Card(CardValue.SEVEN, Suit.DIAMONDS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		dealer.addToHand(card3);
+		dealer.addToHand(card4);
+		
+		assertEquals(false, game.dealerWon(player, dealer));
+
+	}
+	
+	@Test
+	public void TestPlayerVsDealer08(){
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
+		Card card1 = new Card(CardValue.SEVEN, Suit.HEARTS);
+		Card card2 = new Card(CardValue.ACE, Suit.SPADES);
+		Card card3 = new Card(CardValue.JACK, Suit.CLUBS);
+		Card card4 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		dealer.addToHand(card3);
+		dealer.addToHand(card4);
+		
+		assertEquals(true, game.dealerWon(player, dealer));
+
+	}
+	
+	@Test
+	public void TestPlayerVsDealer09(){
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
+		Card card1 = new Card(CardValue.SEVEN, Suit.HEARTS);
+		Card card2 = new Card(CardValue.ACE, Suit.DIAMONDS);
+		Card card3 = new Card(CardValue.THREE, Suit.CLUBS);
+		Card card4 = new Card(CardValue.FOUR, Suit.DIAMONDS);
+		Card card5 = new Card(CardValue.ACE, Suit.HEARTS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		dealer.addToHand(card3);
+		dealer.addToHand(card4);
+		dealer.addToHand(card5);
+		
+		assertEquals(false, game.isDraw(player, dealer));
+
+	}
+	
+	@Test
+	public void TestPlayerVsDealer10(){
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
+		Card card1 = new Card(CardValue.NINE, Suit.CLUBS);
+		Card card2 = new Card(CardValue.ACE, Suit.SPADES);
+		Card card3 = new Card(CardValue.FIVE, Suit.CLUBS);
+		Card card4 = new Card(CardValue.JACK, Suit.DIAMONDS);
 		Card card5 = new Card(CardValue.JACK, Suit.HEARTS);
 		player.addToHand(card1);
 		player.addToHand(card2);
