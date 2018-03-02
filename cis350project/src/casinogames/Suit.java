@@ -1,7 +1,7 @@
 package casinogames;
 
 /**
- * enum containing the possible suits for a card.
+ * Enum containing the possible values (ace through king) for a card.
  */
 public enum Suit {
 	/**

@@ -2,9 +2,18 @@ package casinogames;
 
 import java.awt.EventQueue;
 
-public class CasinoGamesMain {
+/**
+ * Main Class has the main method.
+ *
+ */
+public final class CasinoGamesMain {
 
-	public static void main(String[] args) {
+	/**
+	 * Main Method.
+	 * 
+	 * @param args Arguments for main method. Not used.
+	 */
+	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -15,16 +24,14 @@ public class CasinoGamesMain {
 				}
 			}
 		});
-		
-		// TODO Auto-generated method stub
-				//CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel();
-				//game.test_PrintOutDeck();
-				//boolean test = true;
-				//while (test = true)
-				//{
-					//game.test_game();
-				//}
 	}
 		
+	/**
+	 * Private Constructor to prevent initialization. 
+	 * Should never be called.
+	 */
+	private CasinoGamesMain() {
+        
+    }
 
 }

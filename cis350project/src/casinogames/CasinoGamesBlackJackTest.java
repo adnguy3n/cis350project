@@ -11,7 +11,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testIsBlackJack01() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card ace = new Card(CardValue.ACE, Suit.SPADES); 
 		Card face = new Card(CardValue.KING, Suit.SPADES);
 		player.addToHand(ace);
@@ -22,7 +22,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testIsBlackJack02() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card ace = new Card(CardValue.ACE, Suit.SPADES); 
 		Card face = new Card(CardValue.QUEEN, Suit.SPADES);
 		player.addToHand(ace);
@@ -33,7 +33,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testIsBlackJack03() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card ace = new Card(CardValue.ACE, Suit.SPADES); 
 		Card face = new Card(CardValue.JACK, Suit.SPADES);
 		player.addToHand(ace);
@@ -44,7 +44,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testIsBlackJack04() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card ace = new Card(CardValue.ACE, Suit.SPADES); 
 		Card face = new Card(CardValue.TEN, Suit.SPADES);
 		player.addToHand(ace);
@@ -56,7 +56,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue01() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card ace = new Card(CardValue.ACE, Suit.SPADES); 
 		Card nine = new Card(CardValue.NINE, Suit.SPADES);
 		player.addToHand(ace);
@@ -67,7 +67,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue02() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.TWO, Suit.SPADES); 
 		Card card2 = new Card(CardValue.TWO, Suit.CLUBS);
 		player.addToHand(card1);
@@ -78,7 +78,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue03() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.SEVEN, Suit.SPADES); 
 		Card card2 = new Card(CardValue.EIGHT, Suit.CLUBS);
 		player.addToHand(card1);
@@ -89,7 +89,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue04() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.SIX, Suit.SPADES); 
 		Card card2 = new Card(CardValue.KING, Suit.CLUBS);
 		player.addToHand(card1);
@@ -100,7 +100,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue05() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.QUEEN, Suit.SPADES); 
 		Card card2 = new Card(CardValue.KING, Suit.CLUBS);
 		player.addToHand(card1);
@@ -111,7 +111,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue06() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.SEVEN, Suit.SPADES); 
 		Card card2 = new Card(CardValue.SEVEN, Suit.CLUBS);
 		Card card3 = new Card(CardValue.SEVEN, Suit.HEARTS);
@@ -124,7 +124,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValue07() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.FIVE, Suit.SPADES); 
 		Card card2 = new Card(CardValue.FIVE, Suit.CLUBS);
 		Card card3 = new Card(CardValue.FIVE, Suit.HEARTS);
@@ -139,7 +139,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValueAce01() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card ace = new Card(CardValue.ACE, Suit.SPADES); 
 		Card nine = new Card(CardValue.NINE, Suit.SPADES);
 		Card two = new Card(CardValue.TWO, Suit.HEARTS);
@@ -153,7 +153,7 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testCardValueAce02() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
+		Player player = game.getPlayer(1);
 		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
 		Card card2 = new Card(CardValue.ACE, Suit.CLUBS);
 		player.addToHand(card1);
@@ -164,8 +164,8 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testPlayerVsDealer01() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
-		player dealer = game.getPlayer(0);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
 		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
 		Card card2 = new Card(CardValue.KING, Suit.CLUBS);
 		Card card3 = new Card(CardValue.ACE, Suit.HEARTS);
@@ -180,8 +180,8 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testPlayerVsDealer02() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
-		player dealer = game.getPlayer(0);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
 		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
 		Card card2 = new Card(CardValue.TEN, Suit.CLUBS);
 		Card card3 = new Card(CardValue.ACE, Suit.HEARTS);
@@ -196,8 +196,8 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testPlayerVsDealer03() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
-		player dealer = game.getPlayer(0);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
 		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
 		Card card2 = new Card(CardValue.KING, Suit.CLUBS);
 		Card card3 = new Card(CardValue.ACE, Suit.HEARTS);
@@ -212,8 +212,8 @@ public class CasinoGamesBlackJackTest {
 	@Test
 	public void testPlayerVsDealer04() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
-		player player = game.getPlayer(1);
-		player dealer = game.getPlayer(0);
+		Player player = game.getPlayer(1);
+		Player dealer = game.getPlayer(0);
 		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
 		Card card2 = new Card(CardValue.KING, Suit.CLUBS);
 		Card card3 = new Card(CardValue.ACE, Suit.HEARTS);
