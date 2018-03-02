@@ -137,6 +137,21 @@ public class CasinoGamesBlackJackTest {
 	}
 	
 	@Test
+	public void testCardValue08() {
+		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
+		Player player = game.getPlayer(1);
+		Card card1 = new Card(CardValue.SIX, Suit.SPADES); 
+		Card card2 = new Card(CardValue.FIVE, Suit.CLUBS);
+		Card card3 = new Card(CardValue.FIVE, Suit.HEARTS);
+		Card card4 = new Card(CardValue.FIVE, Suit.DIAMONDS);
+		player.addToHand(card1);
+		player.addToHand(card2);
+		player.addToHand(card3);
+		player.addToHand(card4);
+		assertEquals(21, game.getHandValue(player));
+	}
+	
+	@Test
 	public void testCardValueAce01() {
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
