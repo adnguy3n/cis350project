@@ -176,24 +176,7 @@ public class CasinoGamesBlackJackModel {
 						
 					case ACE:
 						break;
-					case EIGHT:
-						break;
-					case FIVE:
-						break;
-					case FOUR:
-						break;
-					case NINE:
-						break;
-					case SEVEN:
-						break;
-					case SIX:
-						break;
-					case TEN:
-						break;
-					case THREE:
-						break;
-					case TWO:
-						break;
+						
 					default:
 						break;
 				}
@@ -226,7 +209,11 @@ public class CasinoGamesBlackJackModel {
 	 * @return True if the Dealer Won, False otherwise.
 	 */
 	public boolean dealerWon(final Player player, final Player dealer) {
-		if (dealer.getHandValue() > player.getHandValue()) {
+		if (isBust(player)) {
+			return true;
+		}
+		if (dealer.getHandValue() > player.getHandValue() 
+				&& !isBust(dealer)) {
 			return true;
 		} else if (dealer.getHandValue() == player.getHandValue()) {
 			if (isBlackJack(dealer) && !isDraw(player, dealer)) {

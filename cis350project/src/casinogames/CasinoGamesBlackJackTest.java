@@ -288,7 +288,7 @@ public class CasinoGamesBlackJackTest {
 	}
 	
 	@Test
-	public void TestPlayerVsDealer06(){
+	public void testPlayerVsDealer06(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
 		Player dealer = game.getPlayer(0);
@@ -308,7 +308,7 @@ public class CasinoGamesBlackJackTest {
 	}
 	
 	@Test
-	public void TestPlayerVsDealer07(){
+	public void testPlayerVsDealer07(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
 		Player dealer = game.getPlayer(0);
@@ -326,7 +326,7 @@ public class CasinoGamesBlackJackTest {
 	}
 	
 	@Test
-	public void TestPlayerVsDealer08(){
+	public void testPlayerVsDealer08(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
 		Player dealer = game.getPlayer(0);
@@ -339,12 +339,12 @@ public class CasinoGamesBlackJackTest {
 		dealer.addToHand(card3);
 		dealer.addToHand(card4);
 		
-		assertEquals(true, game.dealerWon(player, dealer));
+		assertEquals(false, game.dealerWon(player, dealer));
 
 	}
 	
 	@Test
-	public void TestPlayerVsDealer09(){
+	public void testPlayerVsDealer09(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
 		Player dealer = game.getPlayer(0);
@@ -359,12 +359,12 @@ public class CasinoGamesBlackJackTest {
 		dealer.addToHand(card4);
 		dealer.addToHand(card5);
 		
-		assertEquals(false, game.isDraw(player, dealer));
+		assertEquals(true, game.isDraw(player, dealer));
 
 	}
 	
 	@Test
-	public void TestPlayerVsDealer10(){
+	public void testPlayerVsDealer10(){
 		CasinoGamesBlackJackModel game = new CasinoGamesBlackJackModel(1);
 		Player player = game.getPlayer(1);
 		Player dealer = game.getPlayer(0);
