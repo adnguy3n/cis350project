@@ -21,7 +21,7 @@ public class CasinoGamesPokerModel {
 	/*Array of winning hand types*/
 	private static final String[] winningHands = { "Royal Pair" , "Two Pairs" , "Three of a Kind" , "Straight" , "Flush" , "Full House" , "Four of a Kind" , "Straight Flush" , "Royal Flush" };
 	
-}
+
 	
 	
 	/*Default constructor of CasinoGamesPokerModel*/
@@ -115,4 +115,5 @@ public class CasinoGamesPokerModel {
 				
 		}
 	}
+	
 }
