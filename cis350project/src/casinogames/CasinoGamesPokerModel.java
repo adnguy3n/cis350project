@@ -114,6 +114,7 @@ public class CasinoGamesPokerModel {
 				break;
 				
 		}
+		return royalPair;
 	}
 	
 }
