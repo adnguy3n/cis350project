@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class Player {
 	/** Array List representing the player's hand.*/
 	private ArrayList<Card> hand;
+	/** integer representing the player's cash. */
+	private static final int balance = 5000;
 	
 	/**
 	 * Default Constructor, creates a player with an empty hand.

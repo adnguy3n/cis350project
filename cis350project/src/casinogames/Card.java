@@ -7,6 +7,8 @@ public class Card {
 	private CardValue value;
 	/** The suit of a card: Hearts, Spades, Diamonds, or Clubs. */
 	private Suit suit;
+	/** Boolean for whether the player holds this card or not. */ 
+	private boolean hold = false;
 	
 	/**
 	 * Constructor, initializes the card with its value and suite.
@@ -36,6 +38,12 @@ public class Card {
 	 */
 	public Suit getsuit() {
 		return suit;
+	}
+	
+	/* Get method for hold status, returns boolean when called. */
+	
+	public boolean gethold() {
+		return hold;
 	}
 	
 	/**
