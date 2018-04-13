@@ -87,16 +87,16 @@ public class CasinoGamesPokerModel {
 	/*determines if they player's hand is a royal pair*/
 	
 	private boolean isRoyalPair(final Player player){
-		ArrayList<Card> temp = new ArrayList<Card>();
+		Player temp = new Player();
 		boolean royalPair = false;
 		for(Card c : player.getHand()){
 			for(Card d : player.getHand()){
 				if((d.getValue()==c.getValue())&&(d.getsuit()!=c.getsuit())){
-					temp.add(c);
+					temp.addToHand(c);
 				}
 			}
 		}
-		switch(player.getCard(0).getValue()){
+		switch((temp.getCard(0).getValue()){
 			case JACK:
 				royalPair = true;
 				break;
@@ -116,5 +116,19 @@ public class CasinoGamesPokerModel {
 		}
 		return royalPair;
 	}
+	
+	/*determines if a hand is a straight or not*/
+	
+	private boolean isStraight(final Player player){
+		
+		//Need method for value conversion to integer
+		/*for(int i = 1; i<5; i++){
+			if(player.getCard(i-1).getValue() != player.getCard(i).getValue()-1){
+				return false;
+			}
+		}*/
+		return true;
+	}
+	
 	
 }
