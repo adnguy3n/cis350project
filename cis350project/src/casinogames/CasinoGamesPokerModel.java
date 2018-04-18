@@ -132,9 +132,21 @@ public class CasinoGamesPokerModel {
 	/*determines if a hand is a straight or not*/
 	
 	public boolean isStraight(final Player player){
-		ArrayList<Integer> converted = toInt(player);
+		
+		ArrayList<Integer> sortedRank = toInt(player);
+		ArrayList<Suit> cardSuits = new ArrayList<Suit>();
+		
+		for(int i = 0;i<5;i++){
+			cardSuits.add(player.getCard(i).getsuit());
+		}
+		
+		HashSet<Suit> suitSet = new HashSet<>(cardSuits);
+		if(suitSet.size()>cardSuits.size()){
+			return false;
+		}
+		
 		for(int i = 1; i<5; i++){
-			if(converted.get(i-1) != converted.get(i)-1){
+			if(sortedRank.get(i-1) != sortedRank.get(i)-1){
 				return false;
 			}
 		}
@@ -151,13 +163,11 @@ public class CasinoGamesPokerModel {
 				pairs++;
 				i=i+2;
 			}
-			}
-		if(pairs>=2){
+		}
+		if(pairs>=2)
 			return true;
-		}
-		else{
+		else
 			return false;
-		}
 	}
 	
 	/*determines if the hand is a three or four of a kind*/
@@ -177,6 +187,8 @@ public class CasinoGamesPokerModel {
 			return false;
 		}
 	}
+	
+	
 	
 	/*converts card value in hand to array list of integers*/
 	
