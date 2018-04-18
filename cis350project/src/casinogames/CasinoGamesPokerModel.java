@@ -174,9 +174,9 @@ public class CasinoGamesPokerModel {
 	
 	public boolean isOfAKind(final Player player){
 		ArrayList<Integer> converted = toInt(player);
-		int alike = 0;
-		for(int i=0;i<player.getHandSize();i++){
-			if(converted.get(i)==converted.get(i+1)){
+		int alike = 1;
+		for(int i=1;i<player.getHandSize();i++){
+			if(converted.get(i-1)==converted.get(i)){
 				alike++;
 			}
 		}
@@ -186,8 +186,20 @@ public class CasinoGamesPokerModel {
 		else{
 			return false;
 		}
+	
 	}
 	
+	/*determines if the hand is a flush*/
+	
+	public boolean isFlush(final Player player){
+		Suit flushSuit = player.getCard(0).getsuit();
+		for(Card c : player.getHand()){
+			if(c.getsuit()!=flushSuit){
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	
 	/*converts card value in hand to array list of integers*/

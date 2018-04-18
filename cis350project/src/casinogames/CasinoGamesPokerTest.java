@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class CasinoGamesPokerTest {
 	
 	@Test
-	public void testIsStraight(){
+	public void testIsStraight00(){
 		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
 		Player player = game.getPlayer();
 		Card card1 = new Card(CardValue.ACE, Suit.SPADES); 
@@ -24,7 +24,7 @@ public class CasinoGamesPokerTest {
 	}
 	
 	@Test
-	public void testConversion(){
+	public void testConversion00(){
 		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
 		Player player = game.getPlayer();
 		Card card1 = new Card(CardValue.ACE, Suit.CLUBS);
@@ -39,6 +39,60 @@ public class CasinoGamesPokerTest {
 		y.add(3);
 		y.add(11);
 		assertEquals(x,y);
+	}
+	
+	@Test
+	public void testIsOfAKind00(){
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Player player = game.getPlayer();
+		Card card1 = new Card(CardValue.ACE, Suit.HEARTS);
+		Card card2 = new Card(CardValue.ACE, Suit.CLUBS);
+		Card card3 = new Card(CardValue.ACE, Suit.DIAMONDS);
+		Card card4 = new Card(CardValue.TWO, Suit.HEARTS);
+		Card card5 = new Card(CardValue.THREE, Suit.CLUBS);
+		player.addToHand(card5);
+		player.addToHand(card4);
+		player.addToHand(card3);
+		player.addToHand(card2);
+		player.addToHand(card1);
+		assertEquals(true, game.isOfAKind(player));
+
+	}
+	
+	@Test
+	public void testIsOfAKind01(){
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Player player = game.getPlayer();
+		Card card1 = new Card(CardValue.ACE, Suit.HEARTS);
+		Card card2 = new Card(CardValue.ACE, Suit.CLUBS);
+		Card card3 = new Card(CardValue.FOUR, Suit.DIAMONDS);
+		Card card4 = new Card(CardValue.TWO, Suit.HEARTS);
+		Card card5 = new Card(CardValue.THREE, Suit.CLUBS);
+		player.addToHand(card5);
+		player.addToHand(card4);
+		player.addToHand(card3);
+		player.addToHand(card2);
+		player.addToHand(card1);
+		assertEquals(false, game.isOfAKind(player));
+		
+	}
+	
+	@Test
+	public void testIsOfAKind02(){
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Player player = game.getPlayer();
+		Card card1 = new Card(CardValue.TWO, Suit.HEARTS);
+		Card card2 = new Card(CardValue.TWO, Suit.CLUBS);
+		Card card3 = new Card(CardValue.TWO, Suit.DIAMONDS);
+		Card card4 = new Card(CardValue.TWO, Suit.SPADES);
+		Card card5 = new Card(CardValue.THREE, Suit.CLUBS);
+		player.addToHand(card5);
+		player.addToHand(card4);
+		player.addToHand(card3);
+		player.addToHand(card2);
+		player.addToHand(card1);
+		assertEquals(true, game.isOfAKind(player));
+
 	}
 
 }
