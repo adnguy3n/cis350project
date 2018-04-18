@@ -1,6 +1,7 @@
 package casinogames;
 
 import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CasinoGamesPokerModel {
@@ -120,15 +121,71 @@ public class CasinoGamesPokerModel {
 	/*determines if a hand is a straight or not*/
 	
 	private boolean isStraight(final Player player){
-		
-		//Need method for value conversion to integer
-		/*for(int i = 1; i<5; i++){
-			if(player.getCard(i-1).getValue() != player.getCard(i).getValue()-1){
+		ArrayList<Integer> converted = toInt(player);
+		for(int i = 1; i<5; i++){
+			if(converted.get(i-1) != converted.get(i)-1){
 				return false;
 			}
-		}*/
+		}
 		return true;
 	}
 	
+	/*determines if a hand has two pairs*/
+	
+	private boolean isTwoPair(final Player player){
+		int pairs = 0;
+		ArrayList<Integer> converted = toInt(player);
+		for(int i=0;i<converted.size();i++){
+			if(converted.get(i)==converted.get(i+1)){
+				pairs++;
+				i=i+2;
+			}
+			}
+		if(pairs>=2){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	
+	/*converts card value in hand to array list of integers*/
+	
+	private ArrayList<Integer> toInt(final Player player){
+		ArrayList<Integer> converted = new ArrayList<Integer>();
+		for(int i=0;i<player.getHandSize();i++){
+			switch(player.getCard(i).getValue()){
+				case TWO:
+					converted.add(2);
+				case THREE:
+					converted.add(3);
+				case FOUR:
+					converted.add(4);
+				case FIVE:
+					converted.add(5);
+				case SIX:
+					converted.add(6);
+				case SEVEN:
+					converted.add(7);
+				case EIGHT:
+					converted.add(8);
+				case NINE:
+					converted.add(9);
+				case TEN:
+					converted.add(10);
+				case JACK:
+					converted.add(10);
+				case QUEEN:
+					converted.add(10);
+				case KING:
+					converted.add(10);
+				case ACE:
+					converted.add(11);
+			}
+		}
+		Collections.sort(converted);
+		return converted;
+	}
 	
 }
