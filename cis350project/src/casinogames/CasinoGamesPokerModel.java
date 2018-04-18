@@ -30,6 +30,17 @@ public class CasinoGamesPokerModel {
 		generateDeck(1);	
 	}
 	
+	/*Constructor with turn number parameter*/
+	public CasinoGamesPokerModel(int x){
+		this.turn = x;
+		generateDeck(1);
+	}
+	
+	/*player getter*/
+	public Player getPlayer(){
+		return this.player1;
+	}
+	
 	/*starts the game*/
 	public void startGame(){
 		turn = 1;
@@ -87,7 +98,7 @@ public class CasinoGamesPokerModel {
 	
 	/*determines if they player's hand is a royal pair*/
 	
-	private boolean isRoyalPair(final Player player){
+	public boolean isRoyalPair(final Player player){
 		Player temp = new Player();
 		boolean royalPair = false;
 		for(Card c : player.getHand()){
@@ -97,7 +108,7 @@ public class CasinoGamesPokerModel {
 				}
 			}
 		}
-		switch((temp.getCard(0).getValue()){
+		switch(temp.getCard(0).getValue()){
 			case JACK:
 				royalPair = true;
 				break;
@@ -120,7 +131,7 @@ public class CasinoGamesPokerModel {
 	
 	/*determines if a hand is a straight or not*/
 	
-	private boolean isStraight(final Player player){
+	public boolean isStraight(final Player player){
 		ArrayList<Integer> converted = toInt(player);
 		for(int i = 1; i<5; i++){
 			if(converted.get(i-1) != converted.get(i)-1){
@@ -132,7 +143,7 @@ public class CasinoGamesPokerModel {
 	
 	/*determines if a hand has two pairs*/
 	
-	private boolean isTwoPair(final Player player){
+	public boolean isTwoPair(final Player player){
 		int pairs = 0;
 		ArrayList<Integer> converted = toInt(player);
 		for(int i=0;i<converted.size();i++){
@@ -149,39 +160,69 @@ public class CasinoGamesPokerModel {
 		}
 	}
 	
+	/*determines if the hand is a three or four of a kind*/
+	
+	public boolean isOfAKind(final Player player){
+		ArrayList<Integer> converted = toInt(player);
+		int alike = 0;
+		for(int i=0;i<player.getHandSize();i++){
+			if(converted.get(i)==converted.get(i+1)){
+				alike++;
+			}
+		}
+		if(alike>=3){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	
 	/*converts card value in hand to array list of integers*/
 	
-	private ArrayList<Integer> toInt(final Player player){
+	public ArrayList<Integer> toInt(final Player player){
 		ArrayList<Integer> converted = new ArrayList<Integer>();
 		for(int i=0;i<player.getHandSize();i++){
 			switch(player.getCard(i).getValue()){
 				case TWO:
 					converted.add(2);
+					break;
 				case THREE:
 					converted.add(3);
+					break;
 				case FOUR:
 					converted.add(4);
+					break;
 				case FIVE:
 					converted.add(5);
+					break;
 				case SIX:
 					converted.add(6);
+					break;
 				case SEVEN:
 					converted.add(7);
+					break;
 				case EIGHT:
 					converted.add(8);
+					break;
 				case NINE:
 					converted.add(9);
+					break;
 				case TEN:
 					converted.add(10);
+					break;
 				case JACK:
 					converted.add(10);
+					break;
 				case QUEEN:
 					converted.add(10);
+					break;
 				case KING:
 					converted.add(10);
+					break;
 				case ACE:
 					converted.add(11);
+					break;
 			}
 		}
 		Collections.sort(converted);
