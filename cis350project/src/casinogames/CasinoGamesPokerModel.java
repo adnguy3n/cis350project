@@ -153,18 +153,19 @@ public class CasinoGamesPokerModel {
 		return true;
 	}
 	
+	
 	/*determines if a hand has two pairs*/
+	
 	
 	public boolean isTwoPair(final Player player){
 		int pairs = 0;
 		ArrayList<Integer> converted = toInt(player);
-		for(int i=0;i<converted.size();i++){
-			if(converted.get(i)==converted.get(i+1)){
+		for(int i=1;i<converted.size();i++){
+			if(converted.get(i)==converted.get(i-1)){
 				pairs++;
-				i=i+2;
 			}
 		}
-		if(pairs>=2)
+		if(pairs==2)
 			return true;
 		else
 			return false;
@@ -189,7 +190,9 @@ public class CasinoGamesPokerModel {
 	
 	}
 	
+	
 	/*determines if the hand is a flush*/
+	
 	
 	public boolean isFlush(final Player player){
 		Suit flushSuit = player.getCard(0).getsuit();
@@ -203,6 +206,7 @@ public class CasinoGamesPokerModel {
 	
 	
 	/*converts card value in hand to array list of integers*/
+	
 	
 	public ArrayList<Integer> toInt(final Player player){
 		ArrayList<Integer> converted = new ArrayList<Integer>();

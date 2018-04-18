@@ -94,5 +94,22 @@ public class CasinoGamesPokerTest {
 		assertEquals(true, game.isOfAKind(player));
 
 	}
+	
+	@Test
+	public void testIsTwoPair00(){
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Player player = game.getPlayer();
+		Card card1 = new Card(CardValue.TWO, Suit.HEARTS);
+		Card card2 = new Card(CardValue.THREE, Suit.CLUBS);
+		Card card3 = new Card(CardValue.THREE, Suit.DIAMONDS);
+		Card card4 = new Card(CardValue.TEN, Suit.SPADES);
+		Card card5 = new Card(CardValue.TEN, Suit.CLUBS);
+		player.addToHand(card5);
+		player.addToHand(card4);
+		player.addToHand(card3);
+		player.addToHand(card2);
+		player.addToHand(card1);
+		assertEquals(true, game.isTwoPair(player));
+	}
 
 }
