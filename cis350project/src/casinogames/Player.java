@@ -42,6 +42,10 @@ public class Player {
 		return hand;
 	}
 	
+	public int getBalance(){
+		return balance;
+	}
+	
 	/**
 	 * Get number of Cards in hand.
 	 * 

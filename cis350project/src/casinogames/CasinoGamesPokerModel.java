@@ -1,6 +1,5 @@
 package casinogames;
 
-import java.util.ArrayList;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -16,7 +15,7 @@ public class CasinoGamesPokerModel {
 	/*Number of hands dealt*/
 	private int hands = 0;
 	/*Bet placed at the beginning of the game*/
-	private int bet;
+	private int bet = 0;
 	/*Array of payout multipliers*/
 	private static final int[] multipliers = {1,2,3,5,6,9,25,50,250};
 	/*Array of winning hand types*/
@@ -165,13 +164,13 @@ public class CasinoGamesPokerModel {
 			cardSuits.add(player.getCard(i).getsuit());
 		}
 		
-		HashSet<Suit> suitSet = new HashSet<>(cardSuits);
+		/*HashSet<Suit> suitSet = new HashSet<>(cardSuits);
 		if(suitSet.size()>cardSuits.size()){
 			return false;
-		}
+		}*/
 		
 		for(int i = 1; i<5; i++){
-			if(sortedRank.get(i-1) != sortedRank.get(i)-1){
+			if(sortedRank.get(i) != sortedRank.get(i-1)+1){
 				return false;
 			}
 		}
@@ -263,7 +262,22 @@ public class CasinoGamesPokerModel {
 		return true;
 	}
 	
+	/*Creates a bet from player input*/
+	
+	private void getPlayerBet(){
+		System.out.println("Enter bet: ");
+	/*	try{
+			
+		}*/
+	}
+	
+	/*updates the player's balance*/
+	public void updateBalance(final Player player){
+		//player.getBalance()-= player.bet();
+	}
+	
 	/*converts card value in hand to array list of integers*/
+	
 	
 	
 	public ArrayList<Integer> toInt(final Player player){
@@ -298,16 +312,16 @@ public class CasinoGamesPokerModel {
 					converted.add(10);
 					break;
 				case JACK:
-					converted.add(10);
+					converted.add(11);
 					break;
 				case QUEEN:
-					converted.add(10);
+					converted.add(12);
 					break;
 				case KING:
-					converted.add(10);
+					converted.add(13);
 					break;
 				case ACE:
-					converted.add(11);
+					converted.add(14);
 					break;
 			}
 		}

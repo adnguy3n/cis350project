@@ -37,7 +37,7 @@ public class CasinoGamesPokerTest {
 		ArrayList<Integer> y = new ArrayList<Integer>();
 		y.add(2);
 		y.add(3);
-		y.add(11);
+		y.add(14);
 		assertEquals(x,y);
 	}
 	
