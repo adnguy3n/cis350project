@@ -112,18 +112,43 @@ public class CasinoGamesPokerModel {
 			case JACK:
 				royalPair = true;
 				break;
-				
 			case QUEEN:
 				royalPair = true;
 				break;
-				
 			case KING:
 				royalPair = true;
 				break;
-				
 			case ACE:
 				royalPair = true;
 				break;
+			case EIGHT:
+				royalPair = false;
+				break;
+			case FIVE:
+				royalPair = false;
+				break;
+			case FOUR:
+				royalPair = false;
+				break;
+			case NINE:
+				royalPair = false;
+				break;
+			case SEVEN:
+				royalPair = false;
+				break;
+			case SIX:
+				royalPair = false;
+				break;
+			case TEN:
+				royalPair = false;
+				break;
+			case THREE:
+				royalPair = false;
+				break;
+			case TWO:
+				royalPair = false;
+				break;
+		
 				
 		}
 		return royalPair;
@@ -191,7 +216,7 @@ public class CasinoGamesPokerModel {
 	}
 	
 	
-	/*determines if the hand is a flush*/
+	/*determines if the player's hand is a flush*/
 	
 	
 	public boolean isFlush(final Player player){
@@ -204,6 +229,21 @@ public class CasinoGamesPokerModel {
 		return true;
 	}
 	
+	/*determines if the player's hand is a royal flush*/
+	
+	public boolean isRoyalFlush(final Player player){
+		Suit flushSuit = player.getCard(0).getsuit();
+		ArrayList<Integer> convertedHand = toInt(player);
+		for(int i:convertedHand){
+			if(i<10)
+				return false;
+		}
+		for(Card c:player.getHand()){
+			if(c.getsuit()!=flushSuit)
+				return false;
+		}
+		return true;
+	}
 	
 	/*converts card value in hand to array list of integers*/
 	
