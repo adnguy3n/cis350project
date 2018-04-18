@@ -130,7 +130,7 @@ public class CasinoGamesPokerTest {
 	}
 	
 	@Test
-	public void testIsFlush(){
+	public void testIsFlush00(){
 		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
 		Player player = game.getPlayer();
 		Card card1 = new Card(CardValue.ACE, Suit.HEARTS);
@@ -148,7 +148,7 @@ public class CasinoGamesPokerTest {
 	}
 	
 	@Test
-	public void testIsRoyalFlush(){
+	public void testIsRoyalFlush00(){
 		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
 		Player player = game.getPlayer();
 		Card card1 = new Card(CardValue.ACE, Suit.HEARTS);
@@ -164,5 +164,25 @@ public class CasinoGamesPokerTest {
 		assertEquals(true, game.isRoyalFlush(player));
 		
 	}
+	
+	
+	@Test
+	public void testIsStraightFlush00(){
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Player player = game.getPlayer();
+		Card card1 = new Card(CardValue.SIX, Suit.HEARTS);
+		Card card2 = new Card(CardValue.SEVEN, Suit.HEARTS);
+		Card card3 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card4 = new Card(CardValue.NINE, Suit.HEARTS);
+		Card card5 = new Card(CardValue.TEN, Suit.HEARTS);
+		player.addToHand(card5);
+		player.addToHand(card4);
+		player.addToHand(card3);
+		player.addToHand(card2);
+		player.addToHand(card1);
+		assertEquals(true, game.isStraightFlush(player));
+	}
+	
+
 
 }

@@ -245,6 +245,24 @@ public class CasinoGamesPokerModel {
 		return true;
 	}
 	
+	/*checks if the hand is a straight flush*/
+	
+	public boolean isStraightFlush(final Player player){
+		ArrayList<Integer> sortedRanks = toInt(player);
+		Suit flushSuit = player.getCard(0).getsuit();
+		
+		for(Card c : player.getHand()){
+			if(c.getsuit()!=flushSuit)
+				return false;
+		}
+		
+		for(int i=1;i<4;i++)
+			if(sortedRanks.get(i)!=sortedRanks.get(i-1)+1){
+				return false;
+			}
+		return true;
+	}
+	
 	/*converts card value in hand to array list of integers*/
 	
 	
