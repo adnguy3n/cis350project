@@ -1,9 +1,26 @@
 package casinogames;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
+import javax.swing.JLayeredPane;
+import javax.swing.border.BevelBorder;
+import java.awt.Panel;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JPanel;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JLabel;
 
 public class PokerGUI {
 
@@ -60,6 +77,8 @@ public class PokerGUI {
 	private ImageIcon hJ;
 	private ImageIcon hQ;
 	private ImageIcon hK;
+	private ImageIcon cardBack;
+	private JLabel playerCard1;
 
 	/**
 	 * Launch the application.
@@ -89,12 +108,45 @@ public class PokerGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 700, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+
+		JPanel playerHandPanel = new JPanel();
+		playerHandPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Player Hand", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		playerHandPanel.setBounds(10, 190, 500, 160);
+		playerHandPanel.setLayout(null);
+
+		frame.getContentPane().add(playerHandPanel);
 		
+		playerCard1 = new JLabel("");
+		playerCard1.setBackground(Color.GRAY);
+		playerCard1.setBounds(10, 22, 88, 127);
+		playerHandPanel.add(playerCard1);
+		
+		JLabel playerCard2 = new JLabel("");
+		playerCard2.setBackground(Color.GRAY);
+		playerCard2.setBounds(108, 22, 88, 127);
+		playerHandPanel.add(playerCard2);
+		
+		JLabel playerCard3 = new JLabel("");
+		playerCard3.setBackground(Color.GRAY);
+		playerCard3.setBounds(206, 22, 88, 127);
+		playerHandPanel.add(playerCard3);
+		
+		JLabel playerCard4 = new JLabel("");
+		playerCard4.setBackground(Color.GRAY);
+		playerCard4.setBounds(304, 22, 88, 127);
+		playerHandPanel.add(playerCard4);
+		
+		JLabel playerCard5 = new JLabel("");
+		playerCard5.setBackground(Color.GRAY);
+		playerCard5.setBounds(402, 22, 88, 127);
+		playerHandPanel.add(playerCard5);
+
 		/*
-		
-	
+
+
 		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setBounds(10, 11, 174, 239);
 		BufferedImage img = null;
@@ -103,13 +155,302 @@ public class PokerGUI {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-		
+
 		Image dimg = img.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(),
 		        Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(dimg);
 		lblNewLabel.setIcon(icon);
 		contentPane.add(lblNewLabel);
-		*/
+		 */
 	}
-
+	
+	private void initializeImage() {
+		BufferedImage img = null;
+		
+		try {
+		    img = ImageIO.read(new File("PNG/AC.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		Image cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		cA = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/2C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c2 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/3C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c3 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/4C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c4 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/5C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c5 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/6C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c6 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/7C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c7 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/8C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c8 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/9C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c9 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/10C.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		c0 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/JC.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		cJ = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/QC.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		cQ = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/KC.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		cK = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/AS.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		sA = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/2S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s2 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/3S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s3 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/4S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s4 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/5S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s5 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/6S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s6 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/7S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s7 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/8S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s8 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/9S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s9 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/10S.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		s0 = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/JS.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		sJ = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/QS.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		sQ = new ImageIcon(cimg);
+		
+		try {
+		    img = ImageIO.read(new File("PNG/KS.png"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		cimg = img.getScaledInstance(playerCard1.getWidth(), playerCard1.getHeight(),
+		        Image.SCALE_SMOOTH);
+		
+		sK = new ImageIcon(cimg);
+	}
 }
