@@ -9,6 +9,8 @@ import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 /**
  * Throwaway Prototype for the GUI.
@@ -57,7 +59,7 @@ public class CasinoGUI extends JFrame {
 	 */
 	public CasinoGUI() {
 		game = new CasinoGamesBlackJackModel(1);
-		stage  = new JFrame();
+		stage = new JFrame();
 		stage.setSize(new Dimension(700, 400));
 		stage.setTitle("BlackJack");
 		stage.getContentPane().setLayout(null);
@@ -76,12 +78,14 @@ public class CasinoGUI extends JFrame {
 		output.add(dealerWinCountLbl);
 		
 		playerHandList = new JList<String>();
+		playerHandList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerHandModel = new DefaultListModel<String>();
 		playerHandList.setModel(playerHandModel);
 		playerHandList.setBounds(23, 43, 163, 247);
 		stage.getContentPane().add(playerHandList);
 		
 		dealerHandList = new JList<String>();
+		dealerHandList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		dealerHandModel = new DefaultListModel<String>();
 		dealerHandList.setModel(dealerHandModel);
 		dealerHandList.setBounds(498, 43, 163, 247);

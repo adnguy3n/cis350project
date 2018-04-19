@@ -16,8 +16,8 @@ public class CasinoGamesPokerModel {
 	private int hands = 0;
 	/*Bet placed at the beginning of the game*/
 	private int bet = 0;
-	/*Array of payout multipliers*/
-	private static final int[] multipliers = {1,2,3,5,6,9,25,50,250};
+	/**Array of payout multipliers.*/
+	private static final int[] multipliers = {1, 2, 3, 5, 6, 9, 25, 50, 250};
 	/*Array of winning hand types*/
 	private static final String[] winningHands = { "Royal Pair" , "Two Pairs" , "Three of a Kind" , "Straight" , "Flush" , "Full House" , "Four of a Kind" , "Straight Flush" , "Royal Flush" };
 	
