@@ -92,6 +92,7 @@ public class CasinoGamesBlackJackModel {
 	public void hit() {
 		switch (turn) {
 			case 0:
+				if(!isBust(theDealer))
 				theDealer.addToHand(mainDeck.draw());
 				break;
 			
@@ -109,6 +110,12 @@ public class CasinoGamesBlackJackModel {
 	 */
 	public void stand() {
 		changeplayer();
+		while(theDealer.getHandValue()<=16){
+			if(!isBust(theDealer)){
+				turn = 0;
+				hit();
+			}
+		}
 	}
 	
 	/**
