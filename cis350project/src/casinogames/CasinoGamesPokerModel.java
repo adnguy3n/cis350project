@@ -35,9 +35,8 @@ public class CasinoGamesPokerModel {
 	
 	/**
 	 * Default Constructor for Poker Game.
-	 * @param decks The number of decks being used.
 	 */
-	public CasinoGamesPokerModel(){
+	public CasinoGamesPokerModel() {
 		generateDeck(1);
 	}
 	
@@ -45,7 +44,7 @@ public class CasinoGamesPokerModel {
 	 * Constructor for Poker Game.
 	 * @param decks The number of decks being used.
 	 */
-	public CasinoGamesPokerModel(int decks) {
+	public CasinoGamesPokerModel(final int decks) {
 		generateDeck(decks);
 	}
 	
