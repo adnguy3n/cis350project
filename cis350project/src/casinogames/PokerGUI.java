@@ -232,7 +232,7 @@ public class PokerGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 700, 400);
+		frame.setBounds(100, 100, 725, 415);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -241,7 +241,7 @@ public class PokerGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Player Hand", TitledBorder.LEFT, 
 				TitledBorder.TOP, null, null));
-		playerHandPanel.setBounds(10, 190, 500, 160);
+		playerHandPanel.setBounds(10, 205, 500, 160);
 		playerHandPanel.setLayout(null);
 		frame.getContentPane().add(playerHandPanel);
 		
@@ -250,7 +250,7 @@ public class PokerGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Hand Multipliers", TitledBorder.LEFT, 
 				TitledBorder.TOP, null, null));
-		multiplierPanel.setBounds(10,11,450,200);
+		multiplierPanel.setBounds(10,11,450,193);
 		multiplierPanel.setLayout(null);
 		frame.getContentPane().add(multiplierPanel);
 		mult0.setBounds(10, 11, 400, 100);
@@ -277,7 +277,7 @@ public class PokerGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Controls", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		controlPanel.setBounds(505, 20, 179, 330);
+		controlPanel.setBounds(519, 11, 180, 330);
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
 		
@@ -329,9 +329,8 @@ public class PokerGUI {
 		balancePanel.setLayout(null);
 		balance.setHorizontalAlignment(SwingConstants.CENTER);
 		balance.setBounds(10, 14, 70, 21);
-		balance.setText(""+game.getPlayer().getBalance());
+		balance.setText("" + game.getPlayer().getBalance());
 		balancePanel.add(balance);
-
 		
 		playerCard1.setBackground(Color.GRAY);
 		playerCard1.setBounds(10, 22, 88, 127);
@@ -383,10 +382,7 @@ public class PokerGUI {
 		holdCard5.setBounds(402, 22, 88, 127);
 		playerHandPanel.add(holdCard5);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(520, 11, 154, 160);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
+		anonymousListeners();
 
 	}
 	
