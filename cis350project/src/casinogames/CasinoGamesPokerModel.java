@@ -87,7 +87,7 @@ public class CasinoGamesPokerModel {
 	/**
 	 * Deals a hand to the player.
 	 */
-	private void deal(){
+	private void deal() {
 		System.out.println("Shuffling deck. ");
 		generateDeck(1);
 		hands = 0;
@@ -103,8 +103,8 @@ public class CasinoGamesPokerModel {
 	 * Replaces cards not held by the player.
 	 */
 	public void nextTurn() {
-		for(int i = 0; i < player1.getHandSize(); i++) {
-			if(player1.getCard(i).gethold() == false) {
+		for (int i = 0; i < player1.getHandSize(); i++) {
+			if (player1.getCard(i).gethold()) {
 				player1.getHand().remove(i);
 				player1.addToHand(mainDeck.draw());
 			}
@@ -119,13 +119,14 @@ public class CasinoGamesPokerModel {
 	 * @return true if the player has a royal pair.
 	 * false otherwise.
 	 */
-	public boolean isRoyalPair(final Player player){
+	public boolean isRoyalPair(final Player player) {
 		Player temp = new Player();
 		boolean royalPair = false;
 		for (Card c : player.getHand()) {
 			for (Card d : player.getHand()) {
 				if ((d.getValue() == c.getValue()) 
-						&& (d.getsuit() != c.getsuit())) {
+						&& (d.getsuit() 
+							!= c.getsuit())) {
 					temp.addToHand(c);
 				}
 			}
@@ -187,13 +188,15 @@ public class CasinoGamesPokerModel {
 		if (isOfAKind(player) == 3) {
 			ArrayList<Integer> temp = toInt(player);
 			for (int i = 2; i < temp.size(); i++) {
-				if ((temp.get(i - 2) == temp.get(i - 1) && (temp.get(i - 1) == temp.get(i)))) {
-					temp.remove(i-2);
-					temp.remove(i-1);
+				if ((temp.get(i - 2) == temp.get(i - 1) 
+						&& (temp.get(i - 1) 
+							== temp.get(i)))) {
+					temp.remove(i - 2);
+					temp.remove(i - 1);
 					temp.remove(i);
 				}		
 			}
-			if(temp.size() == 2 ) {
+			if (temp.size() == 2) {
 				return true;
 			}
 		}
@@ -232,14 +235,14 @@ public class CasinoGamesPokerModel {
 	public boolean isTwoPair(final Player player) {
 		int pairs = 0;
 		ArrayList<Integer> converted = toInt(player);
-		for(int i=1;i<converted.size();i++) {
-			if(converted.get(i)==converted.get(i-1)) {
+		for (int i = 1; i < converted.size(); i++) {
+			if (converted.get(i) == converted.get(i - 1)) {
 				pairs++;
 			}
 		}
-		if(pairs == 2) {
+		if (pairs == 2) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
@@ -253,8 +256,8 @@ public class CasinoGamesPokerModel {
 	public int isOfAKind(final Player player) {
 		ArrayList<Integer> converted = toInt(player);
 		int alike = 1;
-		for (int i = 1; i<player.getHandSize(); i++) {
-			if (converted.get(i-1) == converted.get(i)) {
+		for (int i = 1; i < player.getHandSize(); i++) {
+			if (converted.get(i - 1) == converted.get(i)) {
 				alike++;
 			}
 		}
@@ -272,10 +275,10 @@ public class CasinoGamesPokerModel {
 	 * @return true if the player has a flush.
 	 * false otherwise.
 	 */
-	public boolean isFlush(final Player player){
+	public boolean isFlush(final Player player) {
 		Suit flushSuit = player.getCard(0).getsuit();
-		for(Card c : player.getHand()){
-			if(c.getsuit()!=flushSuit){
+		for (Card c : player.getHand()) {
+			if (c.getsuit() != flushSuit) {
 				return false;
 			}
 		}
@@ -297,8 +300,9 @@ public class CasinoGamesPokerModel {
 			}
 		}
 		for (Card c : player.getHand()) {
-			if (c.getsuit() != flushSuit)
+			if (c.getsuit() != flushSuit) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -319,8 +323,8 @@ public class CasinoGamesPokerModel {
 			}
 		}
 		
-		for (int i=1; i<4; i++) {
-			if(sortedRanks.get(i) != sortedRanks.get(i - 1) + 1) {
+		for (int i = 1; i < 4; i++) {
+			if (sortedRanks.get(i) != sortedRanks.get(i - 1) + 1) {
 				return false;
 			}
 		}
@@ -331,7 +335,7 @@ public class CasinoGamesPokerModel {
 	 * Getter method for the waged amount.
 	 * @return wager The amount of money being waged.
 	 */
-	public int getWager(){
+	public int getWager() {
 		return wager;
 	}
 	
@@ -339,13 +343,13 @@ public class CasinoGamesPokerModel {
 	 * Updates the waged amount.
 	 * @param bet The amount being waged.
 	 */
-	public void setWager(final int bet){
+	public void setWager(final int bet) {
 		wager = bet;
 	}
 	
 	/**
 	 * Converts hand value to array list of integers.
-	 * @param player
+	 * @param player The player.
 	 * @return The converted Array List.
 	 */
 	public ArrayList<Integer> toInt(final Player player) {

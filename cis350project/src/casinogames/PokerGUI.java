@@ -19,6 +19,7 @@ import javax.swing.JRadioButton;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 
 public class PokerGUI {
@@ -397,6 +398,8 @@ public class PokerGUI {
 		holdCard3.setEnabled(true);
 		holdCard4.setEnabled(true);
 		holdCard5.setEnabled(true);
+		draw.setEnabled(true);
+		bet.setEnabled(false);
 	}
 	
 	/**
@@ -408,6 +411,8 @@ public class PokerGUI {
 		holdCard3.setEnabled(false);
 		holdCard4.setEnabled(false);
 		holdCard5.setEnabled(false);
+		draw.setEnabled(false);
+		bet.setEnabled(true);
 	}
 	
 	/**
@@ -441,9 +446,11 @@ public class PokerGUI {
 			@Override
 			/*Anonymous method for starting the game with a bet*/
 			public void actionPerformed(final ActionEvent e) {
+				game.getPlayer().clearHand();
 				game.startGame();
 				disableWager();
 				enableGameButtons();
+				game.nextTurn();
 				
 			}
 		});
@@ -453,7 +460,6 @@ public class PokerGUI {
 			/*Anonymous method for drawing new cards on the last turn */
 			public void actionPerformed(final ActionEvent e){
 				disableGameButtons();
-				game.nextTurn();
 				updatePlayerHand();
 				endGame();
 				enableWager();
@@ -465,7 +471,7 @@ public class PokerGUI {
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
 				holdCard1.setEnabled(true);
-				game.getPlayer().getHand().get(0).fliphold();
+				game.getPlayer().getCard(0).fliphold();
 			}
 			
 		});
@@ -585,37 +591,38 @@ public class PokerGUI {
 	 * Ends the hand.
 	 */
 	private void endGame(){
-		if(game.isRoyalPair(game.getPlayer())){
-			game.getPlayer().addBalance(game.getWager());
-		}
-		else if(game.isTwoPair(game.getPlayer())){
-			game.getPlayer().addBalance(2*game.getWager());
-		}
-		else if(game.isOfAKind(game.getPlayer())==3){
-			game.getPlayer().addBalance(3*game.getWager());
-		}
-		else if(game.isStraight(game.getPlayer())){
-			game.getPlayer().addBalance(5*game.getWager());
-		}
-		else if(game.isFlush(game.getPlayer())){
-			game.getPlayer().addBalance(6*game.getWager());
-		}
-		else if(game.isFullHouse(game.getPlayer())){
-			game.getPlayer().addBalance(9*game.getWager());
-		}
-		else if(game.isOfAKind(game.getPlayer())==4){
-			game.getPlayer().addBalance(25*game.getWager());
-		}
-		else if(game.isStraightFlush(game.getPlayer())){
-			game.getPlayer().addBalance(50*game.getWager());
-		}
-		else if(game.isRoyalFlush(game.getPlayer())){
-			game.getPlayer().addBalance(250*game.getWager());
-		}
-		else{
-			game.getPlayer().addBalance(-1*game.getWager());
-		}
+			if(game.isRoyalPair(game.getPlayer())){
+				game.getPlayer().addBalance(game.getWager());
+			}
+			else if(game.isTwoPair(game.getPlayer())){
+				game.getPlayer().addBalance(2*game.getWager());
+			}
+			else if(game.isOfAKind(game.getPlayer())==3){
+				game.getPlayer().addBalance(3*game.getWager());
+			}
+			else if(game.isStraight(game.getPlayer())){
+				game.getPlayer().addBalance(5*game.getWager());
+			}
+			else if(game.isFlush(game.getPlayer())){
+				game.getPlayer().addBalance(6*game.getWager());
+			}
+			else if(game.isFullHouse(game.getPlayer())){
+				game.getPlayer().addBalance(9*game.getWager());
+			}
+			else if(game.isOfAKind(game.getPlayer())==4){
+				game.getPlayer().addBalance(25*game.getWager());
+			}
+			else if(game.isStraightFlush(game.getPlayer())){
+				game.getPlayer().addBalance(50*game.getWager());
+			}
+			else if(game.isRoyalFlush(game.getPlayer())){
+				game.getPlayer().addBalance(250*game.getWager());
+			}
+			else {
+				game.getPlayer().subBalance(game.getWager());
+			}
 		game.getPlayer().clearHand();
+		balance.setText("" + game.getPlayer().getBalance());
 		game.startGame();
 	}
 	
