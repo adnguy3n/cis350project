@@ -52,10 +52,9 @@ public class Card {
 	/**
 	 * Flip method for hold status.
 	 * 
-	 * @return opposite of previous hold status
 	 */
-	public void fliphold(){
-		hold=!hold;
+	public void fliphold() {
+		hold = !hold;
 	}
 	
 	/**

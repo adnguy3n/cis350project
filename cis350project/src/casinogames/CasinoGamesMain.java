@@ -51,6 +51,7 @@ public final class CasinoGamesMain {
 						break;
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null,
 						"You did not pick a game. "
 							+ "Exiting!");

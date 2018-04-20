@@ -8,24 +8,16 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.JLayeredPane;
-import javax.swing.border.BevelBorder;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
 
@@ -139,7 +131,7 @@ public class PokerGUI {
 	private ImageIcon hK;
 	/** Card Image for the card back. */
 	private ImageIcon cardBack;
-	/** Game Model **/
+	/** Game Model. **/
 	private CasinoGamesPokerModel game = new CasinoGamesPokerModel();
 	/** JLabel for the first card in the player's hand. */
 	private final JLabel playerCard1 = new JLabel();
@@ -151,8 +143,10 @@ public class PokerGUI {
 	private final JLabel playerCard4 = new JLabel();
 	/** JLabel for the fifth card in the player's hand. */
 	private final JLabel playerCard5 = new JLabel();
-	/** JLabel array of all cards in the hand */
-	private final JLabel[] playerCards = {playerCard1,playerCard2,playerCard3,playerCard4,playerCard5};
+	/** JLabel array of all cards in the hand. */
+	private final JLabel[] playerCards = {
+			playerCard1, playerCard2, 
+			playerCard3, playerCard4, playerCard5};
 	/** JButton for holding the first card in the player's hand. */
 	private final JButton holdCard1 = new JButton();
 	/** JButton for holding the second card in the player's hand. */
@@ -163,8 +157,10 @@ public class PokerGUI {
 	private final JButton holdCard4 = new JButton();
 	/** JButton for holding the fifth card in the player's hand. */
 	private final JButton holdCard5 = new JButton();
-	/** JButton array for which cards are being held */
-	private final JButton holdCards[] = {holdCard1,holdCard2,holdCard3,holdCard4,holdCard5};
+	/** JButton array for which cards are being held. */
+	private final JButton holdCards[] = {
+			holdCard1, holdCard2, 
+			holdCard3, holdCard4, holdCard5};
 	/** Button group for wager radio buttons. */
 	private final ButtonGroup wager = new ButtonGroup();
 	/** Radio Button for waging 100 credits. */
@@ -179,25 +175,33 @@ public class PokerGUI {
 	private final JRadioButton wager500 = new JRadioButton("$500");
 	/** JLabel to display current balance. */
 	private final JLabel balance = new JLabel();
-	/** JButton for placing a bet at the start of the game */
+	/** JButton for placing a bet at the start of the game. */
 	private final JButton bet = new JButton("Bet");
-	/** JButton for drawing new cards after the first turn */
+	/** JButton for drawing new cards after the first turn. */
 	private final JButton draw = new JButton("Draw");
-	/** JLabels for the multiplier list */
+	/** JLabels for the multiplier list. */
 	private final JLabel mult0 = new JLabel("Royal Pair: x1");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult1 = new JLabel("Two Pair: x2");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult2 = new JLabel("Three of a Kind: x3");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult3 = new JLabel("Straight: x5");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult4 = new JLabel("Flush: x6");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult5 = new JLabel("Full House: x9");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult6 = new JLabel("Four of a Kind: x25");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult7 = new JLabel("Straight Flush: x50");
+	/** JLabels for the multiplier list. */
 	private final JLabel mult8 = new JLabel("Royal Flush: x250");
 	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -331,6 +335,7 @@ public class PokerGUI {
 		
 		playerCard1.setBackground(Color.GRAY);
 		playerCard1.setBounds(10, 22, 88, 127);
+		playerCard1.setIcon(cardBack);
 		playerHandPanel.add(playerCard1);
 		
 		holdCard1.setOpaque(false);
@@ -340,6 +345,7 @@ public class PokerGUI {
 		
 		playerCard2.setBackground(Color.GRAY);
 		playerCard2.setBounds(108, 22, 88, 127);
+		playerCard2.setIcon(cardBack);
 		playerHandPanel.add(playerCard2);
 		
 		holdCard2.setOpaque(false);
@@ -349,6 +355,7 @@ public class PokerGUI {
 		
 		playerCard3.setBackground(Color.GRAY);
 		playerCard3.setBounds(206, 22, 88, 127);
+		playerCard3.setIcon(cardBack);
 		playerHandPanel.add(playerCard3);
 		
 		holdCard3.setOpaque(false);
@@ -358,6 +365,7 @@ public class PokerGUI {
 		
 		playerCard4.setBackground(Color.GRAY);
 		playerCard4.setBounds(304, 22, 88, 127);
+		playerCard4.setIcon(cardBack);
 		playerHandPanel.add(playerCard4);
 		
 		holdCard4.setOpaque(false);
@@ -367,6 +375,7 @@ public class PokerGUI {
 		
 		playerCard5.setBackground(Color.GRAY);
 		playerCard5.setBounds(402, 22, 88, 127);
+		playerCard5.setIcon(cardBack);
 		playerHandPanel.add(playerCard5);
 		
 		holdCard5.setOpaque(false);
@@ -383,7 +392,9 @@ public class PokerGUI {
 	
 	
 	
-	/*Enables game buttons*/
+	/**
+	 * Enable game buttons.
+	 */
 	private void enableGameButtons(){
 		holdCard1.setEnabled(true);
 		holdCard2.setEnabled(true);
@@ -392,7 +403,9 @@ public class PokerGUI {
 		holdCard5.setEnabled(true);
 	}
 	
-	/*Disables game buttons*/
+	/**
+	 * Disables game buttons.
+	 */
 	private void disableGameButtons(){
 		holdCard1.setEnabled(false);
 		holdCard2.setEnabled(false);
@@ -423,16 +436,15 @@ public class PokerGUI {
 		wager500.setEnabled(false);
 	}
 
-	
-	
-	
-	/*Helper Method for setting up anonymous Methods.*/
-	private void anonymousListeners(){
+	/**
+	 * Helper Method for setting up anonymous Methods.
+	 */
+	private void anonymousListeners() {
 		
-		bet.addActionListener(new ActionListener(){
+		bet.addActionListener(new ActionListener() {
 			@Override
 			/*Anonymous method for starting the game with a bet*/
-			public void actionPerformed(final ActionEvent e){
+			public void actionPerformed(final ActionEvent e) {
 				game.startGame();
 				disableWager();
 				enableGameButtons();
@@ -866,618 +878,572 @@ public class PokerGUI {
 	 * Initialize image for card back.
 	 */
 	private void initializeCardBack() {
-		BufferedImage img = null;
-		
+		Image img = null;
+
 		try {
-		    img = ImageIO.read(new File("PNG/red_back.png"));
+			img = ImageIO.read(new File("PNG/red_back.png"));
+			Image cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+			cardBack = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		Image cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		cardBack = new ImageIcon(cimg);
 	}
-	
+
 	/**
-	 * Intiailizes the club images for the deck.
+	 * Initializes the club images for the deck.
 	 */
 	private void initializeCardImageClubs() {
-		BufferedImage img = null;
-		
+		Image img = null;
+		Image cimg = null;
+
 		try {
-		    img = ImageIO.read(new File("PNG/AC.png"));
+			img = ImageIO.read(new File("PNG/AC.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			cA = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		Image cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		cA = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/2C.png"));
+			img = ImageIO.read(new File("PNG/2C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c2 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c2 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/3C.png"));
+			img = ImageIO.read(new File("PNG/3C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c3 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c3 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/4C.png"));
+			img = ImageIO.read(new File("PNG/4C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c4 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c4 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/5C.png"));
+			img = ImageIO.read(new File("PNG/5C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c5 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c5 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/6C.png"));
+			img = ImageIO.read(new File("PNG/6C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c6 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c6 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/7C.png"));
+			img = ImageIO.read(new File("PNG/7C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c7 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c7 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/8C.png"));
+			img = ImageIO.read(new File("PNG/8C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c8 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c8 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/9C.png"));
+			img = ImageIO.read(new File("PNG/9C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c9 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c9 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/10C.png"));
+			img = ImageIO.read(new File("PNG/10C.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			c0 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		c0 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/JC.png"));
+			img = ImageIO.read(new File("PNG/JC.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			cJ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		cJ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/QC.png"));
+			img = ImageIO.read(new File("PNG/QC.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			cQ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		cQ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/KC.png"));
+			img = ImageIO.read(new File("PNG/KC.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			cK = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		cK = new ImageIcon(cimg);
-		
+
 	}
-	
+
 	/**
 	 * Initializes card images for spades.
 	 */
 	private void initializeCardImageSpades() {
 		Image img = null;
-		try {
-		    img = ImageIO.read(new File("PNG/AS.png"));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		
-		Image cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		sA = new ImageIcon(cimg);
+		Image cimg = null;
 		
 		try {
-		    img = ImageIO.read(new File("PNG/2S.png"));
+			img = ImageIO.read(new File("PNG/AS.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			sA = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s2 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/3S.png"));
+			img = ImageIO.read(new File("PNG/2S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s2 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s3 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/4S.png"));
+			img = ImageIO.read(new File("PNG/3S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s3 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s4 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/5S.png"));
+			img = ImageIO.read(new File("PNG/4S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s4 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s5 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/6S.png"));
+			img = ImageIO.read(new File("PNG/5S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s5 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s6 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/7S.png"));
+			img = ImageIO.read(new File("PNG/6S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s6 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s7 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/8S.png"));
+			img = ImageIO.read(new File("PNG/7S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s7 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s8 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/9S.png"));
+			img = ImageIO.read(new File("PNG/8S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s8 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s9 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/10S.png"));
+			img = ImageIO.read(new File("PNG/9S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s9 = new ImageIcon(cimg);
+
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		s0 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/JS.png"));
+			img = ImageIO.read(new File("PNG/10S.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			s0 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		sJ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/QS.png"));
+			img = ImageIO.read(new File("PNG/JS.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			sJ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		sQ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/KS.png"));
+			img = ImageIO.read(new File("PNG/QS.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			sQ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		sK = new ImageIcon(cimg);
-		
+
+		try {
+			img = ImageIO.read(new File("PNG/KS.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			sK = new ImageIcon(cimg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
 	/**
 	 * Initialize Card Images for Diamonds.
 	 */
 	private void initializeCardImageDiamonds() {
 		Image img = null;
+		Image cimg = null;
 		try {
-		    img = ImageIO.read(new File("PNG/AD.png"));
+			img = ImageIO.read(new File("PNG/AD.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			dA = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		Image cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		dA = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/2D.png"));
+			img = ImageIO.read(new File("PNG/2D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d2 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d2 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/3D.png"));
+			img = ImageIO.read(new File("PNG/3D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d3 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d3 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/4D.png"));
+			img = ImageIO.read(new File("PNG/4D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d4 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d4 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/5D.png"));
+			img = ImageIO.read(new File("PNG/5D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d5 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d5 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/6D.png"));
+			img = ImageIO.read(new File("PNG/6D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d6 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d6 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/7D.png"));
+			img = ImageIO.read(new File("PNG/7D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d7 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d7 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/8D.png"));
+			img = ImageIO.read(new File("PNG/8D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d8 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d8 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/9D.png"));
+			img = ImageIO.read(new File("PNG/9D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d9 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d9 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/10D.png"));
+			img = ImageIO.read(new File("PNG/10D.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			d0 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		d0 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/JD.png"));
+			img = ImageIO.read(new File("PNG/JD.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			dJ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		dJ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/QD.png"));
+			img = ImageIO.read(new File("PNG/QD.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			dQ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		dQ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/KD.png"));
+			img = ImageIO.read(new File("PNG/KD.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			dK = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		dK = new ImageIcon(cimg);
-		
+
 	}
-	
+
 	/**
 	 * Initialize CardImages for Hearts.
 	 */
 	private void initializeCardImageHearts() {
 		Image img = null;
-		try {
-		    img = ImageIO.read(new File("PNG/AH.png"));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		
-		Image cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		hA = new ImageIcon(cimg);
+		Image cimg = null;
 		
 		try {
-		    img = ImageIO.read(new File("PNG/2H.png"));
+			img = ImageIO.read(new File("PNG/AH.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			hA = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h2 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/3H.png"));
+			img = ImageIO.read(new File("PNG/2H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h2 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h3 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/4H.png"));
+			img = ImageIO.read(new File("PNG/3H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h3 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h4 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/5H.png"));
+			img = ImageIO.read(new File("PNG/4H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h4 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h5 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/6H.png"));
+			img = ImageIO.read(new File("PNG/5H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h5 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h6 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/7H.png"));
+			img = ImageIO.read(new File("PNG/6H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h6 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h7 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/8H.png"));
+			img = ImageIO.read(new File("PNG/7H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h7 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h8 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/9H.png"));
+			img = ImageIO.read(new File("PNG/8H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h8 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h9 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/10H.png"));
+			img = ImageIO.read(new File("PNG/9H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h9 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		h0 = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/JH.png"));
+			img = ImageIO.read(new File("PNG/10H.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			h0 = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		hJ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/QH.png"));
+			img = ImageIO.read(new File("PNG/JH.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			hJ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		hQ = new ImageIcon(cimg);
-		
+
 		try {
-		    img = ImageIO.read(new File("PNG/KH.png"));
+			img = ImageIO.read(new File("PNG/QH.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			hQ = new ImageIcon(cimg);
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		cimg = img.getScaledInstance(88, 
-				127, Image.SCALE_SMOOTH);
-		
-		hK = new ImageIcon(cimg);
+
+		try {
+			img = ImageIO.read(new File("PNG/KH.png"));
+			cimg = img.getScaledInstance(88, 
+					127, Image.SCALE_SMOOTH);
+
+			hK = new ImageIcon(cimg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	/**
