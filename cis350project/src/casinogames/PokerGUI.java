@@ -450,8 +450,6 @@ public class PokerGUI {
 				game.startGame();
 				disableWager();
 				enableGameButtons();
-				game.nextTurn();
-				
 			}
 		});
 		
