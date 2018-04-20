@@ -1,6 +1,5 @@
 package casinogames;
 
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -164,24 +163,6 @@ public class BlackJackGUI {
 	private final JLabel balance = new JLabel();
 
 	/**
-	 * Launch the application.
-	 * @param args arg
-	 */
-	public static void main(final String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BlackJackGUI window =
-							new BlackJackGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public BlackJackGUI() {
@@ -220,6 +201,7 @@ public class BlackJackGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		//JPanel for the player's hand.
 		JPanel playerHandPanel = new JPanel();
 		playerHandPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
@@ -230,6 +212,7 @@ public class BlackJackGUI {
 		playerHandPanel.setLayout(null);
 		frame.getContentPane().add(playerHandPanel);
 
+		//JPanel for the dealer's hand.
 		JPanel dealerHandPanel = new JPanel();
 		dealerHandPanel.setLayout(null);
 		dealerHandPanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -240,6 +223,7 @@ public class BlackJackGUI {
 		dealerHandPanel.setBounds(10, 11, 600, 160);
 		frame.getContentPane().add(dealerHandPanel);
 
+		//JPanel for the Buttons.
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
@@ -249,6 +233,7 @@ public class BlackJackGUI {
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
 
+		//Play, hit, and stand buttons.
 		play.setBounds(45, 22, 89, 23);
 		controlPanel.add(play);
 
@@ -260,6 +245,7 @@ public class BlackJackGUI {
 		stand.setBounds(45, 90, 89, 23);
 		controlPanel.add(stand);
 
+		//Panel for Wager Buttons.
 		JPanel wagerPanel = new JPanel();
 		wagerPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
@@ -269,6 +255,7 @@ public class BlackJackGUI {
 		controlPanel.add(wagerPanel);
 		wagerPanel.setLayout(null);
 
+		//Radio Buttons for Wager
 		wager100.setBounds(6, 19, 101, 23);
 		wagerPanel.add(wager100);
 
@@ -284,6 +271,7 @@ public class BlackJackGUI {
 		wager500.setBounds(6, 123, 101, 23);
 		wagerPanel.add(wager500);
 
+		//Adding Wager buttons to button group.
 		wager.add(wager100);
 		wager.add(wager200);
 		wager.add(wager300);
@@ -293,6 +281,7 @@ public class BlackJackGUI {
 		game.setWager(100);
 		disableWager();
 
+		//JPanel for the player's money balance.
 		JPanel balancePanel = new JPanel();
 		balancePanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
@@ -302,18 +291,22 @@ public class BlackJackGUI {
 
 		controlPanel.add(balancePanel);
 		balancePanel.setLayout(null);
+		
+		//JLabel for displaying the player's money balance.
 		balance.setHorizontalAlignment(SwingConstants.CENTER);
 		balance.setBounds(10, 14, 70, 21);
 		balance.setText("" + game.getPlayer(1).getBalance());
 
 		balancePanel.add(balance);
 
+		//Dealer's Cards.
 		for (int i = 0; i < 17; i++) {
 			dealerCard[i] = new JLabel();
 			dealerCard[i].setBounds(10 + 30 * i, 21, 90, 125);
 			dealerHandPanel.add(dealerCard[i]);
 		}
 
+		//Player's Cards.
 		for (int i = 0; i < 17; i++) {
 			playerCard[i] = new JLabel();
 			playerCard[i].setBounds(10 + 30 * i, 21, 90, 125);
