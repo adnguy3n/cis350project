@@ -11,6 +11,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLayeredPane;
 import javax.swing.border.BevelBorder;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -133,6 +135,8 @@ public class PokerGUI {
 	private ImageIcon hK;
 	/** Card Image for the card back. */
 	private ImageIcon cardBack;
+	/** Game Model **/
+	private CasinoGamesPokerModel game;
 	/** JLabel for the first card in the player's hand. */
 	private final JLabel playerCard1 = new JLabel();
 	/** JLabel for the second card in the player's hand. */
@@ -252,6 +256,82 @@ public class PokerGUI {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
+	}
+	
+	
+	
+	/*Enables game buttons*/
+	private void enableGameButtons(){
+		holdCard1.setEnabled(false);
+		holdCard2.setEnabled(false);
+		holdCard3.setEnabled(false);
+		holdCard4.setEnabled(false);
+		holdCard5.setEnabled(false);
+	}
+	
+	
+	
+	/*Helper Method for setting up anonymous Methods.*/
+	private void anonymousListeners(){
+		holdCard1.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for holding card 1*/
+			public void actionPerformed(final ActionEvent e){
+				game.startGame();
+				enableGameButtons();
+				holdCard1.setEnabled(true);
+				game.getPlayer().getHand().get(0).fliphold();
+			}
+			
+		});
+		
+		holdCard2.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for holding card 1*/
+			public void actionPerformed(final ActionEvent e){
+				game.startGame();
+				enableGameButtons();
+				holdCard2.setEnabled(true);
+				game.getPlayer().getHand().get(1).fliphold();
+			}
+			
+		});
+		
+		holdCard3.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for holding card 1*/
+			public void actionPerformed(final ActionEvent e){
+				game.startGame();
+				enableGameButtons();
+				holdCard3.setEnabled(true);
+				game.getPlayer().getHand().get(2).fliphold();
+			}
+			
+		});
+		
+		holdCard4.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for holding card 1*/
+			public void actionPerformed(final ActionEvent e){
+				game.startGame();
+				enableGameButtons();
+				holdCard4.setEnabled(true);
+				game.getPlayer().getHand().get(3).fliphold();
+			}
+			
+		});
+		
+		holdCard5.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for holding card 1*/
+			public void actionPerformed(final ActionEvent e){
+				game.startGame();
+				enableGameButtons();
+				holdCard5.setEnabled(true);
+				game.getPlayer().getHand().get(4).fliphold();
+			}
+			
+		});
 	}
 	
 	/**

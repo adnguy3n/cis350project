@@ -50,6 +50,15 @@ public class Card {
 	}
 	
 	/**
+	 * Flip method for hold status.
+	 * 
+	 * @return opposite of previous hold status
+	 */
+	public void fliphold(){
+		hold=!hold;
+	}
+	
+	/**
 	 * Get Method for the value and suit of a card as a string.
 	 * Example: "KING OF HEARTS."
 	 * 
