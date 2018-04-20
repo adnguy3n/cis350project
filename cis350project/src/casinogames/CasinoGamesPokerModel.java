@@ -40,6 +40,11 @@ public class CasinoGamesPokerModel {
 		return player1;
 	}
 	
+	/** turn getter*/
+	public int getTurn(){
+		return turn;
+	}
+	
 	/*starts the game*/
 	public void startGame(){
 		turn = 1;
@@ -72,13 +77,12 @@ public class CasinoGamesPokerModel {
 	private void deal(){
 		System.out.println("Shuffling deck. ");
 		generateDeck(1);
-		hands = 0;
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
-		hands++;
+		turn++;
 	}
 	
 

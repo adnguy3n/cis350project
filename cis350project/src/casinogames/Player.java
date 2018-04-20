@@ -9,6 +9,8 @@ public class Player {
 	private ArrayList<Card> hand;
 	/** integer representing the player's cash. */
 	private int balance;
+	/** Array representing the hold status of each card */
+	public ArrayList<Boolean> holding = new ArrayList<Boolean>();
 	
 	/**
 	 * Default Constructor, creates a player with an empty hand.
@@ -32,6 +34,9 @@ public class Player {
 	 */
 	public void clearHand() {
 		hand.clear();
+		for(boolean i : holding){
+			i = false;
+		}
 	}
 	
 	/**
