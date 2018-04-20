@@ -216,8 +216,8 @@ public class CasinoGamesPokerModel {
 			cardSuits.add(player.getCard(i).getsuit());
 		}
 		
-		for (int i = 1; i<5; i++) {
-			if(sortedRank.get(i) != sortedRank.get(i - 1) + 1) {
+		for (int i = 1; i < 5; i++) {
+			if (sortedRank.get(i) != sortedRank.get(i - 1) + 1) {
 				return false;
 			}
 		}
