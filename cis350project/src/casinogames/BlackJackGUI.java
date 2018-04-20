@@ -249,15 +249,15 @@ public class BlackJackGUI {
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
 
-		play.setBounds(48, 22, 89, 23);
+		play.setBounds(45, 22, 89, 23);
 		controlPanel.add(play);
 
 		hit.setEnabled(false);
-		hit.setBounds(48, 56, 89, 23);
+		hit.setBounds(45, 56, 89, 23);
 		controlPanel.add(hit);
 
 		stand.setEnabled(false);
-		stand.setBounds(48, 90, 89, 23);
+		stand.setBounds(45, 90, 89, 23);
 		controlPanel.add(stand);
 
 		JPanel wagerPanel = new JPanel();
@@ -265,23 +265,23 @@ public class BlackJackGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Wager", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		wagerPanel.setBounds(48, 124, 89, 152);
+		wagerPanel.setBounds(33, 124, 113, 152);
 		controlPanel.add(wagerPanel);
 		wagerPanel.setLayout(null);
 
-		wager100.setBounds(6, 19, 79, 23);
+		wager100.setBounds(6, 19, 101, 23);
 		wagerPanel.add(wager100);
 
-		wager200.setBounds(6, 45, 79, 23);
+		wager200.setBounds(6, 45, 101, 23);
 		wagerPanel.add(wager200);
 
-		wager300.setBounds(6, 71, 79, 23);
+		wager300.setBounds(6, 71, 101, 23);
 		wagerPanel.add(wager300);
 
-		wager400.setBounds(6, 97, 79, 23);
+		wager400.setBounds(6, 97, 101, 23);
 		wagerPanel.add(wager400);
 
-		wager500.setBounds(6, 123, 79, 23);
+		wager500.setBounds(6, 123, 101, 23);
 		wagerPanel.add(wager500);
 
 		wager.add(wager100);
@@ -298,7 +298,7 @@ public class BlackJackGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Credits", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		balancePanel.setBounds(48, 276, 90, 43);
+		balancePanel.setBounds(45, 276, 90, 43);
 
 		controlPanel.add(balancePanel);
 		balancePanel.setLayout(null);
