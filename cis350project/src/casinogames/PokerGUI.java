@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
@@ -157,6 +159,20 @@ public class PokerGUI {
 	private final JButton holdCard4 = new JButton();
 	/** JButton for holding the fifth card in the player's hand. */
 	private final JButton holdCard5 = new JButton();
+	/** Button group for wager radio buttons. */
+	private final ButtonGroup wager = new ButtonGroup();
+	/** Radio Button for waging 100 credits. */
+	private final JRadioButton wager100 = new JRadioButton("100 credits");
+	/** Radio Button for waging 200 credits. */
+	private final JRadioButton wager200 = new JRadioButton("200 credits");
+	/** Radio Button for waging 300 credits. */
+	private final JRadioButton wager300 = new JRadioButton("300 credits");
+	/** Radio Button for waging 400 credits. */
+	private final JRadioButton wager400 = new JRadioButton("400 credits");
+	/** Radio Button for waging 500 credits. */
+	private final JRadioButton wager500 = new JRadioButton("500 credits");
+	/** JLabel to display current balance. */
+	private final JLabel balance = new JLabel();
 
 	/**
 	 * Launch the application.
@@ -203,8 +219,50 @@ public class PokerGUI {
 				TitledBorder.TOP, null, null));
 		playerHandPanel.setBounds(10, 190, 500, 160);
 		playerHandPanel.setLayout(null);
-
 		frame.getContentPane().add(playerHandPanel);
+		
+		JPanel controlPanel = new JPanel();
+		controlPanel.setBorder(new TitledBorder(new EtchedBorder(
+				EtchedBorder.LOWERED, null, null), 
+				"Controls", TitledBorder.LEADING, 
+				TitledBorder.TOP, null, null));
+		controlPanel.setBounds(620, 11, 179, 330);
+		controlPanel.setLayout(null);
+		frame.getContentPane().add(controlPanel);
+		
+		JPanel wagerPanel = new JPanel();
+		wagerPanel.setBorder(new TitledBorder(new EtchedBorder(
+				EtchedBorder.LOWERED, null, null), 
+				"Wager", TitledBorder.LEADING, 
+				TitledBorder.TOP, null, null));
+		wagerPanel.setBounds(48, 124, 89, 152);
+		controlPanel.add(wagerPanel);
+		wagerPanel.setLayout(null);
+
+		wager100.setBounds(6, 19, 79, 23);
+		wagerPanel.add(wager100);
+
+		wager200.setBounds(6, 45, 79, 23);
+		wagerPanel.add(wager200);
+
+		wager300.setBounds(6, 71, 79, 23);
+		wagerPanel.add(wager300);
+
+		wager400.setBounds(6, 97, 79, 23);
+		wagerPanel.add(wager400);
+
+		wager500.setBounds(6, 123, 79, 23);
+		wagerPanel.add(wager500);
+
+		wager.add(wager100);
+		wager.add(wager200);
+		wager.add(wager300);
+		wager.add(wager400);
+		wager.add(wager500);
+		wager100.setSelected(true);
+		game.setWager(100);
+		disableWager();
+
 		
 		playerCard1.setBackground(Color.GRAY);
 		playerCard1.setBounds(10, 22, 88, 127);
@@ -262,12 +320,44 @@ public class PokerGUI {
 	
 	/*Enables game buttons*/
 	private void enableGameButtons(){
+		holdCard1.setEnabled(true);
+		holdCard2.setEnabled(true);
+		holdCard3.setEnabled(true);
+		holdCard4.setEnabled(true);
+		holdCard5.setEnabled(true);
+	}
+	
+	/*Disables game buttons*/
+	private void disableGameButtons(){
 		holdCard1.setEnabled(false);
 		holdCard2.setEnabled(false);
 		holdCard3.setEnabled(false);
 		holdCard4.setEnabled(false);
 		holdCard5.setEnabled(false);
 	}
+	
+	/**
+	 * Helper Method for enabling wager radio buttons.
+	 */
+	private void enableWager() {
+		wager100.setEnabled(true);
+		wager200.setEnabled(true);
+		wager300.setEnabled(true);
+		wager400.setEnabled(true);
+		wager500.setEnabled(true);
+	}
+
+	/**
+	 * Helper Method for disabling wager radio buttons.
+	 */
+	private void disableWager() {
+		wager100.setEnabled(false);
+		wager200.setEnabled(false);
+		wager300.setEnabled(false);
+		wager400.setEnabled(false);
+		wager500.setEnabled(false);
+	}
+
 	
 	
 	

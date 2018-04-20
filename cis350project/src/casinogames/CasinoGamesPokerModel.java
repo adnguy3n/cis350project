@@ -15,7 +15,7 @@ public class CasinoGamesPokerModel {
 	/*Number of hands dealt*/
 	private int hands = 0;
 	/*Bet placed at the beginning of the game*/
-	private int bet = 0;
+	private int wager = 0;
 	/**Array of payout multipliers.*/
 	private static final int[] multipliers = {1, 2, 3, 5, 6, 9, 25, 50, 250};
 	/*Array of winning hand types*/
@@ -164,11 +164,6 @@ public class CasinoGamesPokerModel {
 			cardSuits.add(player.getCard(i).getsuit());
 		}
 		
-		/*HashSet<Suit> suitSet = new HashSet<>(cardSuits);
-		if(suitSet.size()>cardSuits.size()){
-			return false;
-		}*/
-		
 		for(int i = 1; i<5; i++){
 			if(sortedRank.get(i) != sortedRank.get(i-1)+1){
 				return false;
@@ -262,23 +257,20 @@ public class CasinoGamesPokerModel {
 		return true;
 	}
 	
-	/*Creates a bet from player input*/
+	/*Gets the player's bet*/
 	
-	private void getPlayerBet(){
-		System.out.println("Enter bet: ");
-	/*	try{
-			
-		}*/
+	private int getWager(){
+		return wager;
 	}
 	
 	/*updates the player's balance*/
-	public void updateBalance(final Player player){
-		//player.getBalance()-= player.bet();
+	public void setWager(final int bet){
+		wager=bet;
 	}
 	
-	/*converts card value in hand to array list of integers*/
 	
 	
+	/*converts hand value to array list of integers*/
 	
 	public ArrayList<Integer> toInt(final Player player){
 		ArrayList<Integer> converted = new ArrayList<Integer>();
