@@ -435,244 +435,6 @@ public class BlackJackGUI {
 	}
 	
 	/**
-	 * Helper Method for getting the card image for a specific card in hand.
-	 * @param card Card that is getting an image.
-	 * @return icon the image icon for the card.
-	 */
-	private ImageIcon parseCard(final Card card) {
-		ImageIcon icon = null;
-		switch (card.getsuit()) {
-			case CLUBS: 
-				icon = getCardImageClubs(card);
-				break;
-			case SPADES:
-				icon = getCardImageSpades(card);
-				break;
-			case DIAMONDS:
-				icon = getCardImageDiamonds(card);
-				break;
-			case HEARTS:
-				icon = getCardImageHearts(card);
-				break;
-			default:
-				break;
-		}
-		return icon;
-	}
-	
-	/**
-	 * Get card image for clubs.
-	 * @param card Card that is getting an image.
-	 * @return icon the image icon for the card.
-	 */
-	private ImageIcon getCardImageClubs(final Card card) {
-		ImageIcon icon = null;
-		switch (card.getValue()) {
-		case ACE:
-			icon = cA;
-			break;
-		case TWO:
-			icon = c2;
-			break;
-		case THREE:
-			icon = c3;
-			break;
-		case FOUR:
-			icon = c4;
-			break;
-		case FIVE:
-			icon = c5;
-			break;
-		case SIX:
-			icon = c6;
-			break;
-		case SEVEN:
-			icon = c7;
-			break;
-		case EIGHT:
-			icon = c8;
-			break;
-		case NINE:
-			icon = c9;
-			break;
-		case TEN:
-			icon = c0;
-			break;
-		case JACK:
-			icon = cJ;
-			break;
-		case QUEEN:
-			icon = cQ;
-			break;
-		case KING:
-			icon = cK;
-			break;
-		default:
-			break;
-		}
-		return icon;
-	}
-	
-	/**
-	 * Get card image for Spades.
-	 * @param card Card that is getting an image.
-	 * @return icon the image icon for the card.
-	 */
-	private ImageIcon getCardImageSpades(final Card card) {
-		ImageIcon icon = null;
-		switch (card.getValue()) {
-		case ACE:
-			icon = sA;
-			break;
-		case TWO:
-			icon = s2;
-			break;
-		case THREE:
-			icon = s3;
-			break;
-		case FOUR:
-			icon = s4;
-			break;
-		case FIVE:
-			icon = s5;
-			break;
-		case SIX:
-			icon = s6;
-			break;
-		case SEVEN:
-			icon = s7;
-			break;
-		case EIGHT:
-			icon = s8;
-			break;
-		case NINE:
-			icon = s9;
-			break;
-		case TEN:
-			icon = s0;
-			break;
-		case JACK:
-			icon = sJ;
-			break;
-		case QUEEN:
-			icon = sQ;
-			break;
-		case KING:
-			icon = sK;
-			break;
-		default:
-			break;
-		}
-		return icon;
-	}
-	
-	/**
-	 * Get card image for Diamonds.
-	 * @param card Card that is getting an image.
-	 * @return icon the image icon for the card.
-	 */
-	private ImageIcon getCardImageDiamonds(final Card card) {
-		ImageIcon icon = null;
-		switch (card.getValue()) {
-		case ACE:
-			icon = dA;
-			break;
-		case TWO:
-			icon = d2;
-			break;
-		case THREE:
-			icon = d3;
-			break;
-		case FOUR:
-			icon = d4;
-			break;
-		case FIVE:
-			icon = d5;
-			break;
-		case SIX:
-			icon = d6;
-			break;
-		case SEVEN:
-			icon = d7;
-			break;
-		case EIGHT:
-			icon = d8;
-			break;
-		case NINE:
-			icon = d9;
-			break;
-		case TEN:
-			icon = d0;
-			break;
-		case JACK:
-			icon = dJ;
-			break;
-		case QUEEN:
-			icon = dQ;
-			break;
-		case KING:
-			icon = dK;
-			break;
-		default:
-			break;
-		}
-		return icon;
-	}
-	
-	/**
-	 * Get card image for Hearts.
-	 * @param card Card that is getting an image.
-	 * @return icon the image icon for the card.
-	 */
-	private ImageIcon getCardImageHearts(final Card card) {
-		ImageIcon icon = null;
-		switch (card.getValue()) {
-		case ACE:
-			icon = hA;
-			break;
-		case TWO:
-			icon = h2;
-			break;
-		case THREE:
-			icon = h3;
-			break;
-		case FOUR:
-			icon = h4;
-			break;
-		case FIVE:
-			icon = h5;
-			break;
-		case SIX:
-			icon = h6;
-			break;
-		case SEVEN:
-			icon = h7;
-			break;
-		case EIGHT:
-			icon = h8;
-			break;
-		case NINE:
-			icon = h9;
-			break;
-		case TEN:
-			icon = h0;
-			break;
-		case JACK:
-			icon = hJ;
-			break;
-		case QUEEN:
-			icon = hQ;
-			break;
-		case KING:
-			icon = hK;
-			break;
-		default:
-			break;
-		}
-		return icon;
-	}
-	
-	/**
 	 * Enable the Hit and Stand Buttons while disabling the play button.
 	 */
 	private void enableGameButtons() {
@@ -719,7 +481,7 @@ public class BlackJackGUI {
 	}
 	
 	/**
-	 * Intiailizes the club images for the deck.
+	 * Initializes the club images for the deck.
 	 */
 	private void initializeCardImageClubs() {
 		BufferedImage img = null;
@@ -1317,4 +1079,243 @@ public class BlackJackGUI {
 		
 		hK = new ImageIcon(cimg);
 	}
+
+	/**
+	 * Helper Method for getting the card image for a specific card in hand.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon parseCard(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getsuit()) {
+			case CLUBS: 
+				icon = getCardImageClubs(card);
+				break;
+			case SPADES:
+				icon = getCardImageSpades(card);
+				break;
+			case DIAMONDS:
+				icon = getCardImageDiamonds(card);
+				break;
+			case HEARTS:
+				icon = getCardImageHearts(card);
+				break;
+			default:
+				break;
+		}
+		return icon;
+	}
+	
+	/**
+	 * Get card image for clubs.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageClubs(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = cA;
+			break;
+		case TWO:
+			icon = c2;
+			break;
+		case THREE:
+			icon = c3;
+			break;
+		case FOUR:
+			icon = c4;
+			break;
+		case FIVE:
+			icon = c5;
+			break;
+		case SIX:
+			icon = c6;
+			break;
+		case SEVEN:
+			icon = c7;
+			break;
+		case EIGHT:
+			icon = c8;
+			break;
+		case NINE:
+			icon = c9;
+			break;
+		case TEN:
+			icon = c0;
+			break;
+		case JACK:
+			icon = cJ;
+			break;
+		case QUEEN:
+			icon = cQ;
+			break;
+		case KING:
+			icon = cK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+	
+	/**
+	 * Get card image for Spades.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageSpades(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = sA;
+			break;
+		case TWO:
+			icon = s2;
+			break;
+		case THREE:
+			icon = s3;
+			break;
+		case FOUR:
+			icon = s4;
+			break;
+		case FIVE:
+			icon = s5;
+			break;
+		case SIX:
+			icon = s6;
+			break;
+		case SEVEN:
+			icon = s7;
+			break;
+		case EIGHT:
+			icon = s8;
+			break;
+		case NINE:
+			icon = s9;
+			break;
+		case TEN:
+			icon = s0;
+			break;
+		case JACK:
+			icon = sJ;
+			break;
+		case QUEEN:
+			icon = sQ;
+			break;
+		case KING:
+			icon = sK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+	
+	/**
+	 * Get card image for Diamonds.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageDiamonds(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = dA;
+			break;
+		case TWO:
+			icon = d2;
+			break;
+		case THREE:
+			icon = d3;
+			break;
+		case FOUR:
+			icon = d4;
+			break;
+		case FIVE:
+			icon = d5;
+			break;
+		case SIX:
+			icon = d6;
+			break;
+		case SEVEN:
+			icon = d7;
+			break;
+		case EIGHT:
+			icon = d8;
+			break;
+		case NINE:
+			icon = d9;
+			break;
+		case TEN:
+			icon = d0;
+			break;
+		case JACK:
+			icon = dJ;
+			break;
+		case QUEEN:
+			icon = dQ;
+			break;
+		case KING:
+			icon = dK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+	
+	/**
+	 * Get card image for Hearts.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageHearts(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = hA;
+			break;
+		case TWO:
+			icon = h2;
+			break;
+		case THREE:
+			icon = h3;
+			break;
+		case FOUR:
+			icon = h4;
+			break;
+		case FIVE:
+			icon = h5;
+			break;
+		case SIX:
+			icon = h6;
+			break;
+		case SEVEN:
+			icon = h7;
+			break;
+		case EIGHT:
+			icon = h8;
+			break;
+		case NINE:
+			icon = h9;
+			break;
+		case TEN:
+			icon = h0;
+			break;
+		case JACK:
+			icon = hJ;
+			break;
+		case QUEEN:
+			icon = hQ;
+			break;
+		case KING:
+			icon = hK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+	
 }
