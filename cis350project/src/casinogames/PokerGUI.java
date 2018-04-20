@@ -395,7 +395,7 @@ public class PokerGUI {
 	/**
 	 * Enable game buttons.
 	 */
-	private void enableGameButtons(){
+	private void enableGameButtons() {
 		holdCard1.setEnabled(true);
 		holdCard2.setEnabled(true);
 		holdCard3.setEnabled(true);
@@ -406,7 +406,7 @@ public class PokerGUI {
 	/**
 	 * Disables game buttons.
 	 */
-	private void disableGameButtons(){
+	private void disableGameButtons() {
 		holdCard1.setEnabled(false);
 		holdCard2.setEnabled(false);
 		holdCard3.setEnabled(false);
