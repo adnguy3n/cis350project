@@ -13,11 +13,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 /**
  * 
@@ -158,6 +160,7 @@ public class BlackJackGUI {
 	private final JRadioButton wager400 = new JRadioButton("400 credits");
 	/** Radio Button for waging 500 credits. */
 	private final JRadioButton wager500 = new JRadioButton("500 credits");
+	private final JLabel balance = new JLabel();
 
 	/**
 	 * Launch the application.
@@ -195,6 +198,7 @@ public class BlackJackGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Black Jack");
 		frame.setBounds(100, 100, 825, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -239,29 +243,29 @@ public class BlackJackGUI {
 		stand.setBounds(48, 90, 89, 23);
 		controlPanel.add(stand);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(
+		JPanel wagerPanel = new JPanel();
+		wagerPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
 				"Wager", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		panel.setBounds(48, 124, 89, 166);
-		controlPanel.add(panel);
-		panel.setLayout(null);
+		wagerPanel.setBounds(48, 124, 89, 152);
+		controlPanel.add(wagerPanel);
+		wagerPanel.setLayout(null);
 		
-		wager100.setBounds(6, 32, 79, 23);
-		panel.add(wager100);
+		wager100.setBounds(6, 19, 79, 23);
+		wagerPanel.add(wager100);
 		
-		wager200.setBounds(6, 58, 79, 23);
-		panel.add(wager200);
+		wager200.setBounds(6, 45, 79, 23);
+		wagerPanel.add(wager200);
 		
-		wager300.setBounds(6, 84, 79, 23);
-		panel.add(wager300);
+		wager300.setBounds(6, 71, 79, 23);
+		wagerPanel.add(wager300);
 		
-		wager400.setBounds(6, 110, 79, 23);
-		panel.add(wager400);
+		wager400.setBounds(6, 97, 79, 23);
+		wagerPanel.add(wager400);
 		
-		wager500.setBounds(6, 136, 79, 23);
-		panel.add(wager500);
+		wager500.setBounds(6, 123, 79, 23);
+		wagerPanel.add(wager500);
 		
 		wager.add(wager100);
 		wager.add(wager200);
@@ -270,6 +274,22 @@ public class BlackJackGUI {
 		wager.add(wager500);
 		wager100.setSelected(true);
 		game.setWager(100);
+		disableWager();
+		
+		JPanel balancePanel = new JPanel();
+		balancePanel.setBorder(new TitledBorder(new EtchedBorder(
+				EtchedBorder.LOWERED, null, null), 
+				"Credits", TitledBorder.LEADING, 
+				TitledBorder.TOP, null, null));
+		balancePanel.setBounds(48, 276, 90, 43);
+		
+		controlPanel.add(balancePanel);
+		balancePanel.setLayout(null);
+		balance.setHorizontalAlignment(SwingConstants.CENTER);
+		balance.setBounds(10, 14, 70, 21);
+		balance.setText("" + game.getPlayer(1).getBalance());
+		
+		balancePanel.add(balance);
 		
 		for (int i = 0; i < 17; i++) {
 			dealerCard[i] = new JLabel();
@@ -316,6 +336,7 @@ public class BlackJackGUI {
 			 */
 			public void actionPerformed(final ActionEvent e) {
 				game.hit();
+				disableWager();
 				if (game.isBust(game.
 						getPlayer(game.
 								getTurnPlayer()
@@ -347,6 +368,7 @@ public class BlackJackGUI {
 			 * active player's turn.
 			 */
 			public void actionPerformed(final ActionEvent e) {
+				disableWager();
 				switch (game.getTurnPlayer()) {
 					case 0:
 						endHand(false);
@@ -362,6 +384,71 @@ public class BlackJackGUI {
 				}
 			}
 		});
+		
+		wager100.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				// TODO Auto-generated method stub
+				game.setWager(100);
+			}
+			
+		});
+		
+		wager200.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				// TODO Auto-generated method stub
+				game.setWager(200);
+			}
+			
+		});
+		
+		wager300.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				// TODO Auto-generated method stub
+				game.setWager(300);
+			}
+			
+		});
+		
+		wager400.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				// TODO Auto-generated method stub
+				game.setWager(400);
+			}
+			
+		});
+		
+		wager500.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				// TODO Auto-generated method stub
+				game.setWager(500);
+			}
+			
+		});
 	}
 	
 	/**
@@ -374,11 +461,15 @@ public class BlackJackGUI {
 				case 0:
 					//playerWinCount++;
 					System.out.println("Player Win.");
+					game.getPlayer(1).
+					addBalance(game.getWager());
 					break;
 				
 				case 1:
 					//dealerWinCount++;
 					System.out.println("Dealer Win.");
+					game.getPlayer(1).
+					subBalance(game.getWager());
 					break;
 					
 				default:
@@ -390,15 +481,21 @@ public class BlackJackGUI {
 				game.getPlayer(0))) {
 			//dealerWinCount++;
 			System.out.println("Dealer Win.");
+			game.getPlayer(1).subBalance(game.getWager());
 		} else {
 			//playerWinCount++;
 			System.out.println("Player Win.");
+			game.getPlayer(1).addBalance(game.getWager());
 		}
 		
 		enableStartButton();
 		game.gameReset();
-		//playerWinCountLbl.setText("Player Wins: " + playerWinCount);
-		//dealerWinCountLbl.setText("Dealer Wins: " + dealerWinCount);
+		balance.setText("" + game.getPlayer(1).getBalance());
+		if (game.getPlayer(1).getBalance() <= 0) {
+			JOptionPane.showMessageDialog(frame,
+				    "You're out of money!");
+			System.exit(0);
+		}
 	}
 	
 	/**
@@ -441,11 +538,7 @@ public class BlackJackGUI {
 		hit.setEnabled(true);
 		stand.setEnabled(true);
 		play.setEnabled(false);
-		wager100.setEnabled(false);
-		wager200.setEnabled(false);
-		wager300.setEnabled(false);
-		wager400.setEnabled(false);
-		wager500.setEnabled(false);
+		enableWager();
 	}
 	
 	/**
@@ -453,13 +546,30 @@ public class BlackJackGUI {
 	 */
 	private void enableStartButton() {
 		play.setEnabled(true);
+		hit.setEnabled(false);
+		stand.setEnabled(false);
+	}
+	
+	/**
+	 * Helper Method for enabling wager radio buttons.
+	 */
+	private void enableWager() {
 		wager100.setEnabled(true);
 		wager200.setEnabled(true);
 		wager300.setEnabled(true);
 		wager400.setEnabled(true);
 		wager500.setEnabled(true);
-		hit.setEnabled(false);
-		stand.setEnabled(false);
+	}
+	
+	/**
+	 * Helper Method for disabling wager radio buttons.
+	 */
+	private void disableWager() {
+		wager100.setEnabled(false);
+		wager200.setEnabled(false);
+		wager300.setEnabled(false);
+		wager400.setEnabled(false);
+		wager500.setEnabled(false);
 	}
 	
 	/**
@@ -1318,4 +1428,12 @@ public class BlackJackGUI {
 		return icon;
 	}
 	
+	/**
+	 * Method for returning the Jframe to the main class.
+	 * 
+	 * @return The Jframe Stage so the GUI can be ran from the main method.
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
 }

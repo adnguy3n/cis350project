@@ -269,7 +269,7 @@ public class CasinoGamesBlackJackModel {
 	 * Sets the wager of the current hand.
 	 * @param bet The amount of money waged.
 	 */
-	public void setWager(int bet) {
+	public void setWager(final int bet) {
 		wager = bet;
 	}
 	
