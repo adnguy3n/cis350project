@@ -24,6 +24,8 @@ public class CasinoGamesBlackJackModel {
 	private int turn;
 	/** Number of hands Dealt.*/
 	private int hands = 0;
+	/** The current wager. */
+	private int wager;
 	
 	
 	/**
@@ -92,9 +94,7 @@ public class CasinoGamesBlackJackModel {
 	public void hit() {
 		switch (turn) {
 			case 0:
-				if (!isBust(theDealer)) {
-					theDealer.addToHand(mainDeck.draw());
-				}
+				theDealer.addToHand(mainDeck.draw());
 				break;
 			
 			case 1:
@@ -111,12 +111,6 @@ public class CasinoGamesBlackJackModel {
 	 */
 	public void stand() {
 		changeplayer();
-		while (theDealer.getHandValue() <= 16) {
-			if (!isBust(theDealer)) {
-				turn = 0;
-				hit();
-			}
-		}
 	}
 	
 	/**
@@ -269,6 +263,22 @@ public class CasinoGamesBlackJackModel {
 	public void gameReset() {
 		player1.clearHand();
 		theDealer.clearHand();
+	}
+	
+	/**
+	 * Sets the wager of the current hand.
+	 * @param bet The amount of money waged.
+	 */
+	public void setWager(int bet) {
+		wager = bet;
+	}
+	
+	/**
+	 * Get method for the wager of the current hand.
+	 * @return wager The current wager.
+	 */
+	public int getWager() {
+		return wager;
 	}
 	
 }

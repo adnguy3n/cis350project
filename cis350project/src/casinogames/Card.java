@@ -40,8 +40,11 @@ public class Card {
 		return suit;
 	}
 	
-	/* Get method for hold status, returns boolean when called. */
-	
+	/**
+	 * Get method for hold status.
+	 * 
+	 * @return hold boolean for hold status
+	 */
 	public boolean gethold() {
 		return hold;
 	}

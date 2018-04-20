@@ -8,13 +8,14 @@ public class Player {
 	/** Array List representing the player's hand.*/
 	private ArrayList<Card> hand;
 	/** integer representing the player's cash. */
-	private final int balance = 5000;
+	private int balance;
 	
 	/**
 	 * Default Constructor, creates a player with an empty hand.
 	 */
 	public Player() {
 		hand = new ArrayList<Card>();
+		balance = 5000;
 	}
 	
 	/**
@@ -42,8 +43,28 @@ public class Player {
 		return hand;
 	}
 	
-	public int getBalance(){
+	/**
+	 * Get method for the player's current balance.
+	 * @return balance the current amount of money the player has.
+	 */
+	public int getBalance() {
 		return balance;
+	}
+	
+	/**
+	 * Method for adding to a player's balance.
+	 * @param winnings the amount of money the player won.
+	 */
+	public void addBalance(final int winnings) {
+		balance += winnings;
+	}
+	
+	/**
+	 * Method for subtracting from a player's balance.
+	 * @param loss the amount of money the player lost.
+	 */
+	public void subBalance(final int loss) {
+		balance -= loss;
 	}
 	
 	/**
