@@ -37,7 +37,7 @@ public class CasinoGamesPokerModel {
 	
 	/*player getter*/
 	public Player getPlayer(){
-		return this.player1;
+		return player1;
 	}
 	
 	/*starts the game*/
@@ -259,7 +259,7 @@ public class CasinoGamesPokerModel {
 	
 	/*Gets the player's bet*/
 	
-	private int getWager(){
+	public int getWager(){
 		return wager;
 	}
 	

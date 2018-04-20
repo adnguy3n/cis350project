@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JLayeredPane;
 import javax.swing.border.BevelBorder;
 import java.awt.Panel;
@@ -162,18 +164,32 @@ public class PokerGUI {
 	/** Button group for wager radio buttons. */
 	private final ButtonGroup wager = new ButtonGroup();
 	/** Radio Button for waging 100 credits. */
-	private final JRadioButton wager100 = new JRadioButton("100 credits");
+	private final JRadioButton wager100 = new JRadioButton("$100");
 	/** Radio Button for waging 200 credits. */
-	private final JRadioButton wager200 = new JRadioButton("200 credits");
+	private final JRadioButton wager200 = new JRadioButton("$200");
 	/** Radio Button for waging 300 credits. */
-	private final JRadioButton wager300 = new JRadioButton("300 credits");
+	private final JRadioButton wager300 = new JRadioButton("$300");
 	/** Radio Button for waging 400 credits. */
-	private final JRadioButton wager400 = new JRadioButton("400 credits");
+	private final JRadioButton wager400 = new JRadioButton("$400");
 	/** Radio Button for waging 500 credits. */
-	private final JRadioButton wager500 = new JRadioButton("500 credits");
+	private final JRadioButton wager500 = new JRadioButton("$500");
 	/** JLabel to display current balance. */
 	private final JLabel balance = new JLabel();
-
+	/** JButton for placing a bet at the start of the game */
+	private final JButton bet = new JButton("Bet");
+	/** JButton for drawing new cards after the first turn */
+	private final JButton draw = new JButton("Draw");
+	/** JLabels for the multiplier list */
+	private final JLabel mult0 = new JLabel("Royal Pair: x1");
+	private final JLabel mult1 = new JLabel("Two Pair: x2");
+	private final JLabel mult2 = new JLabel("Three of a Kind: x3");
+	private final JLabel mult3 = new JLabel("Straight: x5");
+	private final JLabel mult4 = new JLabel("Flush: x6");
+	private final JLabel mult5 = new JLabel("Full House: x9");
+	private final JLabel mult6 = new JLabel("Four of a Kind: x25");
+	private final JLabel mult7 = new JLabel("Straight Flush: x50");
+	private final JLabel mult8 = new JLabel("Royal Flush: x250");
+	
 	/**
 	 * Launch the application.
 	 */
@@ -221,21 +237,51 @@ public class PokerGUI {
 		playerHandPanel.setLayout(null);
 		frame.getContentPane().add(playerHandPanel);
 		
+		JPanel multiplierPanel = new JPanel();
+		multiplierPanel.setBorder(new TitledBorder(new EtchedBorder(
+				EtchedBorder.LOWERED, null, null), 
+				"Hand Multipliers", TitledBorder.LEFT, 
+				TitledBorder.TOP, null, null));
+		multiplierPanel.setBounds(10,11,450,200);
+		multiplierPanel.setLayout(null);
+		frame.getContentPane().add(multiplierPanel);
+		mult0.setBounds(10, 11, 400, 100);
+		mult1.setBounds(100, 11, 400, 100);
+		mult2.setBounds(180, 11, 400, 100);
+		mult3.setBounds(310, 11, 400, 100);
+		mult4.setBounds(10, 11, 400, 175);
+		mult5.setBounds(100, 11, 400, 175);
+		mult6.setBounds(180, 11, 400, 175);
+		multiplierPanel.add(mult0);
+		multiplierPanel.add(mult1);
+		multiplierPanel.add(mult2);
+		multiplierPanel.add(mult3);
+		multiplierPanel.add(mult4);
+		multiplierPanel.add(mult5);
+		multiplierPanel.add(mult6);
+		
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
 				"Controls", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		controlPanel.setBounds(620, 11, 179, 330);
+		controlPanel.setBounds(505, 20, 179, 330);
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
+		
+		bet.setBounds(45, 22, 89, 23);
+		controlPanel.add(bet);
+		
+		draw.setEnabled(false);
+		draw.setBounds(45, 56, 89, 23);
+		controlPanel.add(draw);
 		
 		JPanel wagerPanel = new JPanel();
 		wagerPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
 				"Wager", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		wagerPanel.setBounds(48, 124, 89, 152);
+		wagerPanel.setBounds(45, 124, 90, 152);
 		controlPanel.add(wagerPanel);
 		wagerPanel.setLayout(null);
 
@@ -259,9 +305,21 @@ public class PokerGUI {
 		wager.add(wager300);
 		wager.add(wager400);
 		wager.add(wager500);
-		wager100.setSelected(true);
-		game.setWager(100);
-		disableWager();
+		
+		JPanel balancePanel = new JPanel();
+		balancePanel.setBorder(new TitledBorder(new EtchedBorder(
+				EtchedBorder.LOWERED, null, null), 
+				"Credits", TitledBorder.LEADING, 
+				TitledBorder.TOP, null, null));
+		balancePanel.setBounds(45, 276, 90, 43);
+
+		controlPanel.add(balancePanel);
+		balancePanel.setLayout(null);
+		balance.setHorizontalAlignment(SwingConstants.CENTER);
+		balance.setBounds(10, 14, 70, 21);
+		//balance.setText("" + game.getPlayer().getBalance());
+
+		balancePanel.add(balance);
 
 		
 		playerCard1.setBackground(Color.GRAY);
