@@ -882,4 +882,13 @@ public class PokerGUI {
 		
 		hK = new ImageIcon(cimg);
 	}
+	
+	/**
+	 * Method for returning the Jframe to the main class.
+	 * 
+	 * @return The Jframe Stage so the GUI can be ran from the main method.
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
 }

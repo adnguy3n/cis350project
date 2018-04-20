@@ -229,6 +229,7 @@ public class CasinoGamesBlackJackModel {
 	}
 	
 	/**
+	 * Check if the current hand ended in a draw.
 	 * 
 	 * @param player The player whose hand is being compared to the dealer.
 	 * @param dealer The Dealer.
