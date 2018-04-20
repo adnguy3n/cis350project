@@ -140,7 +140,7 @@ public class PokerGUI {
 	/** Card Image for the card back. */
 	private ImageIcon cardBack;
 	/** Game Model **/
-	private CasinoGamesPokerModel game;
+	private CasinoGamesPokerModel game = new CasinoGamesPokerModel();
 	/** JLabel for the first card in the player's hand. */
 	private final JLabel playerCard1 = new JLabel();
 	/** JLabel for the second card in the player's hand. */
@@ -151,6 +151,8 @@ public class PokerGUI {
 	private final JLabel playerCard4 = new JLabel();
 	/** JLabel for the fifth card in the player's hand. */
 	private final JLabel playerCard5 = new JLabel();
+	/** JLabel array of all cards in the hand */
+	private final JLabel[] playerCards = {playerCard1,playerCard2,playerCard3,playerCard4,playerCard5};
 	/** JButton for holding the first card in the player's hand. */
 	private final JButton holdCard1 = new JButton();
 	/** JButton for holding the second card in the player's hand. */
@@ -161,6 +163,8 @@ public class PokerGUI {
 	private final JButton holdCard4 = new JButton();
 	/** JButton for holding the fifth card in the player's hand. */
 	private final JButton holdCard5 = new JButton();
+	/** JButton array for which cards are being held */
+	private final JButton holdCards[] = {holdCard1,holdCard2,holdCard3,holdCard4,holdCard5};
 	/** Button group for wager radio buttons. */
 	private final ButtonGroup wager = new ButtonGroup();
 	/** Radio Button for waging 100 credits. */
@@ -216,7 +220,7 @@ public class PokerGUI {
 		initializeCardImageDiamonds();
 		initializeCardImageHearts();
 		initialize();
-		testImage();
+
 	}
 
 	/**
@@ -321,8 +325,7 @@ public class PokerGUI {
 		balancePanel.setLayout(null);
 		balance.setHorizontalAlignment(SwingConstants.CENTER);
 		balance.setBounds(10, 14, 70, 21);
-	//	balance.setText(""+game.getPlayer().getBalance());
-
+		balance.setText(""+game.getPlayer().getBalance());
 		balancePanel.add(balance);
 
 		
@@ -430,13 +433,22 @@ public class PokerGUI {
 			@Override
 			/*Anonymous method for starting the game with a bet*/
 			public void actionPerformed(final ActionEvent e){
-				game.getPlayer().clearHand();
 				game.startGame();
 				disableWager();
 				enableGameButtons();
 				
-				
-				
+			}
+		});
+		
+		draw.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for drawing new cards on the last turn */
+			public void actionPerformed(final ActionEvent e){
+				disableGameButtons();
+				game.nextTurn();
+				updatePlayerHand();
+				endGame();
+				enableWager();
 			}
 		});
 		
@@ -445,7 +457,6 @@ public class PokerGUI {
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
 				holdCard1.setEnabled(true);
-				playerCard1.setBounds(10, 22, 88, 170);
 				game.getPlayer().getHand().get(0).fliphold();
 			}
 			
@@ -455,8 +466,6 @@ public class PokerGUI {
 			@Override
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
-				game.startGame();
-				enableGameButtons();
 				holdCard2.setEnabled(true);
 				game.getPlayer().getHand().get(1).fliphold();
 			}
@@ -467,8 +476,6 @@ public class PokerGUI {
 			@Override
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
-				game.startGame();
-				enableGameButtons();
 				holdCard3.setEnabled(true);
 				game.getPlayer().getHand().get(2).fliphold();
 			}
@@ -479,8 +486,6 @@ public class PokerGUI {
 			@Override
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
-				game.startGame();
-				enableGameButtons();
 				holdCard4.setEnabled(true);
 				game.getPlayer().getHand().get(3).fliphold();
 			}
@@ -491,25 +496,371 @@ public class PokerGUI {
 			@Override
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
-				game.startGame();
-				enableGameButtons();
 				holdCard5.setEnabled(true);
 				game.getPlayer().getHand().get(4).fliphold();
 			}
 			
 		});
+		
+		wager100.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				game.setWager(100);
+			}
+
+		});
+
+		wager200.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				game.setWager(200);
+			}
+
+		});
+
+		wager300.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				game.setWager(300);
+			}
+
+		});
+
+		wager400.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				game.setWager(400);
+			}
+
+		});
+
+		wager500.addActionListener(new ActionListener() {
+			@Override
+			/**
+			 * Anonymous Method for a wager radio button. 
+			 * Sets the wagered amount.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				game.setWager(500);
+			}
+
+		});
 	}
+	
+	/**
+	 * Update the player's hand visual.
+	 */
+	private void updatePlayerHand() {
+		for (int i = 0; i < game.getPlayer().getHand().size(); i++) {
+			playerCards[i].setIcon(parseCard(
+					game.getPlayer().getHand().get(i)));
+		}
+	}
+	
+	/**
+	 * Ends the hand.
+	 */
+	private void endGame(){
+		if(game.isRoyalPair(game.getPlayer())){
+			game.getPlayer().addBalance(game.getWager());
+		}
+		else if(game.isTwoPair(game.getPlayer())){
+			game.getPlayer().addBalance(2*game.getWager());
+		}
+		else if(game.isOfAKind(game.getPlayer())==3){
+			game.getPlayer().addBalance(3*game.getWager());
+		}
+		else if(game.isStraight(game.getPlayer())){
+			game.getPlayer().addBalance(5*game.getWager());
+		}
+		else if(game.isFlush(game.getPlayer())){
+			game.getPlayer().addBalance(6*game.getWager());
+		}
+		else if(game.isFullHouse(game.getPlayer())){
+			game.getPlayer().addBalance(9*game.getWager());
+		}
+		else if(game.isOfAKind(game.getPlayer())==4){
+			game.getPlayer().addBalance(25*game.getWager());
+		}
+		else if(game.isStraightFlush(game.getPlayer())){
+			game.getPlayer().addBalance(50*game.getWager());
+		}
+		else if(game.isRoyalFlush(game.getPlayer())){
+			game.getPlayer().addBalance(250*game.getWager());
+		}
+		else{
+			game.getPlayer().addBalance(-1*game.getWager());
+		}
+		game.getPlayer().clearHand();
+		game.startGame();
+	}
+	
+	/**
+	 * Helper Method for getting the card image for a specific card in hand.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon parseCard(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getsuit()) {
+		case CLUBS: 
+			icon = getCardImageClubs(card);
+			break;
+		case SPADES:
+			icon = getCardImageSpades(card);
+			break;
+		case DIAMONDS:
+			icon = getCardImageDiamonds(card);
+			break;
+		case HEARTS:
+			icon = getCardImageHearts(card);
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+	
+	
+	/**
+	 * Get card image for clubs.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageClubs(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = cA;
+			break;
+		case TWO:
+			icon = c2;
+			break;
+		case THREE:
+			icon = c3;
+			break;
+		case FOUR:
+			icon = c4;
+			break;
+		case FIVE:
+			icon = c5;
+			break;
+		case SIX:
+			icon = c6;
+			break;
+		case SEVEN:
+			icon = c7;
+			break;
+		case EIGHT:
+			icon = c8;
+			break;
+		case NINE:
+			icon = c9;
+			break;
+		case TEN:
+			icon = c0;
+			break;
+		case JACK:
+			icon = cJ;
+			break;
+		case QUEEN:
+			icon = cQ;
+			break;
+		case KING:
+			icon = cK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+
+	/**
+	 * Get card image for Spades.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageSpades(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = sA;
+			break;
+		case TWO:
+			icon = s2;
+			break;
+		case THREE:
+			icon = s3;
+			break;
+		case FOUR:
+			icon = s4;
+			break;
+		case FIVE:
+			icon = s5;
+			break;
+		case SIX:
+			icon = s6;
+			break;
+		case SEVEN:
+			icon = s7;
+			break;
+		case EIGHT:
+			icon = s8;
+			break;
+		case NINE:
+			icon = s9;
+			break;
+		case TEN:
+			icon = s0;
+			break;
+		case JACK:
+			icon = sJ;
+			break;
+		case QUEEN:
+			icon = sQ;
+			break;
+		case KING:
+			icon = sK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+
+	/**
+	 * Get card image for Diamonds.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageDiamonds(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = dA;
+			break;
+		case TWO:
+			icon = d2;
+			break;
+		case THREE:
+			icon = d3;
+			break;
+		case FOUR:
+			icon = d4;
+			break;
+		case FIVE:
+			icon = d5;
+			break;
+		case SIX:
+			icon = d6;
+			break;
+		case SEVEN:
+			icon = d7;
+			break;
+		case EIGHT:
+			icon = d8;
+			break;
+		case NINE:
+			icon = d9;
+			break;
+		case TEN:
+			icon = d0;
+			break;
+		case JACK:
+			icon = dJ;
+			break;
+		case QUEEN:
+			icon = dQ;
+			break;
+		case KING:
+			icon = dK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+
+	/**
+	 * Get card image for Hearts.
+	 * @param card Card that is getting an image.
+	 * @return icon the image icon for the card.
+	 */
+	private ImageIcon getCardImageHearts(final Card card) {
+		ImageIcon icon = null;
+		switch (card.getValue()) {
+		case ACE:
+			icon = hA;
+			break;
+		case TWO:
+			icon = h2;
+			break;
+		case THREE:
+			icon = h3;
+			break;
+		case FOUR:
+			icon = h4;
+			break;
+		case FIVE:
+			icon = h5;
+			break;
+		case SIX:
+			icon = h6;
+			break;
+		case SEVEN:
+			icon = h7;
+			break;
+		case EIGHT:
+			icon = h8;
+			break;
+		case NINE:
+			icon = h9;
+			break;
+		case TEN:
+			icon = h0;
+			break;
+		case JACK:
+			icon = hJ;
+			break;
+		case QUEEN:
+			icon = hQ;
+			break;
+		case KING:
+			icon = hK;
+			break;
+		default:
+			break;
+		}
+		return icon;
+	}
+
 	
 	/**
 	 * Test Method for images. /
 	 */
-	private void testImage() {
+	/*private void testImage() {
 		playerCard1.setIcon(c2);
 		playerCard2.setIcon(cardBack);
 		playerCard3.setIcon(hK);
 		playerCard4.setIcon(d7);
 		playerCard5.setIcon(s0);
-	}
+	}*/
 	
 	/**
 	 * Initialize image for card back.

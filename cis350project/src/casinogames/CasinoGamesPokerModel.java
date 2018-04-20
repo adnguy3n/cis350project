@@ -43,6 +43,7 @@ public class CasinoGamesPokerModel {
 	/*starts the game*/
 	public void startGame(){
 		turn = 1;
+		
 		deal();
 		//prompt for bet amount
 	}
@@ -84,7 +85,7 @@ public class CasinoGamesPokerModel {
 	
 	/*replaces cards not held by the player*/
 	
-	private void nextTurn(){
+	public void nextTurn(){
 		for(int i=0;i<player1.getHandSize();i++){
 			if(player1.getCard(i).gethold() == false){
 				player1.getHand().remove(i);
@@ -153,6 +154,24 @@ public class CasinoGamesPokerModel {
 		return royalPair;
 	}
 	
+	/*determines if a hand is a full house or not*/
+	public boolean isFullHouse(final Player player){
+		if(isOfAKind(player)==3){
+			ArrayList<Integer> temp = toInt(player);
+			for(int i=2;i< temp.size();i++){
+				if((temp.get(i-2)==temp.get(i-1)&&(temp.get(i-1)==temp.get(i)))){
+					temp.remove(i-2);
+					temp.remove(i-1);
+					temp.remove(i);
+				}		
+			}
+			if(temp.size()==2){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/*determines if a hand is a straight or not*/
 	
 	public boolean isStraight(final Player player){
@@ -192,7 +211,7 @@ public class CasinoGamesPokerModel {
 	
 	/*determines if the hand is a three or four of a kind*/
 	
-	public boolean isOfAKind(final Player player){
+	public int isOfAKind(final Player player){
 		ArrayList<Integer> converted = toInt(player);
 		int alike = 1;
 		for(int i=1;i<player.getHandSize();i++){
@@ -201,10 +220,10 @@ public class CasinoGamesPokerModel {
 			}
 		}
 		if(alike>=3){
-			return true;
+			return alike;
 		}
 		else{
-			return false;
+			return 0;
 		}
 	
 	}
