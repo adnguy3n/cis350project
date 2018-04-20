@@ -17,7 +17,8 @@ public final class CasinoGamesMain {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BlackJackGUI window = new BlackJackGUI();
+					BlackJackGUI window = 
+							new BlackJackGUI();
 					window.getFrame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
