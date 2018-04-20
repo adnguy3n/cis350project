@@ -69,11 +69,9 @@ public class CasinoGamesPokerModel {
 	/*deals a hand to the player and the dealer*/
 	
 	private void deal(){
-		if (hands==5){
-			System.out.println("Shuffling deck. ");
-			generateDeck(1);
-			hands = 0;
-		}
+		System.out.println("Shuffling deck. ");
+		generateDeck(1);
+		hands = 0;
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
@@ -81,6 +79,8 @@ public class CasinoGamesPokerModel {
 		player1.addToHand(mainDeck.draw());
 		hands++;
 	}
+	
+
 	
 	/*replaces cards not held by the player*/
 	

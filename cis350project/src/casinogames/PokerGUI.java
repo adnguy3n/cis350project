@@ -250,8 +250,10 @@ public class PokerGUI {
 		mult2.setBounds(180, 11, 400, 100);
 		mult3.setBounds(310, 11, 400, 100);
 		mult4.setBounds(10, 11, 400, 175);
-		mult5.setBounds(100, 11, 400, 175);
-		mult6.setBounds(180, 11, 400, 175);
+		mult5.setBounds(90, 11, 400, 175);
+		mult6.setBounds(200, 11, 400, 175);
+		mult7.setBounds(10, 11, 400, 250);
+		mult8.setBounds(150, 11, 400, 250);
 		multiplierPanel.add(mult0);
 		multiplierPanel.add(mult1);
 		multiplierPanel.add(mult2);
@@ -259,6 +261,8 @@ public class PokerGUI {
 		multiplierPanel.add(mult4);
 		multiplierPanel.add(mult5);
 		multiplierPanel.add(mult6);
+		multiplierPanel.add(mult7);
+		multiplierPanel.add(mult8);
 		
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -317,7 +321,7 @@ public class PokerGUI {
 		balancePanel.setLayout(null);
 		balance.setHorizontalAlignment(SwingConstants.CENTER);
 		balance.setBounds(10, 14, 70, 21);
-		//balance.setText("" + game.getPlayer().getBalance());
+	//	balance.setText(""+game.getPlayer().getBalance());
 
 		balancePanel.add(balance);
 
@@ -421,13 +425,27 @@ public class PokerGUI {
 	
 	/*Helper Method for setting up anonymous Methods.*/
 	private void anonymousListeners(){
+		
+		bet.addActionListener(new ActionListener(){
+			@Override
+			/*Anonymous method for starting the game with a bet*/
+			public void actionPerformed(final ActionEvent e){
+				game.getPlayer().clearHand();
+				game.startGame();
+				disableWager();
+				enableGameButtons();
+				
+				
+				
+			}
+		});
+		
 		holdCard1.addActionListener(new ActionListener(){
 			@Override
 			/*Anonymous method for holding card 1*/
 			public void actionPerformed(final ActionEvent e){
-				game.startGame();
-				enableGameButtons();
 				holdCard1.setEnabled(true);
+				playerCard1.setBounds(10, 22, 88, 170);
 				game.getPlayer().getHand().get(0).fliphold();
 			}
 			
