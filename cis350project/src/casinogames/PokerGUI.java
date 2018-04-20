@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JLayeredPane;
@@ -140,8 +141,18 @@ public class PokerGUI {
 	private final JLabel playerCard3 = new JLabel();
 	/** JLabel for the fourth card in the player's hand. */
 	private final JLabel playerCard4 = new JLabel();
-	/** JLabel for the first card in the player's hand. */
+	/** JLabel for the fifth card in the player's hand. */
 	private final JLabel playerCard5 = new JLabel();
+	/** JButton for holding the first card in the player's hand. */
+	private final JButton holdCard1 = new JButton();
+	/** JButton for holding the second card in the player's hand. */
+	private final JButton holdCard2 = new JButton();
+	/** JButton for holding the third card in the player's hand. */
+	private final JButton holdCard3 = new JButton();
+	/** JButton for holding the fourth card in the player's hand. */
+	private final JButton holdCard4 = new JButton();
+	/** JButton for holding the fifth card in the player's hand. */
+	private final JButton holdCard5 = new JButton();
 
 	/**
 	 * Launch the application.
@@ -195,21 +206,46 @@ public class PokerGUI {
 		playerCard1.setBounds(10, 22, 88, 127);
 		playerHandPanel.add(playerCard1);
 		
+		holdCard1.setOpaque(false);
+		holdCard1.setContentAreaFilled(false);
+		holdCard1.setBounds(10, 22, 88, 127);
+		playerHandPanel.add(holdCard1);
+		
 		playerCard2.setBackground(Color.GRAY);
 		playerCard2.setBounds(108, 22, 88, 127);
 		playerHandPanel.add(playerCard2);
+		
+		holdCard2.setOpaque(false);
+		holdCard2.setContentAreaFilled(false);
+		holdCard2.setBounds(108, 22, 88, 127);
+		playerHandPanel.add(holdCard2);
 		
 		playerCard3.setBackground(Color.GRAY);
 		playerCard3.setBounds(206, 22, 88, 127);
 		playerHandPanel.add(playerCard3);
 		
+		holdCard3.setOpaque(false);
+		holdCard3.setContentAreaFilled(false);
+		holdCard3.setBounds(206, 22, 88, 127);
+		playerHandPanel.add(holdCard3);
+		
 		playerCard4.setBackground(Color.GRAY);
 		playerCard4.setBounds(304, 22, 88, 127);
 		playerHandPanel.add(playerCard4);
 		
+		holdCard4.setOpaque(false);
+		holdCard4.setContentAreaFilled(false);
+		holdCard4.setBounds(304, 22, 88, 127);
+		playerHandPanel.add(holdCard4);
+		
 		playerCard5.setBackground(Color.GRAY);
 		playerCard5.setBounds(402, 22, 88, 127);
 		playerHandPanel.add(playerCard5);
+		
+		holdCard5.setOpaque(false);
+		holdCard5.setContentAreaFilled(false);
+		holdCard5.setBounds(402, 22, 88, 127);
+		playerHandPanel.add(holdCard5);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(520, 11, 154, 160);
