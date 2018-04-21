@@ -141,7 +141,7 @@ public class PokerGUI {
 	/** Card Image for the card back. */
 	private ImageIcon cardBack;
 	/** Game Model. **/
-	private CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+	private CasinoGamesPokerModel game;
 	/** JLabel array of cards in the hand. */
 	private final JLabel[] playerCards = new JLabel[5];
 	/** JPanel array for JPanels used to 
@@ -167,28 +167,28 @@ public class PokerGUI {
 	private final JButton redraw = new JButton("Re-Draw");
 	/** Boolean flag to determine if a hand is in progress. */
 	private boolean start = false;
-	
-	/**
-	 * Launch the application.
-	 * @param args argh
-	 */
-	public static void main(final String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PokerGUI window = new PokerGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
 	public PokerGUI() {
+		int decks = 1;
+		Object[] possibilities = {1, 2, 3};
+		try {
+			decks = (int) JOptionPane.showInputDialog(
+					null,
+					"Enter number of decks:",
+					"Number of Decks",
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					possibilities,
+					1);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"You did not pick the number of decks. "
+					+ "Defaulting to 1.");
+		}
+		game = new CasinoGamesPokerModel(decks);
 		initializeCardBack();
 		initializeCardImageClubs();
 		initializeCardImageSpades();
