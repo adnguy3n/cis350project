@@ -1,6 +1,5 @@
 package casinogames;
 
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.SystemColor;
 
