@@ -23,6 +23,7 @@ import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -478,7 +479,58 @@ public class PokerGUI {
 	 * Ends the hand.
 	 */
 	private void endGame() {
-			
+		switch (game.getResult()) {
+			case ROYAL_FLUSH:
+				JOptionPane.showMessageDialog(frame,
+						"Royal Flush!");
+				break;
+			case STRAIGHT_FLUSH:
+				JOptionPane.showMessageDialog(frame,
+						"Straight Flush!");
+				break;
+			case FOUR_OF_A_KIND:
+				JOptionPane.showMessageDialog(frame,
+						"Four of a kind!");
+				break;
+			case FULLHOUSE:
+				JOptionPane.showMessageDialog(frame,
+						"Full House!");
+				break;
+			case FLUSH:
+				JOptionPane.showMessageDialog(frame,
+						"Flush!");
+				break;
+			case STRAIGHT:
+				JOptionPane.showMessageDialog(frame,
+						"Straight!");
+				break;
+			case THREE_OF_A_KIND:
+				JOptionPane.showMessageDialog(frame,
+						"Three of a Kind!");
+				break;
+			case TWO_PAIR:
+				JOptionPane.showMessageDialog(frame,
+						"Two Pair!");
+				break;
+			case ROYAL_PAIR:
+				JOptionPane.showMessageDialog(frame,
+						"Royal Pair!");
+				break;
+			default:
+				//Exits game if player runs out of money.
+				if (game.getPlayer().getBalance() <= 0) {
+					JOptionPane.showMessageDialog(frame,
+						"You're out of money!",
+						"You're broke!",
+						JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}
+				JOptionPane.showMessageDialog(frame,
+						"Better luck next time!");
+				break;
+		}
+		
+		balance.setText("" + game.getPlayer().getBalance());
 	}
 	
 	/**
