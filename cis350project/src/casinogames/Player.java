@@ -28,6 +28,17 @@ public class Player {
 	}
 	
 	/**
+	 * Add Card to hand at index.
+	 * 
+	 * @param card The card to be added to the player's hand.
+	 * @param index The index at which the card is added to the
+	 * player's hand.
+	 */
+	public void addToHand(final Card card, final int index) {
+		hand.add(index, card);
+	}
+	
+	/**
 	 * Discard hand.
 	 */
 	public void clearHand() {

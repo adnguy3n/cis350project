@@ -12,15 +12,11 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class CasinoGamesPokerModel {
 	/** The player. */
-	private Player player1 = new Player();
+	private Player thePlayer = new Player();
 	/** Number of standard decks that comprises the deck in use. */
 	private Deck standardDeck = new Deck();
 	/** Deck being used. */
 	private Deck mainDeck = new Deck(0);
-	/** Turn in game. */
-	private int turn;
-	/** Number of hands dealt. */
-	private int hands = 0;
 	/** Bet placed at the beginning of the game. */
 	private int wager = 0;
 	/**Array of payout multipliers. */
@@ -32,35 +28,59 @@ public class CasinoGamesPokerModel {
 				"Three of a Kind", "Straight", 
 				"Flush", "Full House", "Four of a Kind", 
 				"Straight Flush", "Royal Flush"};
-	
-	/**
-	 * Default Constructor for Poker Game.
-	 */
-	public CasinoGamesPokerModel() {
-		generateDeck(1);
-	}
+	/** Boolean for determining which cards are kept. */
+	private final boolean[] keep = new boolean[5];
+	/** Number of standard decks being used. */
+	private final int numOfDecks;
 	
 	/**
 	 * Constructor for Poker Game.
 	 * @param decks The number of decks being used.
 	 */
 	public CasinoGamesPokerModel(final int decks) {
-		generateDeck(decks);
+		numOfDecks = decks;
+		for (int i = 0; i < 5; i++) {
+			keep[i] = false;
+		}
+		generateDeck(numOfDecks);
 	}
 	
 	/**
 	 * Getting method for player.
-	 * @return player1 The player.
+	 * @return thePlayer The player.
 	 */
 	public Player getPlayer() {
-		return player1;
+		return thePlayer;
 	}
 	
 	/**
 	 * Public method for starting the game.
 	 */
 	public void startGame() {
-		deal();
+		if (mainDeck.getSize() < 10) {
+			System.out.println("Shuffling Deck");
+			generateDeck(numOfDecks);
+		}
+		draw(5);
+	}
+	
+	/**
+	 * Method for drawing cards to hand.
+	 * @param draws The number of cards being drawn.
+	 */
+	private void draw(final int draws) {
+		for (int i = 0; i < draws; i++) {
+			thePlayer.addToHand(mainDeck.draw());
+		}
+	}
+	
+	/**
+	 * Method for discarding unwanted cards and drawing new cards.
+	 * @param slot The placement in hand of the cards being redrawn.
+	 */
+	public void redraw(final int slot) {
+		thePlayer.getHand().remove(slot);
+		thePlayer.addToHand(mainDeck.draw(), slot);
 	}
 	
 	/**
@@ -85,32 +105,57 @@ public class CasinoGamesPokerModel {
 	}
 	
 	/**
-	 * Deals a hand to the player.
+	 * Setter method for booleans determining which cards to
+	 * keep when re-drawing.
+	 * @param cardSlot The card slot in hand to keep.
 	 */
-	private void deal() {
-		System.out.println("Shuffling deck. ");
-		generateDeck(1);
-		hands = 0;
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		hands++;
+	public void setKeep(final int cardSlot) {
+		if (keep[cardSlot]) {
+			keep[cardSlot] = false;
+		} else {
+			keep[cardSlot] = true;
+		}
 	}
 	
-	/** 
-	 * Replaces cards not held by the player.
+	/**
+	 * Getter method for booleans determining which cards to
+	 * keep when redrawing.
+	 * @param cardSlot The card slot in hand to keep.
+	 * @return true If the card is being kept or false if
+	 * the card is being discarded.
 	 */
-	public void nextTurn() {
-		for (int i = 0; i < player1.getHandSize(); i++) {
-			if (player1.getCard(i).gethold()) {
-				player1.getHand().remove(i);
-				player1.addToHand(mainDeck.draw());
-			}
-			
+	public boolean getKeep(final int cardSlot) {
+		return keep[cardSlot];
+	}
+	
+	/**
+	 * Method for resetting keep status at the end of a hand.
+	 */
+	public void resetKeep() {
+		for (int i = 0; i < 5; i++) {
+			keep[i] = false;
 		}
-		turn++;
+	}
+	
+	/**
+	 * Determines if the player has cards of the same value.	
+	 * @param player The player.
+	 * @return alike The number of cards the player has the same of..
+	 */
+	public int isOfAKind(final Player player) {
+		ArrayList<Integer> converted = toInt(player);
+		int alike = 1;
+		for (int i = 1; i < player.getHandSize(); i++) {
+			if (converted.get(i - 1) == converted.get(i)) {
+				alike++;
+			}
+		}
+		if (alike >= 3) {
+			return alike;
+		} else {
+			return 0;
+		}
+	
 	}
 	
 	/**
@@ -240,33 +285,7 @@ public class CasinoGamesPokerModel {
 				pairs++;
 			}
 		}
-		if (pairs == 2) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * Determines if the player has four of a kind.	
-	 * @param player The player.
-	 * @return true if the player has four of a kind.
-	 * false otherwise.
-	 */
-	public int isOfAKind(final Player player) {
-		ArrayList<Integer> converted = toInt(player);
-		int alike = 1;
-		for (int i = 1; i < player.getHandSize(); i++) {
-			if (converted.get(i - 1) == converted.get(i)) {
-				alike++;
-			}
-		}
-		if (alike >= 3) {
-			return alike;
-		} else {
-			return 0;
-		}
-	
+		return pairs == 2;
 	}
 	
 	/**
