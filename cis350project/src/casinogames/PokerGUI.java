@@ -273,7 +273,8 @@ public class PokerGUI {
 		getColumn(1).setPreferredWidth(29);
 		multiplierListTable.getColumnModel().
 		getColumn(1).setMinWidth(2);
-		multiplierListTable.setBounds(10, 21, 129, 145);
+		multiplierListTable.setBounds(
+				10, 21, 129, 145);
 		multiplierPanel.add(multiplierListTable);
 		
 		JPanel controlPanel = new JPanel();
