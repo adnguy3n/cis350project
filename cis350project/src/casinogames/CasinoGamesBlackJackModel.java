@@ -22,8 +22,6 @@ public class CasinoGamesBlackJackModel {
 	private Deck mainDeck = new Deck(0);
 	/** Current player Turn Flag: 1 for player 1, 0 for Dealer.*/
 	private int turn;
-	/** Number of hands Dealt.*/
-	private int hands = 0;
 	/** The current wager. */
 	private int wager;
 	
@@ -76,16 +74,14 @@ public class CasinoGamesBlackJackModel {
 	 * Deal starting hand.
 	 */
 	private void deal() {
-		if (hands == 5) {
+		if (mainDeck.getSize() < 34) {
 			System.out.println("Shuffling Deck.");
 			generateDeck(numOfDeck);
-			hands = 0;
 		}
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		theDealer.addToHand(mainDeck.draw());
 		theDealer.addToHand(mainDeck.draw());
-		hands++;
 	}
 	
 	/**
