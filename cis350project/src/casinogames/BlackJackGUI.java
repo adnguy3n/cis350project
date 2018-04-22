@@ -19,7 +19,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
 
 /**
  * Graphical User Interface for Black Jack Game.
@@ -160,12 +163,17 @@ public class BlackJackGUI {
 	private final JRadioButton wager500 = new JRadioButton("500 credits");
 	/** JLabel to display current balance. */
 	private final JLabel balance = new JLabel();
+	/** Log of the current game session. */
+	private final JTextArea history = new JTextArea();
+	/** Scroll Pane to hold history. */
+	private final JScrollPane scroll = new JScrollPane(history);
 
 	/**
 	 * Create the application.
 	 */
 	public BlackJackGUI() {
 		int decks = 1;
+		/*
 		Object[] possibilities = {1, 2, 3};
 		try {
 			decks = (int) JOptionPane.showInputDialog(
@@ -181,6 +189,7 @@ public class BlackJackGUI {
 					"You did not pick the number of decks. "
 					+ "Defaulting to 1.");
 		}
+		*/
 		game = new CasinoGamesBlackJackModel(decks);
 		initializeCardBack();
 		initializeCardImageClubs();
@@ -283,7 +292,7 @@ public class BlackJackGUI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Black Jack");
-		frame.setBounds(100, 100, 825, 390);
+		frame.setBounds(100, 100, 1080, 390);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		setWindowListener();
@@ -316,7 +325,7 @@ public class BlackJackGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Controls", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		controlPanel.setBounds(620, 11, 179, 330);
+		controlPanel.setBounds(875, 11, 179, 330);
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
 
@@ -366,7 +375,6 @@ public class BlackJackGUI {
 		wager.add(wager500);
 		wager100.setSelected(true);
 		game.setWager(100);
-		disableWager();
 
 		//JPanel for the player's money balance.
 		JPanel balancePanel = new JPanel();
@@ -385,6 +393,10 @@ public class BlackJackGUI {
 		balance.setText("" + game.getPlayer(1).getBalance());
 
 		balancePanel.add(balance);
+		
+		scroll.setBounds(616, 17, 249, 323);
+		history.setEditable(false);
+		frame.getContentPane().add(scroll);
 
 		//Dealer's Cards.
 		for (int i = 0; i < 17; i++) {
@@ -418,6 +430,7 @@ public class BlackJackGUI {
 			public void actionPerformed(final ActionEvent e) {
 				clearHand();
 				game.startGame();
+				disableWager();
 				enableGameButtons();
 				updatePlayerHand();
 				dealerCard[0].setIcon(cardBack);
@@ -435,7 +448,6 @@ public class BlackJackGUI {
 			 */
 			public void actionPerformed(final ActionEvent e) {
 				game.hit();
-				disableWager();
 				if (game.isBust(game.
 						getPlayer(game.
 								getTurnPlayer()
@@ -572,45 +584,49 @@ public class BlackJackGUI {
 		if (bust) {
 			switch (game.getTurnPlayer()) {
 			case 0:
-				JOptionPane.showMessageDialog(frame,
-						"Player Wins!");
 				game.getPlayer(1).
 				addBalance(game.getWager());
+				history.append("You win! +" + game.getWager() 
+				+ " credits.\n");
 				
 				//Black Jacks have a pay out of 1.5x
 				if (game.isBlackJack(game.getPlayer(1))) {
 					game.getPlayer(1).
 					addBalance((game.getWager() / 2));
+					history.append(
+						"Black Jack! 1.5x Payout +" 
+					+ game.getWager() / 2 + " credits.\n");
 				}
 				break;
 
 			case 1:
-				JOptionPane.showMessageDialog(frame,
-						"Dealer Wins!");
 				game.getPlayer(1).
 				subBalance(game.getWager());
+				history.append("You lost. -" + game.getWager() 
+				+ " credits.\n");
 				break;
 
 			default:
 				break;
 			}
 		} else if (game.isDraw(game.getPlayer(1), game.getPlayer(0))) {
-			JOptionPane.showMessageDialog(frame,
-					"Draw!");
+			history.append("It's a draw.\n");
 		} else if (game.dealerWon(game.getPlayer(1), 
 				game.getPlayer(0))) {
-			JOptionPane.showMessageDialog(frame,
-					"Dealer Wins!");
 			game.getPlayer(1).subBalance(game.getWager());
+			history.append("You lost. -" + game.getWager() 
+			+ " credits.\n");
 		} else {
-			JOptionPane.showMessageDialog(frame,
-					"Player Wins!");
 			game.getPlayer(1).addBalance(game.getWager());
+			history.append("You win! +" + game.getWager() 
+			+ " credits.\n");
 			
 			//Black Jacks have a pay out of 1.5x
 			if (game.isBlackJack(game.getPlayer(1))) {
 				game.getPlayer(1).
 				addBalance((game.getWager() / 2));
+				history.append("Black Jack! 1.5x Payout +" 
+				+ game.getWager() / 2 + " credits.\n");
 			}
 		}
 
@@ -626,6 +642,8 @@ public class BlackJackGUI {
 				JOptionPane.ERROR_MESSAGE);
 			frame.dispose();
 		}
+		
+		enableWager();
 	}
 
 	/**
@@ -668,7 +686,6 @@ public class BlackJackGUI {
 		hit.setEnabled(true);
 		stand.setEnabled(true);
 		play.setEnabled(false);
-		enableWager();
 	}
 
 	/**
