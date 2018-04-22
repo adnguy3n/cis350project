@@ -29,6 +29,22 @@ public class CasinoGamesPokerTest {
 		assertEquals(PokerResult.STRAIGHT, game.getResult());
 	}
 	
+	@Test
+	public void testIsStraight01() {
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Card card1 = new Card(CardValue.TWO, Suit.SPADES); 
+		Card card2 = new Card(CardValue.KING, Suit.CLUBS);
+		Card card3 = new Card(CardValue.TEN, Suit.HEARTS);
+		Card card4 = new Card(CardValue.JACK, Suit.DIAMONDS);
+		Card card5 = new Card(CardValue.QUEEN, Suit.HEARTS);
+		game.getPlayer().addToHand(card1);
+		game.getPlayer().addToHand(card2);
+		game.getPlayer().addToHand(card3);
+		game.getPlayer().addToHand(card4);
+		game.getPlayer().addToHand(card5);
+		assertEquals(false, (PokerResult.STRAIGHT == game.getResult()));
+	}
+	
 	/**
 	 * Tests Conversion.
 	 */

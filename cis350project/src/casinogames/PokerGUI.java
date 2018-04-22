@@ -210,6 +210,7 @@ public class PokerGUI {
 	private void initialize() {
 		history.setEditable(false);
 		frame = new JFrame();
+		frame.setTitle("Poker");
 		frame.setBounds(100, 100, 833, 415);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

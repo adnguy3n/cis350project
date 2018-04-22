@@ -337,7 +337,7 @@ public class CasinoGamesPokerModel {
 	 * false otherwise.
 	 */
 	private boolean isStraight() {
-		
+		//Convert card values into integers for easier processing.
 		ArrayList<Integer> sortedRank = toInt(player);
 		
 		for (int i = 1; i < 5; i++) {
