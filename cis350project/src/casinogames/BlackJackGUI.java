@@ -464,23 +464,11 @@ public class BlackJackGUI {
 			@Override
 			/**
 			 * Anonymous Method for the Stand Button. Ends the
-			 * active player's turn.
+			 * player's turn and runs the dealer script.
 			 */
 			public void actionPerformed(final ActionEvent e) {
-				disableWager();
-				switch (game.getTurnPlayer()) {
-				case 0:
-					endHand(false);
-					break;
-
-				case 1:
-					game.stand();
-					updateDealerHand();
-					break;
-
-				default:
-					break;
-				}
+				game.stand();
+				dealerScript();
 			}
 		});
 
@@ -545,6 +533,37 @@ public class BlackJackGUI {
 		});
 	}
 
+	/**
+	 * Basic AI Script for dealer.
+	 */
+	private void dealerScript() {
+		if (game.isBlackJack(game.getPlayer(1))) {
+			updateDealerHand();
+			endHand(false);
+		} else {
+			while (true) {
+				if (game.getHandValue(game.getPlayer(0)) 
+						> game.getHandValue(
+						game.getPlayer(1))) {
+					updateDealerHand();
+					endHand(false);
+					break;
+				} else if (game.getHandValue(game.getPlayer(0)) 
+					== game.getHandValue(game.getPlayer(1))
+						&& game.getHandValue(
+							game.getPlayer(0)) 
+						> 16) {
+					updateDealerHand();
+					endHand(false);
+					break;
+				} else {
+					game.hit();
+					updateDealerHand();
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Determines who won the round and adds increments their win counter.
 	 * @param bust Boolean for whether or not the hand was a bust.

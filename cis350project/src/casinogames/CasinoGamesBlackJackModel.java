@@ -110,7 +110,18 @@ public class CasinoGamesBlackJackModel {
 	 * Method for when a player stands. Changes the turn player.
 	 */
 	public void stand() {
-		changeplayer();
+		switch (turn) {
+		case 0:
+			turn = 1;
+			break;
+		
+		case 1:
+			turn = 0;
+			break;
+			
+		default:
+			break;
+		}
 	}
 	
 	/**
@@ -120,24 +131,6 @@ public class CasinoGamesBlackJackModel {
 	 */
 	public int getTurnPlayer() {
 		return turn;
-	}
-	
-	/**
-	 * 
-	 */
-	private void changeplayer() {
-		switch (turn) {
-			case 0:
-				turn = 1;
-				break;
-			
-			case 1:
-				turn = 0;
-				break;
-				
-			default:
-				break;
-		}
 	}
 	
 	/**
