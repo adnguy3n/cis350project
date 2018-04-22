@@ -65,7 +65,7 @@ public final class CasinoGamesMain {
 	 * Should never be called.
 	 */
 	private CasinoGamesMain() {
-
+		System.exit(1);
 	}
 
 }
