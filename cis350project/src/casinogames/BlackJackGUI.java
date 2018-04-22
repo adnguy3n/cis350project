@@ -3,6 +3,8 @@ package casinogames;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -189,15 +191,103 @@ public class BlackJackGUI {
 	}
 
 	/**
+	 * Window Listener for when GUI is closed.
+	 */
+	private void setWindowListener() {
+		frame.addWindowListener(new WindowListener() {
+			@Override
+			public void windowActivated(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowClosed(final WindowEvent e) {
+				startNewGame();
+			}
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowDeactivated(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowDeiconified(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowIconified(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowOpened(final WindowEvent e) {
+				//Do nothing.
+			}
+        });
+    }
+	
+	/**
+	 * Asks if the user would like to play again.
+	 */
+	private void startNewGame() {
+		Object[] options = {"Yes",
+		"No"};
+		int o = JOptionPane.showOptionDialog(frame,
+				"Would you like to play again?",
+				"New Game?",
+				JOptionPane.
+				YES_NO_CANCEL_OPTION,
+				JOptionPane.
+				QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if (o == 0) {
+			BlackJackGUI blackJack 
+			= new BlackJackGUI();
+			blackJack.getFrame().
+			setVisible(true);
+		} else {
+			switchToPoker();
+		}
+	}
+	
+	/**
+	 * Asks if the user would like to switch to 
+	 * Poker upon closing.
+	 */
+	private void switchToPoker() {
+		Object[] options = {"Yes",
+		"No"};
+		int o = JOptionPane.showOptionDialog(frame,
+				"Would you like to switch to Poker?",
+				"New Game?",
+				JOptionPane.
+				YES_NO_CANCEL_OPTION,
+				JOptionPane.
+				QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if (o == 0) {
+			PokerGUI poker
+			= new PokerGUI();
+			poker.getFrame().
+			setVisible(true);
+		}
+	}
+	
+	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Black Jack");
 		frame.setBounds(100, 100, 825, 390);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		setWindowListener();
+		
 		//JPanel for the player's hand.
 		JPanel playerHandPanel = new JPanel();
 		playerHandPanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -515,7 +605,7 @@ public class BlackJackGUI {
 				"You don't have enough money!",
 				"~Better luck next time!~",
 				JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+			frame.dispose();
 		}
 	}
 
