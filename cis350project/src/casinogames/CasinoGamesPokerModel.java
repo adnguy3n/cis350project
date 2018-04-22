@@ -7,8 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Logic Model for Poker game.
- * @author TypeL
- *
  */
 public class CasinoGamesPokerModel {
 	/** The player. */

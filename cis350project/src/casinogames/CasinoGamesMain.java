@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 
 /**
  * Main Class has the main method.
- *
  */
 public final class CasinoGamesMain {
 
@@ -21,8 +20,8 @@ public final class CasinoGamesMain {
 		Object[] possibilities = {"Black Jack", "Poker"};
 		game = (String) JOptionPane.showInputDialog(
 				null,
-				"Enter number of decks:",
-				"Number of Decks",
+				"Pick a game:",
+				"Casino Games!",
 				JOptionPane.PLAIN_MESSAGE,
 				null,
 				possibilities,
@@ -51,7 +50,6 @@ public final class CasinoGamesMain {
 						break;
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
 					JOptionPane.showMessageDialog(null,
 						"You did not pick a game. "
 							+ "Exiting!");

@@ -21,8 +21,6 @@ import javax.swing.SwingConstants;
 
 /**
  * Graphical User Interface for Black Jack Game.
- * @author Lunaception
- *
  */
 public class BlackJackGUI {
 
@@ -469,6 +467,12 @@ public class BlackJackGUI {
 						"Player Wins!");
 				game.getPlayer(1).
 				addBalance(game.getWager());
+				
+				//Black Jacks have a pay out of 1.5x
+				if (game.isBlackJack(game.getPlayer(1))) {
+					game.getPlayer(1).
+					addBalance((game.getWager() / 2));
+				}
 				break;
 
 			case 1:
@@ -493,6 +497,12 @@ public class BlackJackGUI {
 			JOptionPane.showMessageDialog(frame,
 					"Player Wins!");
 			game.getPlayer(1).addBalance(game.getWager());
+			
+			//Black Jacks have a pay out of 1.5x
+			if (game.isBlackJack(game.getPlayer(1))) {
+				game.getPlayer(1).
+				addBalance((game.getWager() / 2));
+			}
 		}
 
 		enableStartButton();
@@ -500,11 +510,11 @@ public class BlackJackGUI {
 		balance.setText("" + game.getPlayer(1).getBalance());
 
 		//Exits game if player runs out of money.
-		if (game.getPlayer(1).getBalance() <= 0) {
+		if (game.getPlayer(1).getBalance() < 100) {
 			JOptionPane.showMessageDialog(frame,
-					"You're out of money!",
-					"You're broke!",
-					JOptionPane.ERROR_MESSAGE);
+				"You don't have enough money!",
+				"~Better luck next time!~",
+				JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 	}
@@ -566,10 +576,34 @@ public class BlackJackGUI {
 	 */
 	private void enableWager() {
 		wager100.setEnabled(true);
-		wager200.setEnabled(true);
-		wager300.setEnabled(true);
-		wager400.setEnabled(true);
-		wager500.setEnabled(true);
+		
+		if (game.getPlayer(1).getBalance() >= 200) {
+			wager200.setEnabled(true);
+		} else if (wager200.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer(1).getBalance() >= 300) {
+			wager300.setEnabled(true);
+		} else if (wager300.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer(1).getBalance() >= 400) {
+			wager400.setEnabled(true);
+		} else if (wager400.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer(1).getBalance() >= 500) {
+			wager500.setEnabled(true);
+		} else if (wager500.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
 	}
 
 	/**

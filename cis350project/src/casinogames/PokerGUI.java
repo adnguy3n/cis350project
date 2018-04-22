@@ -18,16 +18,19 @@ import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextArea;
 
 /**
- * 
- * @author Lunaception
- *
+ *  GUI for Poker.
  */
 public class PokerGUI {
 
@@ -166,6 +169,10 @@ public class PokerGUI {
 	private final JButton redraw = new JButton("Re-Draw");
 	/** Boolean flag to determine if a hand is in progress. */
 	private boolean start = false;
+	/** Log of the current game session. */
+	private final JTextArea history = new JTextArea();
+	/** Scroll Pane to hold history. */
+	private final JScrollPane scroll = new JScrollPane(history);
 
 	/**
 	 * Create the application.
@@ -201,6 +208,7 @@ public class PokerGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		history.setEditable(false);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 833, 415);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -233,9 +241,39 @@ public class PokerGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Hand Multipliers", TitledBorder.LEFT, 
 				TitledBorder.TOP, null, null));
-		multiplierPanel.setBounds(10, 0, 610, 177);
+		multiplierPanel.setBounds(10, 0, 149, 177);
 		multiplierPanel.setLayout(null);
 		frame.getContentPane().add(multiplierPanel);
+		
+		JTable multiplierListTable = new JTable();
+		multiplierListTable.setShowHorizontalLines(false);
+		multiplierListTable.setBackground(SystemColor.control);
+		multiplierListTable.setShowGrid(false);
+		multiplierListTable.setRowSelectionAllowed(false);
+		multiplierListTable.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Royal Flush", "250x"},
+				{"Straight Flush", "50x"},
+				{"Four of a Kind", "25x"},
+				{"Full House", "9x"},
+				{"Flush", "6x"},
+				{"Straight", "5x"},
+				{"Three of a Kind", "3x"},
+				{"Two Pair", "2x"},
+				{"Royal Pair", "1x"},
+			},
+			new String[] {
+				"Hand", "Multiplier"
+			}
+		));
+		multiplierListTable.getColumnModel().
+		getColumn(0).setPreferredWidth(83);
+		multiplierListTable.getColumnModel().
+		getColumn(1).setPreferredWidth(29);
+		multiplierListTable.getColumnModel().
+		getColumn(1).setMinWidth(2);
+		multiplierListTable.setBounds(10, 21, 129, 145);
+		multiplierPanel.add(multiplierListTable);
 		
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -299,6 +337,10 @@ public class PokerGUI {
 		balance.setText("" + game.getPlayer().getBalance());
 		balancePanel.add(balance);
 		
+		scroll.setBounds(169, 11, 449, 166);
+		scroll.setViewportView(history);
+		frame.getContentPane().add(scroll);
+		
 		anonymousListeners();
 
 	}
@@ -321,6 +363,8 @@ public class PokerGUI {
 				updatePlayerHand();
 				disableWager();
 				enableGameButtons();
+				history.append("Drawing new hand. Wager: " 
+				+ game.getWager() + " credits.\n");
 			}
 		});
 		
@@ -440,10 +484,34 @@ public class PokerGUI {
 	 */
 	private void enableWager() {
 		wager100.setEnabled(true);
-		wager200.setEnabled(true);
-		wager300.setEnabled(true);
-		wager400.setEnabled(true);
-		wager500.setEnabled(true);
+		
+		if (game.getPlayer().getBalance() >= 200) {
+			wager200.setEnabled(true);
+		} else if (wager200.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer().getBalance() >= 300) {
+			wager300.setEnabled(true);
+		} else if (wager300.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer().getBalance() >= 400) {
+			wager400.setEnabled(true);
+		} else if (wager400.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer().getBalance() >= 500) {
+			wager500.setEnabled(true);
+		} else if (wager500.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
 	}
 
 	/**
@@ -482,50 +550,62 @@ public class PokerGUI {
 			case ROYAL_FLUSH:
 				JOptionPane.showMessageDialog(frame,
 						"Royal Flush!");
+				history.append("Royal Flush! +" 
+						+ game.getWager() * 250 
+						+ "credits.\n");
 				break;
 			case STRAIGHT_FLUSH:
-				JOptionPane.showMessageDialog(frame,
-						"Straight Flush!");
+				history.append("Straight Flush! +" 
+						+ game.getWager() * 50 
+						+ " credits.\n");
 				break;
 			case FOUR_OF_A_KIND:
-				JOptionPane.showMessageDialog(frame,
-						"Four of a kind!");
+				history.append("Four of a kind! +" 
+						+ game.getWager() * 25 
+						+ " credits.\n");
 				break;
 			case FULLHOUSE:
-				JOptionPane.showMessageDialog(frame,
-						"Full House!");
+				history.append("Full House! +" 
+						+ game.getWager() * 9 
+						+ " credits.\n");
 				break;
 			case FLUSH:
-				JOptionPane.showMessageDialog(frame,
-						"Flush!");
+				history.append("Flush. +" 
+						+ game.getWager() * 6 
+						+ " credits.\n");
 				break;
 			case STRAIGHT:
-				JOptionPane.showMessageDialog(frame,
-						"Straight!");
+				history.append("You got a Straight. +" 
+						+ game.getWager() * 5 
+						+ " credits.\n");
 				break;
 			case THREE_OF_A_KIND:
-				JOptionPane.showMessageDialog(frame,
-						"Three of a Kind!");
+				history.append("You got Three of a kind. +" 
+						+ game.getWager() * 3 
+						+ " credits.\n");
 				break;
 			case TWO_PAIR:
-				JOptionPane.showMessageDialog(frame,
-						"Two Pair!");
+				history.append("You got Two Pairs. +" 
+						+ game.getWager() * 2 
+						+ " credits.\n");
 				break;
 			case ROYAL_PAIR:
-				JOptionPane.showMessageDialog(frame,
-						"Royal Pair!");
+				history.append("You got a Royal Pair. +" 
+						+ game.getWager() 
+						+ " credits.\n");
 				break;
 			default:
 				//Exits game if player runs out of money.
-				if (game.getPlayer().getBalance() <= 0) {
+				if (game.getPlayer().getBalance() < 100) {
 					JOptionPane.showMessageDialog(frame,
-						"You're out of money!",
-						"You're broke!",
+						"You don't have enough money!",
+						"~Better luck next time!~",
 						JOptionPane.ERROR_MESSAGE);
 					System.exit(0);
 				}
-				JOptionPane.showMessageDialog(frame,
-						"Better luck next time!");
+				history.append("You got nothing. -" 
+						+ game.getWager() 
+						+ " credits.\n");
 				break;
 		}
 		

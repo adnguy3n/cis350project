@@ -55,6 +55,26 @@ public class Player {
 	}
 	
 	/**
+	 * Get number of Cards in hand.
+	 * 
+	 * @return The number of cards in the player's hand.
+	 */
+	public int getHandSize() {
+		return hand.size();
+	}
+	
+	/**
+	 * Get specific Card in hand.
+	 * 
+	 * @param i The index of the card being returned.
+	 * 
+	 * @return The card at index i.
+	 */
+	public Card getCard(final int i) {
+		return hand.get(i);
+	}
+	
+	/**
 	 * Get method for the player's current balance.
 	 * @return balance the current amount of money the player has.
 	 */
@@ -76,100 +96,5 @@ public class Player {
 	 */
 	public void subBalance(final int loss) {
 		balance -= loss;
-	}
-	
-	/**
-	 * Get number of Cards in hand.
-	 * 
-	 * @return The number of cards in the player's hand.
-	 */
-	public int getHandSize() {
-		return hand.size();
-	}
-	
-	/**
-	 * Get specific Card in hand.
-	 * 
-	 * @param i The index of the card being returned.
-	 * 
-	 * @return The card at index i.
-	 */
-	public Card getCard(final int i) {
-		return hand.get(i);
-	}
-	
-	/**
-	 * Get method for the value of the player's hand.
-	 * 
-	 * @return The value of the player's hand.
-	 */
-	public int getHandValue() {
-		int cardValue = 0;
-		boolean hasAce = false;
-		for (int i = 0; i < hand.size(); i++) {
-			switch (hand.get(i).getValue()) {
-			
-				case ACE:
-					cardValue += 1;
-					hasAce = true;
-					break;
-				
-				case TWO:
-					cardValue += 2;
-					break;
-					
-				case THREE:
-					cardValue += 3;
-					break;
-					
-				case FOUR:
-					cardValue += 4;
-					break;
-					
-				case FIVE:
-					cardValue += 5;
-					break;
-					
-				case SIX:
-					cardValue += 6;
-					break;
-					
-				case SEVEN:
-					cardValue += 7;
-					break;
-					
-				case EIGHT:
-					cardValue += 8;
-					break;
-					
-				case NINE:
-					cardValue += 9;
-					break;
-					
-				case TEN:
-					cardValue += 10;
-					break;
-					
-				case JACK:
-					cardValue += 10;
-					break;
-					
-				case QUEEN:
-					cardValue += 10;
-					break;
-					
-				case KING:
-					cardValue += 10;
-					break;
-			default:
-				break;
-			}
-		}
-		
-		if (hasAce && cardValue < 12) {
-			cardValue += 10;
-		}
-		
-		return cardValue;
 	}
 }
