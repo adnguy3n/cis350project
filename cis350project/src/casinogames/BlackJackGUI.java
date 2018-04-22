@@ -173,7 +173,6 @@ public class BlackJackGUI {
 	 */
 	public BlackJackGUI() {
 		int decks = 1;
-		/*
 		Object[] possibilities = {1, 2, 3};
 		try {
 			decks = (int) JOptionPane.showInputDialog(
@@ -189,7 +188,6 @@ public class BlackJackGUI {
 					"You did not pick the number of decks. "
 					+ "Defaulting to 1.");
 		}
-		*/
 		game = new CasinoGamesBlackJackModel(decks);
 		initializeCardBack();
 		initializeCardImageClubs();
@@ -283,6 +281,8 @@ public class BlackJackGUI {
 			= new PokerGUI();
 			poker.getFrame().
 			setVisible(true);
+		} else {
+			System.exit(0);
 		}
 	}
 	

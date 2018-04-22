@@ -290,6 +290,8 @@ public class PokerGUI {
 			= new BlackJackGUI();
 			blackJack.getFrame().
 			setVisible(true);
+		} else {
+			System.exit(0);
 		}
 	}
 
