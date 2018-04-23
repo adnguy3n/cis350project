@@ -22,8 +22,6 @@ public class CasinoGamesBlackJackModel {
 	private Deck mainDeck = new Deck(0);
 	/** Current player Turn Flag: 1 for player 1, 0 for Dealer.*/
 	private int turn;
-	/** Number of hands Dealt.*/
-	private int hands = 0;
 	/** The current wager. */
 	private int wager;
 	
@@ -76,16 +74,14 @@ public class CasinoGamesBlackJackModel {
 	 * Deal starting hand.
 	 */
 	private void deal() {
-		if (hands == 5) {
+		if (mainDeck.getSize() < 34) {
 			System.out.println("Shuffling Deck.");
 			generateDeck(numOfDeck);
-			hands = 0;
 		}
 		player1.addToHand(mainDeck.draw());
 		player1.addToHand(mainDeck.draw());
 		theDealer.addToHand(mainDeck.draw());
 		theDealer.addToHand(mainDeck.draw());
-		hands++;
 	}
 	
 	/**
@@ -110,7 +106,18 @@ public class CasinoGamesBlackJackModel {
 	 * Method for when a player stands. Changes the turn player.
 	 */
 	public void stand() {
-		changeplayer();
+		switch (turn) {
+		case 0:
+			turn = 1;
+			break;
+		
+		case 1:
+			turn = 0;
+			break;
+			
+		default:
+			break;
+		}
 	}
 	
 	/**
@@ -123,31 +130,79 @@ public class CasinoGamesBlackJackModel {
 	}
 	
 	/**
-	 * 
-	 */
-	private void changeplayer() {
-		switch (turn) {
-			case 0:
-				turn = 1;
-				break;
-			
-			case 1:
-				turn = 0;
-				break;
-				
-			default:
-				break;
-		}
-	}
-	
-	/**
 	 * Returns the numerical value of a player's hand.
 	 * 
 	 * @param player The player whose hand is being checked.
 	 * @return Returns the value of the player's hand.
 	 */
 	public int getHandValue(final Player player) {
-		return player.getHandValue();
+		int cardValue = 0;
+		boolean hasAce = false;
+		for (int i = 0; i < player.getHandSize(); i++) {
+			switch (player.getHand().get(i).getValue()) {
+			
+				case ACE:
+					cardValue += 1;
+					hasAce = true;
+					break;
+				
+				case TWO:
+					cardValue += 2;
+					break;
+					
+				case THREE:
+					cardValue += 3;
+					break;
+					
+				case FOUR:
+					cardValue += 4;
+					break;
+					
+				case FIVE:
+					cardValue += 5;
+					break;
+					
+				case SIX:
+					cardValue += 6;
+					break;
+					
+				case SEVEN:
+					cardValue += 7;
+					break;
+					
+				case EIGHT:
+					cardValue += 8;
+					break;
+					
+				case NINE:
+					cardValue += 9;
+					break;
+					
+				case TEN:
+					cardValue += 10;
+					break;
+					
+				case JACK:
+					cardValue += 10;
+					break;
+					
+				case QUEEN:
+					cardValue += 10;
+					break;
+					
+				case KING:
+					cardValue += 10;
+					break;
+			default:
+				break;
+			}
+		}
+		
+		if (hasAce && cardValue < 12) {
+			cardValue += 10;
+		}
+		
+		return cardValue;
 	}
 	
 	/**
@@ -161,7 +216,7 @@ public class CasinoGamesBlackJackModel {
 	 */
 	public boolean isBlackJack(final Player player) {
 		boolean face = false;
-		if (player.getHandSize() == 2 && player.getHandValue() == 21) {
+		if (player.getHandSize() == 2 && getHandValue(player) == 21) {
 			for (int i = 0; i < player.getHandSize(); i++) {
 				switch (player.getCard(i).getValue()) {
 					case JACK:
@@ -196,7 +251,7 @@ public class CasinoGamesBlackJackModel {
 	 * False otherwise.
 	 */
 	public boolean isBust(final Player player) {
-		if (player.getHandValue() > 21) {
+		if (getHandValue(player) > 21) {
 			return true;
 		}
 		
@@ -214,10 +269,10 @@ public class CasinoGamesBlackJackModel {
 		if (isBust(player)) {
 			return true;
 		}
-		if (dealer.getHandValue() > player.getHandValue() 
+		if (getHandValue(dealer) > getHandValue(player) 
 				&& !isBust(dealer)) {
 			return true;
-		} else if (dealer.getHandValue() == player.getHandValue()) {
+		} else if (getHandValue(dealer) == getHandValue(player)) {
 			if (isBlackJack(dealer) && !isDraw(player, dealer)) {
 				return true;
 			}
@@ -236,7 +291,7 @@ public class CasinoGamesBlackJackModel {
 	 * @return True if the hand is a tie; false otherwise.
 	 */
 	public boolean isDraw(final Player player, final Player dealer) {
-		if (dealer.getHandValue() == player.getHandValue()) {
+		if (getHandValue(dealer) == getHandValue(player)) {
 			return !((isBlackJack(dealer) && !isBlackJack(player)) 
 					|| (!isBlackJack(dealer) 
 							&& 

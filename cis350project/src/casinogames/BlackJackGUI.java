@@ -3,6 +3,8 @@ package casinogames;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,12 +19,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
 
 /**
  * Graphical User Interface for Black Jack Game.
- * @author Lunaception
- *
  */
 public class BlackJackGUI {
 
@@ -160,6 +163,10 @@ public class BlackJackGUI {
 	private final JRadioButton wager500 = new JRadioButton("500 credits");
 	/** JLabel to display current balance. */
 	private final JLabel balance = new JLabel();
+	/** Log of the current game session. */
+	private final JTextArea history = new JTextArea();
+	/** Scroll Pane to hold history. */
+	private final JScrollPane scroll = new JScrollPane(history);
 
 	/**
 	 * Create the application.
@@ -191,15 +198,105 @@ public class BlackJackGUI {
 	}
 
 	/**
+	 * Window Listener for when GUI is closed.
+	 */
+	private void setWindowListener() {
+		frame.addWindowListener(new WindowListener() {
+			@Override
+			public void windowActivated(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowClosed(final WindowEvent e) {
+				startNewGame();
+			}
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowDeactivated(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowDeiconified(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowIconified(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowOpened(final WindowEvent e) {
+				//Do nothing.
+			}
+        });
+    }
+	
+	/**
+	 * Asks if the user would like to play again.
+	 */
+	private void startNewGame() {
+		Object[] options = {"Yes",
+		"No"};
+		int o = JOptionPane.showOptionDialog(frame,
+				"Would you like to play again?",
+				"New Game?",
+				JOptionPane.
+				YES_NO_CANCEL_OPTION,
+				JOptionPane.
+				QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if (o == 0) {
+			BlackJackGUI blackJack 
+			= new BlackJackGUI();
+			blackJack.getFrame().
+			setVisible(true);
+		} else {
+			switchToPoker();
+		}
+	}
+	
+	/**
+	 * Asks if the user would like to switch to 
+	 * Poker upon closing.
+	 */
+	private void switchToPoker() {
+		Object[] options = {"Yes",
+		"No"};
+		int o = JOptionPane.showOptionDialog(frame,
+				"Would you like to switch to Poker?",
+				"New Game?",
+				JOptionPane.
+				YES_NO_CANCEL_OPTION,
+				JOptionPane.
+				QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if (o == 0) {
+			PokerGUI poker
+			= new PokerGUI();
+			poker.getFrame().
+			setVisible(true);
+		} else {
+			System.exit(0);
+		}
+	}
+	
+	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Black Jack");
-		frame.setBounds(100, 100, 825, 390);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 1080, 390);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		setWindowListener();
+		
 		//JPanel for the player's hand.
 		JPanel playerHandPanel = new JPanel();
 		playerHandPanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -228,7 +325,7 @@ public class BlackJackGUI {
 				EtchedBorder.LOWERED, null, null), 
 				"Controls", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		controlPanel.setBounds(620, 11, 179, 330);
+		controlPanel.setBounds(875, 11, 179, 330);
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
 
@@ -278,7 +375,6 @@ public class BlackJackGUI {
 		wager.add(wager500);
 		wager100.setSelected(true);
 		game.setWager(100);
-		disableWager();
 
 		//JPanel for the player's money balance.
 		JPanel balancePanel = new JPanel();
@@ -297,6 +393,10 @@ public class BlackJackGUI {
 		balance.setText("" + game.getPlayer(1).getBalance());
 
 		balancePanel.add(balance);
+		
+		scroll.setBounds(616, 17, 249, 323);
+		history.setEditable(false);
+		frame.getContentPane().add(scroll);
 
 		//Dealer's Cards.
 		for (int i = 0; i < 17; i++) {
@@ -330,6 +430,7 @@ public class BlackJackGUI {
 			public void actionPerformed(final ActionEvent e) {
 				clearHand();
 				game.startGame();
+				disableWager();
 				enableGameButtons();
 				updatePlayerHand();
 				dealerCard[0].setIcon(cardBack);
@@ -347,7 +448,6 @@ public class BlackJackGUI {
 			 */
 			public void actionPerformed(final ActionEvent e) {
 				game.hit();
-				disableWager();
 				if (game.isBust(game.
 						getPlayer(game.
 								getTurnPlayer()
@@ -376,23 +476,11 @@ public class BlackJackGUI {
 			@Override
 			/**
 			 * Anonymous Method for the Stand Button. Ends the
-			 * active player's turn.
+			 * player's turn and runs the dealer script.
 			 */
 			public void actionPerformed(final ActionEvent e) {
-				disableWager();
-				switch (game.getTurnPlayer()) {
-				case 0:
-					endHand(false);
-					break;
-
-				case 1:
-					game.stand();
-					updateDealerHand();
-					break;
-
-				default:
-					break;
-				}
+				game.stand();
+				dealerScript();
 			}
 		});
 
@@ -458,6 +546,37 @@ public class BlackJackGUI {
 	}
 
 	/**
+	 * Basic AI Script for dealer.
+	 */
+	private void dealerScript() {
+		if (game.isBlackJack(game.getPlayer(1))) {
+			updateDealerHand();
+			endHand(false);
+		} else {
+			while (true) {
+				if (game.getHandValue(game.getPlayer(0)) 
+						> game.getHandValue(
+						game.getPlayer(1))) {
+					updateDealerHand();
+					endHand(false);
+					break;
+				} else if (game.getHandValue(game.getPlayer(0)) 
+					== game.getHandValue(game.getPlayer(1))
+						&& game.getHandValue(
+							game.getPlayer(0)) 
+						> 16) {
+					updateDealerHand();
+					endHand(false);
+					break;
+				} else {
+					game.hit();
+					updateDealerHand();
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Determines who won the round and adds increments their win counter.
 	 * @param bust Boolean for whether or not the hand was a bust.
 	 */
@@ -465,34 +584,50 @@ public class BlackJackGUI {
 		if (bust) {
 			switch (game.getTurnPlayer()) {
 			case 0:
-				JOptionPane.showMessageDialog(frame,
-						"Player Wins!");
 				game.getPlayer(1).
 				addBalance(game.getWager());
+				history.append("You win! +" + game.getWager() 
+				+ " credits.\n");
+				
+				//Black Jacks have a pay out of 1.5x
+				if (game.isBlackJack(game.getPlayer(1))) {
+					game.getPlayer(1).
+					addBalance((game.getWager() / 2));
+					history.append(
+						"Black Jack! 1.5x Payout +" 
+					+ game.getWager() / 2 + " credits.\n");
+				}
 				break;
 
 			case 1:
-				JOptionPane.showMessageDialog(frame,
-						"Dealer Wins!");
 				game.getPlayer(1).
 				subBalance(game.getWager());
+				history.append("You lost. -" + game.getWager() 
+				+ " credits.\n");
 				break;
 
 			default:
 				break;
 			}
 		} else if (game.isDraw(game.getPlayer(1), game.getPlayer(0))) {
-			JOptionPane.showMessageDialog(frame,
-					"Draw!");
+			history.append("It's a draw.\n");
 		} else if (game.dealerWon(game.getPlayer(1), 
 				game.getPlayer(0))) {
-			JOptionPane.showMessageDialog(frame,
-					"Dealer Wins!");
 			game.getPlayer(1).subBalance(game.getWager());
+			history.append("You lost. -" + game.getWager() 
+			+ " credits.\n");
 		} else {
-			JOptionPane.showMessageDialog(frame,
-					"Player Wins!");
 			game.getPlayer(1).addBalance(game.getWager());
+			history.append("You win! +" + game.getWager() 
+			+ " credits.\n");
+			
+			//Black Jacks have a pay out of 1.5x
+			if (game.isBlackJack(game.getPlayer(1))) {
+				game.getPlayer(1).
+				addBalance((game.getWager() / 2));
+				history.append("Black Jack! 1.5x Payout +" 
+				+ game.getWager() / 2 + " credits.\n");
+			}
 		}
 
 		enableStartButton();
@@ -500,13 +635,15 @@ public class BlackJackGUI {
 		balance.setText("" + game.getPlayer(1).getBalance());
 
 		//Exits game if player runs out of money.
-		if (game.getPlayer(1).getBalance() <= 0) {
+		if (game.getPlayer(1).getBalance() < 100) {
 			JOptionPane.showMessageDialog(frame,
-					"You're out of money!",
-					"You're broke!",
-					JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+				"You don't have enough money!",
+				"~Better luck next time!~",
+				JOptionPane.ERROR_MESSAGE);
+			frame.dispose();
 		}
+		
+		enableWager();
 	}
 
 	/**
@@ -549,7 +686,6 @@ public class BlackJackGUI {
 		hit.setEnabled(true);
 		stand.setEnabled(true);
 		play.setEnabled(false);
-		enableWager();
 	}
 
 	/**
@@ -566,10 +702,34 @@ public class BlackJackGUI {
 	 */
 	private void enableWager() {
 		wager100.setEnabled(true);
-		wager200.setEnabled(true);
-		wager300.setEnabled(true);
-		wager400.setEnabled(true);
-		wager500.setEnabled(true);
+		
+		if (game.getPlayer(1).getBalance() >= 200) {
+			wager200.setEnabled(true);
+		} else if (wager200.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer(1).getBalance() >= 300) {
+			wager300.setEnabled(true);
+		} else if (wager300.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer(1).getBalance() >= 400) {
+			wager400.setEnabled(true);
+		} else if (wager400.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer(1).getBalance() >= 500) {
+			wager500.setEnabled(true);
+		} else if (wager500.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
 	}
 
 	/**

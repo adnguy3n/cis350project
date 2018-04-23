@@ -1,7 +1,7 @@
 package casinogames;
 
-import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.SystemColor;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -11,17 +11,29 @@ import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextArea;
 
+/**
+ *  GUI for Poker.
+ */
 public class PokerGUI {
 
 	/** JFrame, returned to main to run the program. */
@@ -133,35 +145,12 @@ public class PokerGUI {
 	/** Card Image for the card back. */
 	private ImageIcon cardBack;
 	/** Game Model. **/
-	private CasinoGamesPokerModel game = new CasinoGamesPokerModel();
-	/** JLabel for the first card in the player's hand. */
-	private final JLabel playerCard1 = new JLabel();
-	/** JLabel for the second card in the player's hand. */
-	private final JLabel playerCard2 = new JLabel();
-	/** JLabel for the third card in the player's hand. */
-	private final JLabel playerCard3 = new JLabel();
-	/** JLabel for the fourth card in the player's hand. */
-	private final JLabel playerCard4 = new JLabel();
-	/** JLabel for the fifth card in the player's hand. */
-	private final JLabel playerCard5 = new JLabel();
-	/** JLabel array of all cards in the hand. */
-	private final JLabel[] playerCards = {
-			playerCard1, playerCard2, 
-			playerCard3, playerCard4, playerCard5};
-	/** JButton for holding the first card in the player's hand. */
-	private final JButton holdCard1 = new JButton();
-	/** JButton for holding the second card in the player's hand. */
-	private final JButton holdCard2 = new JButton();
-	/** JButton for holding the third card in the player's hand. */
-	private final JButton holdCard3 = new JButton();
-	/** JButton for holding the fourth card in the player's hand. */
-	private final JButton holdCard4 = new JButton();
-	/** JButton for holding the fifth card in the player's hand. */
-	private final JButton holdCard5 = new JButton();
-	/** JButton array for which cards are being held. */
-	private final JButton holdCards[] = {
-			holdCard1, holdCard2, 
-			holdCard3, holdCard4, holdCard5};
+	private CasinoGamesPokerModel game;
+	/** JLabel array of cards in the hand. */
+	private final JLabel[] playerCards = new JLabel[5];
+	/** JPanel array for JPanels used to 
+	 * visual show which cards are kept. */
+	private final JPanel[] cardSlot = new JPanel[5];
 	/** Button group for wager radio buttons. */
 	private final ButtonGroup wager = new ButtonGroup();
 	/** Radio Button for waging 100 credits. */
@@ -177,48 +166,37 @@ public class PokerGUI {
 	/** JLabel to display current balance. */
 	private final JLabel balance = new JLabel();
 	/** JButton for placing a bet at the start of the game. */
-	private final JButton bet = new JButton("Bet");
+	private final JButton play = new JButton("Play");
 	/** JButton for drawing new cards after the first turn. */
-	private final JButton draw = new JButton("Draw");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult0 = new JLabel("Royal Pair: x1");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult1 = new JLabel("Two Pair: x2");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult2 = new JLabel("Three of a Kind: x3");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult3 = new JLabel("Straight: x5");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult4 = new JLabel("Flush: x6");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult5 = new JLabel("Full House: x9");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult6 = new JLabel("Four of a Kind: x25");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult7 = new JLabel("Straight Flush: x50");
-	/** JLabels for the multiplier list. */
-	private final JLabel mult8 = new JLabel("Royal Flush: x250");
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(final String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PokerGUI window = new PokerGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private final JButton redraw = new JButton("Re-Draw");
+	/** Boolean flag to determine if a hand is in progress. */
+	private boolean start = false;
+	/** Log of the current game session. */
+	private final JTextArea history = new JTextArea();
+	/** Scroll Pane to hold history. */
+	private final JScrollPane scroll = new JScrollPane(history);
 
 	/**
 	 * Create the application.
 	 */
 	public PokerGUI() {
+		int decks = 1;
+		Object[] possibilities = {1, 2, 3};
+		try {
+			decks = (int) JOptionPane.showInputDialog(
+					null,
+					"Enter number of decks:",
+					"Number of Decks",
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					possibilities,
+					1);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"You did not pick the number of decks. "
+					+ "Defaulting to 1.");
+		}
+		game = new CasinoGamesPokerModel(decks);
 		initializeCardBack();
 		initializeCardImageClubs();
 		initializeCardImageSpades();
@@ -227,67 +205,185 @@ public class PokerGUI {
 		initialize();
 
 	}
+	
+	/**
+	 * Window Listener for when GUI is closed.
+	 */
+	private void setWindowListener() {
+		frame.addWindowListener(new WindowListener() {
+			@Override
+			public void windowActivated(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowClosed(final WindowEvent e) {
+				startNewGame();
+			}
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowDeactivated(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowDeiconified(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowIconified(final WindowEvent e) {
+				//Do nothing.
+			}
+			@Override
+			public void windowOpened(final WindowEvent e) {
+				//Do nothing.
+			}
+        });
+    }
+	
+	/**
+	 * Asks if the user would like to play again.
+	 */
+	private void startNewGame() {
+		Object[] options = {"Yes",
+		"No"};
+		int o = JOptionPane.showOptionDialog(frame,
+				"Would you like to play again?",
+				"New Game?",
+				JOptionPane.
+				YES_NO_CANCEL_OPTION,
+				JOptionPane.
+				QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if (o == 0) {
+			PokerGUI poker
+			= new PokerGUI();
+			poker.getFrame().
+			setVisible(true);
+		} else {
+			switchToBlackJack();
+		}
+	}
+	
+	/**
+	 * Asks if the user would like to switch to 
+	 * Black Jack upon closing.
+	 */
+	private void switchToBlackJack() {
+		Object[] options = {"Yes",
+		"No"};
+		int o = JOptionPane.showOptionDialog(frame,
+				"Would you like to switch to Black Jack?",
+				"New Game?",
+				JOptionPane.
+				YES_NO_CANCEL_OPTION,
+				JOptionPane.
+				QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if (o == 0) {
+			BlackJackGUI blackJack 
+			= new BlackJackGUI();
+			blackJack.getFrame().
+			setVisible(true);
+		} else {
+			System.exit(0);
+		}
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		history.setEditable(false);
 		frame = new JFrame();
-		frame.setBounds(100, 100, 725, 415);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Poker");
+		frame.setBounds(100, 100, 833, 415);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		setWindowListener();
 
 		JPanel playerHandPanel = new JPanel();
 		playerHandPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
 				"Player Hand", TitledBorder.LEFT, 
 				TitledBorder.TOP, null, null));
-		playerHandPanel.setBounds(10, 205, 500, 160);
+		playerHandPanel.setBounds(10, 188, 610, 177);
 		playerHandPanel.setLayout(null);
 		frame.getContentPane().add(playerHandPanel);
+		
+		for (int i = 0; i < 5; i++) {
+			cardSlot[i] = new JPanel();
+			cardSlot[i].setBackground(SystemColor.control);
+			cardSlot[i].setBounds(10 + (120 * i), 21, 110, 145);
+			playerHandPanel.add(cardSlot[i]);
+			cardSlot[i].setLayout(null);
+			
+			playerCards[i] = new JLabel();
+			playerCards[i].setBounds(10, 11, 88, 127);
+			playerCards[i].setIcon(cardBack);
+			cardSlot[i].add(playerCards[i]);
+		}
 		
 		JPanel multiplierPanel = new JPanel();
 		multiplierPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
 				"Hand Multipliers", TitledBorder.LEFT, 
 				TitledBorder.TOP, null, null));
-		multiplierPanel.setBounds(10,11,450,193);
+		multiplierPanel.setBounds(10, 0, 149, 177);
 		multiplierPanel.setLayout(null);
 		frame.getContentPane().add(multiplierPanel);
-		mult0.setBounds(10, 11, 400, 100);
-		mult1.setBounds(100, 11, 400, 100);
-		mult2.setBounds(180, 11, 400, 100);
-		mult3.setBounds(310, 11, 400, 100);
-		mult4.setBounds(10, 11, 400, 175);
-		mult5.setBounds(90, 11, 400, 175);
-		mult6.setBounds(200, 11, 400, 175);
-		mult7.setBounds(10, 11, 400, 250);
-		mult8.setBounds(150, 11, 400, 250);
-		multiplierPanel.add(mult0);
-		multiplierPanel.add(mult1);
-		multiplierPanel.add(mult2);
-		multiplierPanel.add(mult3);
-		multiplierPanel.add(mult4);
-		multiplierPanel.add(mult5);
-		multiplierPanel.add(mult6);
-		multiplierPanel.add(mult7);
-		multiplierPanel.add(mult8);
+		
+		JTable multiplierListTable = new JTable();
+		multiplierListTable.setShowHorizontalLines(false);
+		multiplierListTable.setBackground(SystemColor.control);
+		multiplierListTable.setShowGrid(false);
+		multiplierListTable.setRowSelectionAllowed(false);
+		multiplierListTable.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Royal Flush", "250x"},
+				{"Straight Flush", "50x"},
+				{"Four of a Kind", "25x"},
+				{"Full House", "9x"},
+				{"Flush", "6x"},
+				{"Straight", "5x"},
+				{"Three of a Kind", "3x"},
+				{"Two Pair", "2x"},
+				{"Royal Pair", "1x"},
+			},
+			new String[] {
+				"Hand", "Multiplier"
+			}
+		));
+		multiplierListTable.getColumnModel().
+		getColumn(0).setPreferredWidth(83);
+		multiplierListTable.getColumnModel().
+		getColumn(1).setPreferredWidth(29);
+		multiplierListTable.getColumnModel().
+		getColumn(1).setMinWidth(2);
+		multiplierListTable.setBounds(
+				10, 21, 129, 145);
+		multiplierPanel.add(multiplierListTable);
 		
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), 
 				"Controls", TitledBorder.LEADING, 
 				TitledBorder.TOP, null, null));
-		controlPanel.setBounds(519, 11, 180, 330);
+		controlPanel.setBounds(630, 0, 180, 365);
 		controlPanel.setLayout(null);
 		frame.getContentPane().add(controlPanel);
 		
-		bet.setBounds(45, 22, 89, 23);
-		controlPanel.add(bet);
+		play.setBounds(45, 22, 89, 23);
+		controlPanel.add(play);
 		
-		draw.setEnabled(false);
-		draw.setBounds(45, 56, 89, 23);
-		controlPanel.add(draw);
+		redraw.setEnabled(false);
+		redraw.setBounds(45, 56, 89, 23);
+		controlPanel.add(redraw);
 		
 		JPanel wagerPanel = new JPanel();
 		wagerPanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -318,6 +414,8 @@ public class PokerGUI {
 		wager.add(wager300);
 		wager.add(wager400);
 		wager.add(wager500);
+		wager100.setSelected(true);
+		game.setWager(100);
 		
 		JPanel balancePanel = new JPanel();
 		balancePanel.setBorder(new TitledBorder(new EtchedBorder(
@@ -333,189 +431,69 @@ public class PokerGUI {
 		balance.setText("" + game.getPlayer().getBalance());
 		balancePanel.add(balance);
 		
-		playerCard1.setBackground(Color.GRAY);
-		playerCard1.setBounds(10, 22, 88, 127);
-		playerCard1.setIcon(cardBack);
-		playerHandPanel.add(playerCard1);
-		
-		holdCard1.setOpaque(false);
-		holdCard1.setContentAreaFilled(false);
-		holdCard1.setBounds(10, 22, 88, 127);
-		playerHandPanel.add(holdCard1);
-		
-		playerCard2.setBackground(Color.GRAY);
-		playerCard2.setBounds(108, 22, 88, 127);
-		playerCard2.setIcon(cardBack);
-		playerHandPanel.add(playerCard2);
-		
-		holdCard2.setOpaque(false);
-		holdCard2.setContentAreaFilled(false);
-		holdCard2.setBounds(108, 22, 88, 127);
-		playerHandPanel.add(holdCard2);
-		
-		playerCard3.setBackground(Color.GRAY);
-		playerCard3.setBounds(206, 22, 88, 127);
-		playerCard3.setIcon(cardBack);
-		playerHandPanel.add(playerCard3);
-		
-		holdCard3.setOpaque(false);
-		holdCard3.setContentAreaFilled(false);
-		holdCard3.setBounds(206, 22, 88, 127);
-		playerHandPanel.add(holdCard3);
-		
-		playerCard4.setBackground(Color.GRAY);
-		playerCard4.setBounds(304, 22, 88, 127);
-		playerCard4.setIcon(cardBack);
-		playerHandPanel.add(playerCard4);
-		
-		holdCard4.setOpaque(false);
-		holdCard4.setContentAreaFilled(false);
-		holdCard4.setBounds(304, 22, 88, 127);
-		playerHandPanel.add(holdCard4);
-		
-		playerCard5.setBackground(Color.GRAY);
-		playerCard5.setBounds(402, 22, 88, 127);
-		playerCard5.setIcon(cardBack);
-		playerHandPanel.add(playerCard5);
-		
-		holdCard5.setOpaque(false);
-		holdCard5.setContentAreaFilled(false);
-		holdCard5.setBounds(402, 22, 88, 127);
-		playerHandPanel.add(holdCard5);
+		scroll.setBounds(169, 11, 449, 166);
+		scroll.setViewportView(history);
+		frame.getContentPane().add(scroll);
 		
 		anonymousListeners();
 
 	}
 	
-	
-	
-	/**
-	 * Enable game buttons.
-	 */
-	private void enableGameButtons() {
-		holdCard1.setEnabled(true);
-		holdCard2.setEnabled(true);
-		holdCard3.setEnabled(true);
-		holdCard4.setEnabled(true);
-		holdCard5.setEnabled(true);
-		draw.setEnabled(true);
-		bet.setEnabled(false);
-	}
-	
-	/**
-	 * Disables game buttons.
-	 */
-	private void disableGameButtons() {
-		holdCard1.setEnabled(false);
-		holdCard2.setEnabled(false);
-		holdCard3.setEnabled(false);
-		holdCard4.setEnabled(false);
-		holdCard5.setEnabled(false);
-		draw.setEnabled(false);
-		bet.setEnabled(true);
-	}
-	
-	/**
-	 * Helper Method for enabling wager radio buttons.
-	 */
-	private void enableWager() {
-		wager100.setEnabled(true);
-		wager200.setEnabled(true);
-		wager300.setEnabled(true);
-		wager400.setEnabled(true);
-		wager500.setEnabled(true);
-	}
-
-	/**
-	 * Helper Method for disabling wager radio buttons.
-	 */
-	private void disableWager() {
-		wager100.setEnabled(false);
-		wager200.setEnabled(false);
-		wager300.setEnabled(false);
-		wager400.setEnabled(false);
-		wager500.setEnabled(false);
-	}
-
 	/**
 	 * Helper Method for setting up anonymous Methods.
 	 */
 	private void anonymousListeners() {
 		
-		bet.addActionListener(new ActionListener() {
+		play.addActionListener(new ActionListener() {
 			@Override
-			/*Anonymous method for starting the game with a bet*/
+			/**
+			 * Anonymous method for starting the game.
+			 */
 			public void actionPerformed(final ActionEvent e) {
+				start = true;
+				game.resetKeep();
 				game.getPlayer().clearHand();
 				game.startGame();
+				updatePlayerHand();
 				disableWager();
 				enableGameButtons();
-				updatePlayerHand();
-				game.nextTurn();
-				
+				history.append("Drawing new hand. Wager: " 
+				+ game.getWager() + " credits.\n");
 			}
 		});
 		
-		draw.addActionListener(new ActionListener(){
+		redraw.addActionListener(new ActionListener() {
 			@Override
-			/*Anonymous method for drawing new cards on the last turn */
-			public void actionPerformed(final ActionEvent e){
+			/**
+			 * Anonymous method for drawing new cards on the 
+			 * last turn.
+			 */
+			public void actionPerformed(final ActionEvent e) {
+				start = false;
 				disableGameButtons();
+				for (int i = 0; i < 5; i++) {
+					if (!game.getKeep(i)) {
+						game.redraw(i);
+					}
+				}
 				updatePlayerHand();
 				endGame();
 				enableWager();
 			}
 		});
 		
-		holdCard1.addActionListener(new ActionListener(){
-			@Override
-			/*Anonymous method for holding card 1*/
-			public void actionPerformed(final ActionEvent e){
-				holdCard1.setEnabled(true);
-				game.getPlayer().getCard(0).fliphold();
-			}
-			
-		});
-		
-		holdCard2.addActionListener(new ActionListener(){
-			@Override
-			/*Anonymous method for holding card 1*/
-			public void actionPerformed(final ActionEvent e){
-				holdCard2.setEnabled(true);
-				game.getPlayer().getHand().get(1).fliphold();
-			}
-			
-		});
-		
-		holdCard3.addActionListener(new ActionListener(){
-			@Override
-			/*Anonymous method for holding card 1*/
-			public void actionPerformed(final ActionEvent e){
-				holdCard3.setEnabled(true);
-				game.getPlayer().getHand().get(2).fliphold();
-			}
-			
-		});
-		
-		holdCard4.addActionListener(new ActionListener(){
-			@Override
-			/*Anonymous method for holding card 1*/
-			public void actionPerformed(final ActionEvent e){
-				holdCard4.setEnabled(true);
-				game.getPlayer().getHand().get(3).fliphold();
-			}
-			
-		});
-		
-		holdCard5.addActionListener(new ActionListener(){
-			@Override
-			/*Anonymous method for holding card 1*/
-			public void actionPerformed(final ActionEvent e){
-				holdCard5.setEnabled(true);
-				game.getPlayer().getHand().get(4).fliphold();
-			}
-			
-		});
+		for (int i = 0; i < 5; i++) {
+			final int slot = i;
+			playerCards[slot].addMouseListener(
+					new MouseAdapter() {  
+			    public void mouseClicked(final MouseEvent e) {  
+			    	if (start) {
+			    		game.setKeep(slot);
+				    	updatePlayerHand();
+			    	}
+			    }  
+			}); 
+		}
 		
 		wager100.addActionListener(new ActionListener() {
 			@Override
@@ -576,7 +554,72 @@ public class PokerGUI {
 			}
 
 		});
+		
 	}
+	
+	/**
+	 * Enable game buttons.
+	 */
+	private void enableGameButtons() {
+		redraw.setEnabled(true);
+		play.setEnabled(false);
+	}
+	
+	/**
+	 * Disables game buttons.
+	 */
+	private void disableGameButtons() {
+		redraw.setEnabled(false);
+		play.setEnabled(true);
+	}
+	
+	/**
+	 * Helper Method for enabling wager radio buttons.
+	 */
+	private void enableWager() {
+		wager100.setEnabled(true);
+		
+		if (game.getPlayer().getBalance() >= 200) {
+			wager200.setEnabled(true);
+		} else if (wager200.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer().getBalance() >= 300) {
+			wager300.setEnabled(true);
+		} else if (wager300.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer().getBalance() >= 400) {
+			wager400.setEnabled(true);
+		} else if (wager400.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+		
+		if (game.getPlayer().getBalance() >= 500) {
+			wager500.setEnabled(true);
+		} else if (wager500.isSelected()) {
+			wager100.setSelected(true);
+			game.setWager(100);
+		}
+	}
+
+	/**
+	 * Helper Method for disabling wager radio buttons.
+	 */
+	private void disableWager() {
+		wager100.setEnabled(false);
+		wager200.setEnabled(false);
+		wager300.setEnabled(false);
+		wager400.setEnabled(false);
+		wager500.setEnabled(false);
+	}
+
+	
 	
 	/**
 	 * Update the player's hand visual.
@@ -585,46 +628,82 @@ public class PokerGUI {
 		for (int i = 0; i < game.getPlayer().getHand().size(); i++) {
 			playerCards[i].setIcon(parseCard(
 					game.getPlayer().getHand().get(i)));
+			if (game.getKeep(i)) {
+				cardSlot[i].setBackground(Color.GRAY);
+			} else {
+				cardSlot[i].setBackground(SystemColor.control);
+			}
 		}
 	}
 	
 	/**
 	 * Ends the hand.
 	 */
-	private void endGame(){
-			if(game.isRoyalPair(game.getPlayer())){
-				game.getPlayer().addBalance(game.getWager());
-			}
-			else if(game.isTwoPair(game.getPlayer())){
-				game.getPlayer().addBalance(2*game.getWager());
-			}
-			else if(game.isOfAKind(game.getPlayer())==3){
-				game.getPlayer().addBalance(3*game.getWager());
-			}
-			else if(game.isStraight(game.getPlayer())){
-				game.getPlayer().addBalance(5*game.getWager());
-			}
-			else if(game.isFlush(game.getPlayer())){
-				game.getPlayer().addBalance(6*game.getWager());
-			}
-			else if(game.isFullHouse(game.getPlayer())){
-				game.getPlayer().addBalance(9*game.getWager());
-			}
-			else if(game.isOfAKind(game.getPlayer())==4){
-				game.getPlayer().addBalance(25*game.getWager());
-			}
-			else if(game.isStraightFlush(game.getPlayer())){
-				game.getPlayer().addBalance(50*game.getWager());
-			}
-			else if(game.isRoyalFlush(game.getPlayer())){
-				game.getPlayer().addBalance(250*game.getWager());
-			}
-			else {
-				game.getPlayer().subBalance(game.getWager());
-			}
-		game.getPlayer().clearHand();
+	private void endGame() {
+		switch (game.getResult()) {
+			case ROYAL_FLUSH:
+				JOptionPane.showMessageDialog(frame,
+						"Royal Flush!");
+				history.append("Royal Flush! +" 
+						+ game.getWager() * 250 
+						+ "credits.\n");
+				break;
+			case STRAIGHT_FLUSH:
+				history.append("Straight Flush! +" 
+						+ game.getWager() * 50 
+						+ " credits.\n");
+				break;
+			case FOUR_OF_A_KIND:
+				history.append("Four of a kind! +" 
+						+ game.getWager() * 25 
+						+ " credits.\n");
+				break;
+			case FULLHOUSE:
+				history.append("Full House! +" 
+						+ game.getWager() * 9 
+						+ " credits.\n");
+				break;
+			case FLUSH:
+				history.append("Flush. +" 
+						+ game.getWager() * 6 
+						+ " credits.\n");
+				break;
+			case STRAIGHT:
+				history.append("You got a Straight. +" 
+						+ game.getWager() * 5 
+						+ " credits.\n");
+				break;
+			case THREE_OF_A_KIND:
+				history.append("You got Three of a kind. +" 
+						+ game.getWager() * 3 
+						+ " credits.\n");
+				break;
+			case TWO_PAIR:
+				history.append("You got Two Pairs. +" 
+						+ game.getWager() * 2 
+						+ " credits.\n");
+				break;
+			case ROYAL_PAIR:
+				history.append("You got a Royal Pair. +" 
+						+ game.getWager() 
+						+ " credits.\n");
+				break;
+			default:
+				//Exits game if player runs out of money.
+				if (game.getPlayer().getBalance() < 100) {
+					JOptionPane.showMessageDialog(frame,
+						"You don't have enough money!",
+						"~Better luck next time!~",
+						JOptionPane.ERROR_MESSAGE);
+					frame.dispose();
+				}
+				history.append("You got nothing. -" 
+						+ game.getWager() 
+						+ " credits.\n");
+				break;
+		}
+		
 		balance.setText("" + game.getPlayer().getBalance());
-		game.startGame();
 	}
 	
 	/**
@@ -652,7 +731,6 @@ public class PokerGUI {
 		}
 		return icon;
 	}
-	
 	
 	/**
 	 * Get card image for clubs.
@@ -865,18 +943,6 @@ public class PokerGUI {
 		}
 		return icon;
 	}
-
-	
-	/**
-	 * Test Method for images. /
-	 */
-	/*private void testImage() {
-		playerCard1.setIcon(c2);
-		playerCard2.setIcon(cardBack);
-		playerCard3.setIcon(hK);
-		playerCard4.setIcon(d7);
-		playerCard5.setIcon(s0);
-	}*/
 	
 	/**
 	 * Initialize image for card back.

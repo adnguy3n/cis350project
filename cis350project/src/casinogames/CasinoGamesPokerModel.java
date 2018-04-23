@@ -1,59 +1,81 @@
 package casinogames;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Logic Model for Poker game.
+ */
 public class CasinoGamesPokerModel {
-	/*player one*/
-	private Player player1 = new Player();
-	/*Number of standard decks that comprises the deck in use*/
+	/** The player. */
+	private Player player = new Player();
+	/** Number of standard decks that comprises the deck in use. */
 	private Deck standardDeck = new Deck();
-	/*Deck being used*/
+	/** Deck being used. */
 	private Deck mainDeck = new Deck(0);
-	/*Turn in game*/
-	private int turn;
-	/*Number of hands dealt*/
-	private int hands = 0;
-	/*Bet placed at the beginning of the game*/
+	/** Bet placed at the beginning of the game. */
 	private int wager = 0;
-	/**Array of payout multipliers.*/
-	private static final int[] multipliers = {1, 2, 3, 5, 6, 9, 25, 50, 250};
-	/*Array of winning hand types*/
-	private static final String[] winningHands = { "Royal Pair" , "Two Pairs" , "Three of a Kind" , "Straight" , "Flush" , "Full House" , "Four of a Kind" , "Straight Flush" , "Royal Flush" };
+	/** Boolean for determining which cards are kept. */
+	private final boolean[] keep = new boolean[5];
+	/** Number of standard decks being used. */
+	private final int numOfDecks;
 	
-
-	
-	
-	/*Default constructor of CasinoGamesPokerModel*/
-	public CasinoGamesPokerModel(){
-		generateDeck(1);	
+	/**
+	 * Constructor for Poker Game.
+	 * @param decks The number of decks being used.
+	 */
+	public CasinoGamesPokerModel(final int decks) {
+		numOfDecks = decks;
+		for (int i = 0; i < 5; i++) {
+			keep[i] = false;
+		}
+		generateDeck(numOfDecks);
 	}
 	
-	/*Constructor with turn number parameter*/
-	public CasinoGamesPokerModel(int x){
-		this.turn = x;
-		generateDeck(1);
+	/**
+	 * Getting method for player.
+	 * @return player The player.
+	 */
+	public Player getPlayer() {
+		return player;
 	}
 	
-	/*player getter*/
-	public Player getPlayer(){
-		return player1;
+	/**
+	 * Public method for starting the game.
+	 */
+	public void startGame() {
+		if (mainDeck.getSize() < 10) {
+			System.out.println("Shuffling Deck");
+			generateDeck(numOfDecks);
+		}
+		draw(5);
 	}
 	
-	/** turn getter*/
-	public int getTurn(){
-		return turn;
+	/**
+	 * Method for drawing cards to hand.
+	 * @param draws The number of cards being drawn.
+	 */
+	private void draw(final int draws) {
+		for (int i = 0; i < draws; i++) {
+			player.addToHand(mainDeck.draw());
+		}
 	}
 	
-	/*starts the game*/
-	public void startGame(){
-		turn = 1;
-		
-		deal();
-		//prompt for bet amount
+	/**
+	 * Method for discarding unwanted cards and drawing new cards.
+	 * @param slot The placement in hand of the cards being redrawn.
+	 */
+	public void redraw(final int slot) {
+		player.getHand().remove(slot);
+		player.addToHand(mainDeck.draw(), slot);
 	}
 	
-	/*generates a standard poker deck*/
+	/**
+	 * Method for generating a standard deck.
+	 * @param decks The number of decks to be generated.
+	 */
 	private void generateDeck(final int decks) {
 		int numOfCards = 52 * decks;
 		Deck deck = new Deck(standardDeck);
@@ -71,234 +93,347 @@ public class CasinoGamesPokerModel {
 		}
 	}
 	
-	
-	/*deals a hand to the player and the dealer*/
-	
-	private void deal(){
-		System.out.println("Shuffling deck. ");
-		generateDeck(1);
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		player1.addToHand(mainDeck.draw());
-		turn++;
-	}
-	
-
-	
-	/*replaces cards not held by the player*/
-	
-	public void nextTurn(){
-		for(int i=0;i<player1.getHandSize();i++){
-			if(player1.getCard(i).gethold() == false){
-				player1.getHand().remove(i);
-				player1.addToHand(mainDeck.draw());
-			}
-			
+	/**
+	 * Setter method for booleans determining which cards to
+	 * keep when re-drawing.
+	 * @param cardSlot The card slot in hand to keep.
+	 */
+	public void setKeep(final int cardSlot) {
+		if (keep[cardSlot]) {
+			keep[cardSlot] = false;
+		} else {
+			keep[cardSlot] = true;
 		}
-		turn++;
 	}
 	
-	/*determines if they player's hand is a royal pair*/
+	/**
+	 * Getter method for booleans determining which cards to
+	 * keep when redrawing.
+	 * @param cardSlot The card slot in hand to keep.
+	 * @return true If the card is being kept or false if
+	 * the card is being discarded.
+	 */
+	public boolean getKeep(final int cardSlot) {
+		return keep[cardSlot];
+	}
 	
-	public boolean isRoyalPair(final Player player){
-		Player temp = new Player();
-		boolean royalPair = false;
-		for(Card c : player.getHand()){
-			for(Card d : player.getHand()){
-				if((d.getValue()==c.getValue())&&(d.getsuit()!=c.getsuit())){
-					temp.addToHand(c);
+	/**
+	 * Method for resetting keep status at the end of a hand.
+	 */
+	public void resetKeep() {
+		for (int i = 0; i < 5; i++) {
+			keep[i] = false;
+		}
+	}
+	
+	/**
+	 * Gets the result of a hand and returns it.
+	 * @return The result of the current hand.
+	 */
+	public PokerResult getResult() {
+		if (isRoyalFlush()) {
+			player.addBalance(wager * 250);
+			return PokerResult.ROYAL_FLUSH;
+		}
+		
+		if (isStraightFlush()) {
+			player.addBalance(wager * 50);
+			return PokerResult.STRAIGHT_FLUSH;
+		}
+		
+		if (isFourOfAKind()) {
+			player.addBalance(wager * 25);
+			return PokerResult.FOUR_OF_A_KIND;
+		}
+		
+		if (isFullHouse()) {
+			player.addBalance(wager * 9);
+			return PokerResult.FULLHOUSE;
+		}
+		
+		if (isFlush()) {
+			player.addBalance(wager * 6);
+			return PokerResult.FLUSH;
+		}
+		
+		if (isStraight()) {
+			player.addBalance(wager * 5);
+			return PokerResult.STRAIGHT;
+		}
+		
+		if (isThreeOfAKind()) {
+			player.addBalance(wager * 3);
+			return PokerResult.THREE_OF_A_KIND;
+		}
+		
+		if (isTwoPair()) {
+			player.addBalance(wager * 2);
+			return PokerResult.TWO_PAIR;
+		}
+		
+		if (isRoyalPair()) {
+			player.addBalance(wager * 1);
+			return PokerResult.ROYAL_PAIR;
+		}
+		
+		player.subBalance(wager);
+		return PokerResult.NONE;
+	}
+	
+	/**
+	 * Counts the number of times a value appears in the hand.
+	 * @param value The card value being checked.
+	 * @return alike The number of cards the player has the same of..
+	 */
+	private int isOfAKind(final CardValue value) {
+		//Counter for number of times the specified value appears.
+		int sameValue = 0;
+		//Counts the number of times the specified value appears.
+		for (int i = 0; i < player.getHandSize(); i++) {
+			if (player.getCard(i).getValue() == value) {
+				sameValue++;
+			}
+		}
+		return sameValue;
+	}
+	
+	/**
+	 * Determines if the player has a royal pair.
+	 * A royal pair is a pair that consists of 
+	 * face cards or aces.
+	 * @return true if the player has a royal pair.
+	 * false otherwise.
+	 */
+	private boolean isRoyalPair() {
+		for (int i = 0; i < player.getHandSize(); i++) {
+			//Checks if the user has a pair.
+			if (isOfAKind(player.getCard(i).getValue()) == 2) {
+				//Checks if the pair is of Ace or Face Cards.
+				switch (player.getCard(i).getValue()) {
+					case ACE:
+						return true;
+					case KING:
+						return true;
+					case QUEEN:
+						return true;
+					case JACK:
+						return true;
+					default:
 				}
 			}
 		}
-		switch(temp.getCard(0).getValue()){
-			case JACK:
-				royalPair = true;
-				break;
-			case QUEEN:
-				royalPair = true;
-				break;
-			case KING:
-				royalPair = true;
-				break;
-			case ACE:
-				royalPair = true;
-				break;
-			case EIGHT:
-				royalPair = false;
-				break;
-			case FIVE:
-				royalPair = false;
-				break;
-			case FOUR:
-				royalPair = false;
-				break;
-			case NINE:
-				royalPair = false;
-				break;
-			case SEVEN:
-				royalPair = false;
-				break;
-			case SIX:
-				royalPair = false;
-				break;
-			case TEN:
-				royalPair = false;
-				break;
-			case THREE:
-				royalPair = false;
-				break;
-			case TWO:
-				royalPair = false;
-				break;
 		
-				
-		}
-		return royalPair;
+		return false;
 	}
 	
-	/*determines if a hand is a full house or not*/
-	public boolean isFullHouse(final Player player){
-		if(isOfAKind(player)==3){
-			ArrayList<Integer> temp = toInt(player);
-			for(int i=2;i< temp.size();i++){
-				if((temp.get(i-2)==temp.get(i-1)&&(temp.get(i-1)==temp.get(i)))){
-					temp.remove(i-2);
-					temp.remove(i-1);
-					temp.remove(i);
-				}		
+	/**
+	 * Determines if the player has two pairs.
+	 * @return true if player has two pairs.
+	 * false otherwise.
+	 */
+	private boolean isTwoPair() {
+		
+		//Number of pairs.
+		int pairs = 0;
+		
+		//Array List for card values that where already checked.
+		ArrayList<CardValue> checked = new ArrayList<CardValue>();
+		
+		for (int i = 0; i < player.getHandSize(); i++) {
+			//Boolean flag for whether 
+			//a value has already been checked.
+			boolean alreadyChecked = false;
+			
+			for (int j = 0; j < checked.size(); j++) {
+				if (player.getCard(i).getValue() 
+						== checked.get(j)) {
+					alreadyChecked = true;
+				}
 			}
-			if(temp.size()==2){
+			//Increments pairs if there 
+			//is a pair of the card's value.
+			if (!alreadyChecked) {
+				if (isOfAKind(player.getCard(i).getValue())
+						== 2) {
+					pairs++;
+					checked.add(player.getCard(i).
+							getValue());
+				}
+			}
+		}
+		
+		return pairs == 2;
+	}
+	
+	/**
+	 * Determines if the player has a three of a kind.
+	 * @return true If the player has three of a kind.
+	 * False otherwise.
+	 */
+	private boolean isThreeOfAKind() {
+		for (int i = 0; i < 3; i++) {
+			if (isOfAKind(player.getCard(i).getValue()) == 3) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Determines if a player has a full house.
+	 * @return true if the player has a full house.
+	 * False otherwise.
+	 */
+	private boolean isFullHouse() {
+		
+		//A Full House always has a three of a kind.
+		if (!isThreeOfAKind()) {
+			return false;
+		}
+		
+		//Array List for card values that where already checked.
+		ArrayList<CardValue> checked = new ArrayList<CardValue>();
+				
+			for (int i = 0; i < player.getHandSize(); i++) {
+				//Boolean flag for whether 
+				//a value has already been checked.
+				boolean alreadyChecked = false;
+					
+				for (int j = 0; j < checked.size(); j++) {
+					if (player.getCard(i).getValue() 
+							== checked.get(j)) {
+						alreadyChecked = true;
+					}
+				}
+					
+				if (!alreadyChecked) {
+					if (isOfAKind(player.getCard(i).
+							getValue()) == 2) {
+						return true;
+					}
+				}
+			}
+		return false;
+	}
+	
+	/**
+	 * Determines if the player has a four of a kind.
+	 * @return true If the player has four of a kind.
+	 * False otherwise.
+	 */
+	private boolean isFourOfAKind() {
+		for (int i = 0; i < 2; i++) {
+			if (isOfAKind(player.getCard(i).getValue()) == 4) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	/*determines if a hand is a straight or not*/
-	
-	public boolean isStraight(final Player player){
-		
+	/**
+	 * Determines if a hand is a straight.
+	 * @return true if the  player has a straight.
+	 * false otherwise.
+	 */
+	private boolean isStraight() {
+		//Convert card values into integers for easier processing.
 		ArrayList<Integer> sortedRank = toInt(player);
-		ArrayList<Suit> cardSuits = new ArrayList<Suit>();
 		
-		for(int i = 0;i<5;i++){
-			cardSuits.add(player.getCard(i).getsuit());
-		}
-		
-		for(int i = 1; i<5; i++){
-			if(sortedRank.get(i) != sortedRank.get(i-1)+1){
+		for (int i = 1; i < 5; i++) {
+			if (sortedRank.get(i) != sortedRank.get(i - 1) + 1) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	
-	/*determines if a hand has two pairs*/
-	
-	
-	public boolean isTwoPair(final Player player){
-		int pairs = 0;
-		ArrayList<Integer> converted = toInt(player);
-		for(int i=1;i<converted.size();i++){
-			if(converted.get(i)==converted.get(i-1)){
-				pairs++;
+	/**
+	 * Determines if the player has a flush.
+	 * @return true if the player has a flush.
+	 * false otherwise.
+	 */
+	private boolean isFlush() {
+		Suit flushSuit = player.getCard(0).getsuit();
+		for (Card c : player.getHand()) {
+			if (c.getsuit() != flushSuit) {
+				return false;
 			}
 		}
-		if(pairs==2)
+		return true;
+	}
+	
+	/**
+	 * Checks if the player has a straight flush.
+	 * @return true if the player has a straight flush.
+	 * false otherwise.
+	 */
+	private boolean isStraightFlush() {
+		//A Straight Flush is both a Flush and a Straight.
+		if (isFlush() && isStraight()) {
 			return true;
-		else
-			return false;
-	}
-	
-	/*determines if the hand is a three or four of a kind*/
-	
-	public int isOfAKind(final Player player){
-		ArrayList<Integer> converted = toInt(player);
-		int alike = 1;
-		for(int i=1;i<player.getHandSize();i++){
-			if(converted.get(i-1)==converted.get(i)){
-				alike++;
-			}
-		}
-		if(alike>=3){
-			return alike;
-		}
-		else{
-			return 0;
-		}
-	
-	}
-	
-	
-	/*determines if the player's hand is a flush*/
-	
-	
-	public boolean isFlush(final Player player){
-		Suit flushSuit = player.getCard(0).getsuit();
-		for(Card c : player.getHand()){
-			if(c.getsuit()!=flushSuit){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/*determines if the player's hand is a royal flush*/
-	
-	public boolean isRoyalFlush(final Player player){
-		Suit flushSuit = player.getCard(0).getsuit();
-		ArrayList<Integer> convertedHand = toInt(player);
-		for(int i:convertedHand){
-			if(i<10)
-				return false;
-		}
-		for(Card c:player.getHand()){
-			if(c.getsuit()!=flushSuit)
-				return false;
-		}
-		return true;
-	}
-	
-	/*checks if the hand is a straight flush*/
-	
-	public boolean isStraightFlush(final Player player){
-		ArrayList<Integer> sortedRanks = toInt(player);
-		Suit flushSuit = player.getCard(0).getsuit();
-		
-		for(Card c : player.getHand()){
-			if(c.getsuit()!=flushSuit)
-				return false;
 		}
 		
-		for(int i=1;i<4;i++)
-			if(sortedRanks.get(i)!=sortedRanks.get(i-1)+1){
-				return false;
-			}
-		return true;
+		return false;
 	}
 	
-	/*Gets the player's bet*/
+	/**
+	 * Determines if the player has a royal flush.
+	 * @return true if the player has a royal flush.
+	 * false otherwise.
+	 */
+	private boolean isRoyalFlush() {
+		//A Royal Flush is a Straight Flush.
+		if (isFlush() && isStraight()) {
+			//A Royal Flush consists of:
+			//Ten, Jack, Queen, King, Ace of the same suit.
+			
+			//Assigns integer values to cards.
+			ArrayList<Integer> sortedRank = toInt(player);
+			
+			int sum = 0;
+			
+			//Sums up the integer values.
+			for (int i = 0; i < 5; i++) {
+				sum += sortedRank.get(i);
+			}
+			
+			//Checks if the sum is the largest possible
+			//as it is the only combination possible for
+			//a Royal Flush.
+			if (sum == 10 + 11 + 12 + 13 + 14) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
-	public int getWager(){
+	/**
+	 * Getter method for the waged amount.
+	 * @return wager The amount of money being waged.
+	 */
+	public int getWager() {
 		return wager;
 	}
 	
-	/*updates the player's balance*/
-	public void setWager(final int bet){
-		wager=bet;
+	/**
+	 * Updates the waged amount.
+	 * @param bet The amount being waged.
+	 */
+	public void setWager(final int bet) {
+		wager = bet;
 	}
 	
-	
-	
-	/*converts hand value to array list of integers*/
-	
-	public ArrayList<Integer> toInt(final Player player){
+	/**
+	 * Converts hand value to array list of integers.
+	 * @param player The player.
+	 * @return The converted Array List.
+	 */
+	public ArrayList<Integer> toInt(final Player player) {
 		ArrayList<Integer> converted = new ArrayList<Integer>();
-		for(int i=0;i<player.getHandSize();i++){
-			switch(player.getCard(i).getValue()){
+		for (int i = 0; i < player.getHandSize(); i++) {
+			switch (player.getCard(i).getValue()) {
 				case TWO:
 					converted.add(2);
 					break;
@@ -337,6 +472,8 @@ public class CasinoGamesPokerModel {
 					break;
 				case ACE:
 					converted.add(14);
+					break;
+				default:
 					break;
 			}
 		}
