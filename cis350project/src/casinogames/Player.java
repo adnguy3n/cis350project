@@ -29,6 +29,11 @@ public class Player {
 		hand.add(card);
 	}
 	
+	/**get held cards method */
+	public ArrayList<Boolean> getHolding(){
+		return holding;
+	}
+	
 	/**
 	 * Discard hand.
 	 */
