@@ -338,7 +338,7 @@ public class CasinoGamesPokerModel {
 	 */
 	private boolean isStraight() {
 		//Convert card values into integers for easier processing.
-		ArrayList<Integer> sortedRank = toInt(player);
+		ArrayList<Integer> sortedRank = toInt();
 		
 		for (int i = 1; i < 5; i++) {
 			if (sortedRank.get(i) != sortedRank.get(i - 1) + 1) {
@@ -389,7 +389,7 @@ public class CasinoGamesPokerModel {
 			//Ten, Jack, Queen, King, Ace of the same suit.
 			
 			//Assigns integer values to cards.
-			ArrayList<Integer> sortedRank = toInt(player);
+			ArrayList<Integer> sortedRank = toInt();
 			
 			int sum = 0;
 			
@@ -430,7 +430,7 @@ public class CasinoGamesPokerModel {
 	 * @param player The player.
 	 * @return The converted Array List.
 	 */
-	public ArrayList<Integer> toInt(final Player player) {
+	public ArrayList<Integer> toInt() {
 		ArrayList<Integer> converted = new ArrayList<Integer>();
 		for (int i = 0; i < player.getHandSize(); i++) {
 			switch (player.getCard(i).getValue()) {

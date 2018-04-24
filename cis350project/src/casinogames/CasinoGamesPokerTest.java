@@ -57,7 +57,7 @@ public class CasinoGamesPokerTest {
 		game.getPlayer().addToHand(card1);
 		game.getPlayer().addToHand(card2);
 		game.getPlayer().addToHand(card3);
-		ArrayList<Integer> x = game.toInt(game.getPlayer());
+		ArrayList<Integer> x = game.toInt();
 		ArrayList<Integer> y = new ArrayList<Integer>();
 		y.add(2);
 		y.add(3);
