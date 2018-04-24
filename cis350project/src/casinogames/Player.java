@@ -27,6 +27,11 @@ public class Player {
 		hand.add(card);
 	}
 	
+	/**get held cards method */
+	public ArrayList<Boolean> getHolding(){
+		return holding;
+	}
+	
 	/**
 	 * Add Card to hand at index.
 	 * 
