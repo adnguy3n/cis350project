@@ -456,18 +456,7 @@ public class BlackJackGUI {
 					updatePlayerHand();
 					endHand(true);
 				} else {
-					switch (game.getTurnPlayer()) {
-					case 0:
-						updateDealerHand();
-						break;
-
-					case 1:
-						updatePlayerHand();
-						break;
-
-					default:
-						break;
-					}
+					updatePlayerHand();
 				}
 			}
 		});

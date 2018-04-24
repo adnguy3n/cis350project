@@ -321,5 +321,52 @@ public class CasinoGamesPokerTest {
 		assertEquals(false, (PokerResult.STRAIGHT_FLUSH == game.getResult()));
 	}
 
+	@Test
+	public void testIsFullHouse00() {
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Card card1 = new Card(CardValue.SIX, Suit.HEARTS);
+		Card card2 = new Card(CardValue.SIX, Suit.SPADES);
+		Card card3 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card4 = new Card(CardValue.EIGHT, Suit.SPADES);
+		Card card5 = new Card(CardValue.EIGHT, Suit.CLUBS);
+		game.getPlayer().addToHand(card5);
+		game.getPlayer().addToHand(card4);
+		game.getPlayer().addToHand(card3);
+		game.getPlayer().addToHand(card2);
+		game.getPlayer().addToHand(card1);
+		assertEquals(PokerResult.FULLHOUSE, game.getResult());
+	}
+	
+	@Test
+	public void testIsFullHouse01() {
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Card card1 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card2 = new Card(CardValue.SIX, Suit.SPADES);
+		Card card3 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card4 = new Card(CardValue.EIGHT, Suit.SPADES);
+		Card card5 = new Card(CardValue.SIX, Suit.CLUBS);
+		game.getPlayer().addToHand(card5);
+		game.getPlayer().addToHand(card4);
+		game.getPlayer().addToHand(card3);
+		game.getPlayer().addToHand(card2);
+		game.getPlayer().addToHand(card1);
+		assertEquals(PokerResult.FULLHOUSE, game.getResult());
+	}
+	
+	@Test
+	public void testIsFullHouse02() {
+		CasinoGamesPokerModel game = new CasinoGamesPokerModel(1);
+		Card card1 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card2 = new Card(CardValue.SIX, Suit.SPADES);
+		Card card3 = new Card(CardValue.EIGHT, Suit.HEARTS);
+		Card card4 = new Card(CardValue.NINE, Suit.SPADES);
+		Card card5 = new Card(CardValue.SIX, Suit.CLUBS);
+		game.getPlayer().addToHand(card5);
+		game.getPlayer().addToHand(card4);
+		game.getPlayer().addToHand(card3);
+		game.getPlayer().addToHand(card2);
+		game.getPlayer().addToHand(card1);
+		assertEquals(false, (PokerResult.FULLHOUSE == game.getResult()));
+	}
 
 }

@@ -37,14 +37,5 @@ public class Card {
 	public Suit getsuit() {
 		return suit;
 	}
-	
-	/**
-	 * Get Method for the value and suit of a card as a string.
-	 * Example: "KING OF HEARTS."
-	 * 
-	 * @return THe value and suit of the card in one string.
-	 */
-	public String getCardString() {
-		return (value + " OF " + suit);
-	}
+
 }
