@@ -427,7 +427,6 @@ public class CasinoGamesPokerModel {
 	
 	/**
 	 * Converts hand value to array list of integers.
-	 * @param player The player.
 	 * @return The converted Array List.
 	 */
 	public ArrayList<Integer> toInt() {
